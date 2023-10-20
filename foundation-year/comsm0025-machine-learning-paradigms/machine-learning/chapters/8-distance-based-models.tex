@@ -1,0 +1,162 @@
+\section{Distance-based models}
+
+A distance-based model is generally comprised of:
+\begin{itemize}
+  \item a distance metric (section~\ref{sec:8:distance-metrics});
+  \item a set of exemplars (centroids or medoids); and
+  \item a distance-based decision rule.
+\end{itemize}
+
+\subsection{Distance metrics}
+\label{sec:8:distance-metrics}
+
+\begin{dfn}
+  [Metric]
+  A metric is a function $d : M \times M \rightarrow \mathbb{R}$, where $M$ is a
+  set of points, such that:
+  \begin{enumerate}
+    \item $d(x, x) = 0 \ \forall\ x \in M$
+          (the distance from a point to itself is zero)
+    \item $d(x, y) > 0 \ \forall\ x, y \in M, x \neq y$
+          (positivity)
+    \item $d(x, y) = d(y, x) \ \forall\ x, y \in M$
+          (symmetry)
+    \item $d(x, z) \leq d(x, y) + d(y, z) \ \forall\ x, y, z \in M$
+          (triangle inequality)
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+  [Pseudo-metric]
+  A pseudo-metric is a metric where the condition of positivity is replaced by
+  non-negativity, i.e., $d(x, y) \geq 0 \ \forall\ x, y \in M$.
+\end{dfn}
+
+\begin{dfn}
+  [Metric space]
+  A metric space is an ordered pair $(M, d)$ where $M$ is a set of points and
+  $d$ is a metric on $M$.
+\end{dfn}
+
+\subsubsection{Examples}
+
+\begin{dfn}
+  [$p$-norm, $L_{p}$ norm]
+  The $p$-norm of a vector $\vec{x} \in \mathbb{R}^n$ is:
+  \begin{equation}
+    \norm{\vec{x}}_{p} = \left( \sum_{i = 1}^{n} |x_i|^{p} \right)^{\frac{1}{p}}
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Minkowski distance]
+  The Minkowski distance of order $p \in \mathbb{N}_1$ between two vectors
+  $\vec{x}, \vec{y} \in \mathbb{R}^n$ is:
+  \begin{equation}
+    D_{p}(\vec{x}, \vec{y})
+    = \left( \sum_{i = 1}^{n} |x_i - y_i|^{p} \right)^{\frac{1}{p}}
+    = \norm{\vec{x} - \vec{y}}_{p}
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Manhattan distance]
+  The Manhattan distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$
+  is the Minkowski distance of order $p = 1$:
+  \begin{equation}
+    D_{1}(\vec{x}, \vec{y})
+    = \sum_{i = 1}^{n} |x_i - y_i|
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Euclidean distance]
+  The Euclidean distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$
+  is the Minkowski distance of order $p = 2$:
+  \begin{equation}
+    D_{2}(\vec{x}, \vec{y})
+    = \sqrt{ \sum_{i = 1}^{n} (x_i - y_i)^{2} }
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Chebyshev distance]
+  The Chebyshev distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$
+  is the Minkowski distance of order $p \rightarrow \infty$:
+  \begin{equation}
+    D_{\infty}(\vec{x}, \vec{y})
+    = \lim_{p \rightarrow \infty} \left( \sum_{i = 1}^{n} |x_i - y_i|^{p} \right)^{\frac{1}{p}}
+    = \max_{i = 1}^{n} |x_i - y_i|
+  \end{equation}
+\end{dfn}
+
+Minkowski distances are translationally invariant but not scale-invariant.
+Euclidean distance is the only Minkowski distance that is rotationally invariant.
+
+\begin{dfn}
+  [0-``norm", $L_{0}$ ``norm"]
+  The 0-``norm" of a vector $\vec{x} \in \mathbb{R}^n$ is the number of non-zero
+  elements in $\vec{x}$:
+  \begin{equation}
+    \norm{\vec{x}}_{0} = \sum_{i = 1}^{n} |x_i|^{0}
+  \end{equation}
+\end{dfn}
+
+The 0-``norm" is not a norm because it is not homogeneous.
+
+\begin{dfn}
+  [Hamming distance]
+  The Hamming distance between two binary strings $\vec{x}, \vec{y}$ of length
+  $n$ is the number of bits in which they differ:
+  \begin{equation}
+    D_{0}(\vec{x}, \vec{y})
+    = \sum_{i = 1}^{n} |x_i - y_i|^{0}
+    = \sum_{i = 1}^{n} \mathbb{I}(x_i \neq y_i)
+  \end{equation}
+\end{dfn}
+
+The edit or \textit{Levenshtein distance} generalises the Hamming distance to
+non-binary strings of different lengths.
+
+\begin{dfn}
+  [Mahalanobis distance]
+  The Mahalanobis distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$,
+  where $\matr{\Sigma}$ is the covariance matrix, is:
+  \begin{equation}
+    D_{M}(\vec{x}, \vec{y} \mid \matr{\Sigma})
+    = \sqrt{ (\vec{x} - \vec{y})^{\top} \Sigma^{-1} (\vec{x} - \vec{y}) }
+  \end{equation}
+\end{dfn}
+
+Euclidean distance is the Mahalanobis distance where the covariance matrix is
+the identity matrix.
+
+\subsection{Neighbours and exemplars}
+
+\begin{thm}
+  [Arithmetic mean minimises squared Euclidean distance]
+  The arithmetic mean $\vec{\mu}$ of a set of points $X \in \mathbb{R}^n$ is the
+  point with the minimum sum of squared Euclidean distances to the points in $X$:
+  \begin{equation}
+    \argmin_{\vec{y}} \sum_{\vec{x} \in X} \norm{\vec{x} - \vec{y}}_{2}^{2} = \vec{\mu}
+  \end{equation}
+
+  \begin{proof}
+    The gradient of the sum of squared Euclidean distances is:
+    \begin{align*}
+      \nabla_{\vec{y}} \sum_{\vec{x} \in X} \norm{\vec{x} - \vec{y}}_{2}^{2}
+       & = - 2 \sum_{\vec{x} \in X} (\vec{x} - \vec{y})          \\
+       & = - 2 \sum_{\vec{x} \in X} \vec{x} + 2 \card{X} \vec{y}
+    \end{align*}
+    If the gradient is the zero vector, then:
+    \begin{equation*}
+      \vec{y} = \frac{1}{\card{X}} \sum_{\vec{x} \in X} \vec{x} = \vec{\mu}
+    \end{equation*}
+  \end{proof}
+\end{thm}
+
+Minimising the sum of squared Euclidean distances is equivalent to minimising
+the \textit{average} squared Euclidean distance.
+The \textit{geometric median} minimises the sum of Euclidean distances.
+However, there is no closed-form expression for the geometric median of
+multivariate data.
