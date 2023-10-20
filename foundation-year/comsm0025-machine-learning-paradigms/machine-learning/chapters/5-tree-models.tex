@@ -1,0 +1,225 @@
+\paragraph{Trees}
+
+A tree is an undirected connected acyclic graph.
+A rooted tree is a tree in which a node is designated the root.
+The edges of a rooted tree may be directed away from or towards the root.
+The nodes of an $m$-ary tree have at most $m$ children.
+
+\paragraph{Tree models}
+
+\begin{itemize}
+  \item A \textit{tree model} is represented by a directed rooted tree.
+        The branch nodes represent features and the leaf nodes represent instance space segments.
+  \item A \textit{feature tree} is represented by a binary directed rooted tree.
+        There are two edges directed away from each branch node, each of which represents a mutually exclusive proposition about the value of the feature.
+  \item A \textit{decision tree} is represented by an $m$-ary directed rooted tree where $m \geq 2$.
+        There are $m_i$ edges directed away from each branch node $i$, each of which represents a possible value of the feature.
+\end{itemize}
+
+TODO:
+
+\begin{itemize}
+  \item Disjunctive normal form
+  \item Distributive equivalence $A \vee (B \wedge C) \equiv (A \vee B) \wedge (A \vee C)$
+  \item De Morgan laws $\neg (A \vee B) \equiv \neg A \wedge \neg B$
+\end{itemize}
+
+\paragraph{Expressivity}
+
+A decision tree represents a set of mutually exclusive logical expressions, which can be written in different equivalent forms.
+The expressions represented by a decision tree may not be equivalent to \textit{conjunctive} expressions of individual features\footnote{But they may be equivalent to conjunctive expressions of \textit{conjunctive features}. This is called \textit{constructive induction}.}.
+Because any logical expression may be written in disjunctive normal form, decision trees are maximally \textit{expressive}, i.e., they can separate any data that is consistently labelled.
+
+However, expressive hypothesis languages are prone to overfitting and one way to prevent overfitting is to choose a restrictive hypothesis language.
+Learning algorithms in expressive hypothesis spaces typically have an \textit{inductive bias} towards simpler hypotheses, either implicitly by the search procedure or explicitly by a term in the loss function.
+
+\paragraph{Bias and variance}
+
+Low-bias models are more likely to overfit to the training data.
+Low-variance models change by a small amount when the training data changes by a
+small amount.
+
+Low-variance, high-bias models are preferable when there is limited training
+data and overfitting is a concern.
+High-variance, low-bias models are preferable when there is plenty of training
+data but underfitting is a concern.
+
+\paragraph{Learning algorithms}
+
+A feature tree represents conjunctive concepts in the hypothesis space.
+The learning problem is to choose the best conjunctive concepts to solve a task.
+
+Algorithm~\ref{algLearnFeatureTree} (pseudo-code) is a generic learning procedure.
+It is a \textit{divide-and-conquer} algorithm: it splits the data into subsets, learns a tree for each subset, and combines them.
+It is also a \textit{greedy} algorithm: it always chooses the best feature values to split the data at a given step, which may be sub-optimal.
+An optimal but more computationally expensive alternative is to search for the best feature values to split the data over all steps.
+
+% TODO: Update from exercises.
+\begin{alg}
+  \label{algLearnFeatureTree}
+  \begin{lstlisting}[language=Python]
+
+  # Returns true if data can be given a single label.
+  def is_homogeneous(data)
+
+  # Returns the best label for data.
+  def label(data)
+
+  # Returns the best feature values to split data.
+  def find_feature_values(data, features)
+
+  # Returns the subsets of data for each feature value.
+  def find_split(data, feature, values)
+
+  def grow(tree, data, features):
+    if is_homogeneous(data):
+      tree.add_leaf(label(data))
+
+    feature, values = find_feature_values(data, features)
+
+    for subset in find_split(data, feature, values):
+      if len(subset) > 0:
+        grow(tree[feature], subset, features)
+      else:
+        tree[feature].add_leaf(label(subset))
+\end{lstlisting}
+\end{alg}
+
+\subsection{Decision trees}
+
+\subsubsection{Purity of a leaf}
+
+For a classification task, a set of instances is \textit{homogeneous} if the instances belong to the same class.
+Therefore, \lstinline[language=Python]{def label} returns the majority class.
+The \textit{purity} of a set of instances is the proportion of instances that belong to the majority class.
+It is proportional to the \textit{empirical probability} $\dot{p}$.
+
+\subsubsection{Impurity of a leaf}
+
+\lstinline[language=Python]{def find_feature_values} returns the feature values that maximise the purity (minimise the impurity) of the subsets.
+In terms of $\dot{p}$, the impurity $f$ must obey the following constraints:
+
+\begin{itemize}
+  \item $f(\dot{p}) = 0$ : $\dot{p} \in {0, 1}$, i.e., it is zero if the subset is homogeneous
+  \item $f(\dot{p}) = f(1 - \dot{p})$, i.e., it is symmetric about $\dot{p} = \frac{1}{2}$
+  \item $\argmax_{\dot{p}} f = \frac{1}{2}$, i.e., it is maximal when $\dot{p} = \frac{1}{2}$
+\end{itemize}
+Some examples of impurity functions are:
+
+\begin{itemize}
+  \item \textit{Minority class} $\min(\dot{p}, 1 - \dot{p})$
+
+        The error rate, i.e., the proportion of instances that are labelled incorrectly if they are labelled with the majority class.
+
+  \item \textit{Gini index} $2 \dot{p} (1 - \dot{p})$
+
+        The expected error if we label instances randomly.
+
+  \item \textit{Entropy} $- \dot{p} \log_2 \dot{p} - (1 - \dot{p}) \log_2 (1 - \dot{p})$
+
+        The expected number of bits encoded by the class of a random instance.
+
+\end{itemize}
+
+\subsubsection{Impurity of a tree}
+
+The impurity of a set of mutually exclusive leaves, i.e., a decision tree, is the weighted average of the impurities of the leaves:
+
+\begin{equation}
+  \label{eqnImpurityTree}
+  f(\{ D_i \mid i \in 1, ..., n \}) = \frac{1}{|D|} \sum_{i = 1}^n |D_i| f(\dot{p}_i)
+\end{equation}
+
+For binary classification, we can find $f(\{ D_+, D_- \})$ from $f(\dot{p}_+)$ and $f(\dot{p}_-)$ geometrically:
+First, we draw a straight line between $(\dot{p}_+, f(\dot{p}_+))$ and $(\dot{p}_-, f(\dot{p}_-))$.
+The line represents the possible weighted averages of $f(\dot{p}_+)$ and $f(\dot{p}_-)$.
+Given that $\dot{p} = \frac{|D_+|}{|D|} \dot{p}_+ + \frac{|D_-|}{|D|} \dot{p}_-$, $f(\dot{p})$ is the point on the line that corresponds to $\dot{p}$.
+
+\subsubsection{Multi-class classification}
+
+Impurity functions can be generalized to $k > 2$ classes, e.g.:
+\begin{itemize}
+  \item \textit{$k$-class Gini index} $\sum_{i = 1}^k \dot{p_i} (1 - \dot{p_i})$
+  \item \textit{$k$-class entropy} $\sum_{i = 1}^k - \dot{p_i} \log_2 \dot{p_i}$
+\end{itemize}
+\subsubsection{Purity and information gain}
+
+To split a parent node $D$ into children $\{ D_i \mid i = 1, ..., n \}$, we typically choose the feature that maximises the \textit{purity gain}:
+\begin{equation}
+  f(D) - f(\{ D_i \mid i = 1, ..., n \})
+\end{equation}
+If $f(D)$ is the entropy, this is called the \textit{information gain}.
+It measures the increase in information about the class gained by including the feature.
+A `best split' algorithm finds the feature that minimises $f(\{ D_i \mid i = 1, ..., n \})$.
+
+\subsection{Ranking and probability estimation trees}
+
+A grouping classifier can be used to rank instances by learning an ordering on its instance-space segments.
+Decision trees can access the class distributions (empirical probabilities) of the segments, from which an ordering can be derived that is optimal for the training data.
+This is not possible for some other grouping classifiers.
+
+The ordering is optimal because it produces a convex ROC curve.
+The ROC curve is convex because its segments are sorted in decreasing order of slope.
+The slope of a segment is $\frac{\dot{p}}{1 - \dot{p}}$ and, because the slope is a monotonic function of $\dot{p}$, sorting the segments in decreasing order of $\dot{p}$ is equivalent to sorting them in decreasing order of slope.
+
+The empirical probability of a parent node is a weighted average of the empirical probabilities of its children (see \ref{eqnImpurityTree}):
+\begin{equation}
+  \dot{p} =  \frac{1}{|D|} \sum_{i = 1}^{n} |D_i| \dot{p}_i
+\end{equation}
+But this does not constrain the empirical probabilities of a parent's children, so we cannot find the ordering of segments from the tree structure.
+
+TODO:
+
+\begin{itemize}
+  \item Interpretation of splits in terms of coverage curves.
+        To add a split: split the line segment of the ROC curve into $k > 2$ segments and re-sort the segments in decreasing order of slope.
+        Sorting the segments ensures that the ROC curve is convex.
+  \item Turning a feature tree into a decision tree (classifier), ranking tree, or probability estimation tree.
+  \item[] \begin{itemize}
+          \item Decision tree (classifier): choose the operating conditions and find the optimal point under those conditions.
+          \item Ranking tree: order the segments in decreasing order of empirical probability.
+          \item Probability estimation tree: predict the empirical probabilities of the segments (applying smoothing).
+        \end{itemize}
+  \item Pruning trees.
+  \item[] \begin{itemize}
+          \item Merging all leaves in a subtree
+          \item Only recommended for classification and when you can define the operating conditions
+          \item E.g., reduced-error pruning with a pruning set
+          \item Never improves accuracy over the training data
+        \end{itemize}
+  \item Sensitivity to imbalanced classes.
+  \item[] \begin{itemize}
+          \item Oversampling the minority class.
+                Applies to any model without changing the model itself.
+                But increases training time and may not change the model(!).
+        \end{itemize}
+  \item Relative impurity.
+  \item[] \begin{itemize}
+          \item The relative impurity of a child node is its weighted impurity in proportion to its parent node's impurity.
+          \item Some impurity measures are invariant with respect to the class distribution.
+                E.g., the square root of the Gini index, which minimises the relative impurity.
+          \item Impurity measures that vary with the class distribution produce splitting criteria that emphasise child nodes with more instances.
+                E.g., the Gini index and entropy.
+        \end{itemize}
+\end{itemize}
+
+How to train a decision tree:
+\begin{enumerate}
+  \item Prioritise ranking performance
+  \item Use an impurity measure that is invariant with respect to the class distribution.
+        Otherwise, oversample the minority class to balance the class distribution.
+  \item Apply Laplace or add-$k$ smoothing to the empirical probabilities.
+  \item Given the operating conditions, select the best operating point on the ROC curve.
+  \item Optionally, prune subtrees whose leaves are homogeneous.
+\end{enumerate}
+
+\subsection{Tree learning as variance reduction}
+
+TODO:
+
+\begin{itemize}
+  \item Adapting decision trees to regression and clustering tasks.
+  \item Variance of a Bernoulli distribution.
+  \item Overfitting, pruning, and model trees.
+  \item Cluster and split dissimilarity.
+\end{itemize}

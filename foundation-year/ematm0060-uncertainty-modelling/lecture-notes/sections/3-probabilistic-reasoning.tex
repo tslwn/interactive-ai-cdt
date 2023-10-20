@@ -1,0 +1,449 @@
+\section{Probabilistic reasoning}
+
+Classical logic is based on propositions and rules that are known with certainty.
+This is generally impossible.
+Probabilistic reasoning is based on uncertain knowledge.
+There are generally multiple probability distributions that are consistent with
+a knowledge-base.
+
+\subsection{Probabilistic knowledge-based reasoning}
+
+One approach to probabilistic reasoning is to identify the set of probability
+distributions $\mathbb{P}(K)$ that are consistent with a knowledge-base $K$,
+then select a probability distribution based on some principle.
+
+\begin{dfn}
+  [Probabilistic knowledge-base]
+  A probabilistic knowledge-base $K$ is a set of linear equations on $P$:
+  \begin{equation}
+    K = \left\{
+    \sum_{i = 1}^{n_j}a_{ij} P(A_{ij}) = b_j
+    \ :\
+    j = 1 .. m
+    \ \land \
+    A_{ij}\subseteq W
+    \ \land \
+    a_{ij},b_k \in\mathbb{R}
+    \right\}
+  \end{equation}
+\end{dfn}
+
+One principle is to select the distribution that has minimal information.
+Entropy is a measure of the information content of a probability distribution.
+
+\begin{dfn}
+  [Entropy]
+  Let $W = \{w_i \mid i \in 1 .. n\}$ and $P(w_i) = p_i : i \in 1 .. n$.
+  Entropy is:
+  \begin{equation}
+    H(\{p_i \mid i \in 1 .. n\}) = \sum_{i = 1}^{n} - p_i \log_2(p_i)
+  \end{equation}
+\end{dfn}
+
+If the knowledge-base is linear, then there is a single probability distribution
+with maximum entropy (theorem~\ref{thm:3:MaximumEntropyDistribution}).
+
+\begin{thm}
+  [Maximum entropy distribution]
+  \label{thm:3:MaximumEntropyDistribution}
+  Let $W=\{w_i \mid i \in 1 .. n\}$.
+  The maximum entropy distribution in $\mathbb{P}$ is $P(w_i) = \frac{1}{n}$.
+  \begin{proof}
+    Let $P(w_i) = p_i : i\in 1 .. n$.
+    Without loss of generality, let $p_n = 1 - \sum_{i = 1}^{n - 1} p_i$ such
+    that $H$ is a function of
+    $\{p_i \mid i \in 1 .. n - 1\}$.
+
+    $H$ is maximal when $\frac{\partial H}{\partial p_i} = 0 : i \in 1 .. n - 1$.
+    By the product and chain rules:
+    \begin{align}
+      \frac{\partial H}{\partial p_i}
+       & = \frac{\partial}{\partial p_i}(- p_i \log_2(p_i))
+      - \frac{\partial}{\partial p_i}(- p_n \log_2(p_n))
+      \label{eqn:3:MaximumEntropyDistribution1}             \\
+       & = -\log_2(p_i) \frac{\partial p_i}{\partial p_i}
+      - p_i \frac{\partial \log_2(p_i)}{\partial p_i}
+      + \log_2(p_n) \frac{\partial p_n}{\partial p_i}
+      + p_n \frac{\partial \log_2(p_n)}{\partial p_i}
+      \label{eqn:3:MaximumEntropyDistribution2}
+    \end{align}
+    By the properties of logarithms:
+    \begin{align}
+      \frac{\partial \log_2(p_i)}{\partial p_i}
+       & = \frac{1}{\ln 2} \frac{\partial \ln p_i}{\partial p_i}
+      = \frac{1}{p_i \ln 2}
+      \label{eqn:3:MaximumEntropyDistribution3}                  \\
+      \frac{\partial \log_2(p_n)}{\partial p_i}
+       & = \frac{1}{\ln 2} \frac{\partial \ln p_n}{\partial p_i}
+      = \frac{1}{\ln 2} \frac{\partial p_n}{\partial p_i} \frac{\partial \ln p_n}{p_n}
+      = - \frac{1}{p_n \ln 2}
+      \label{eqn:3:MaximumEntropyDistribution4}
+    \end{align}
+    Substituting equations~\ref{eqn:3:MaximumEntropyDistribution3} and
+    \ref{eqn:3:MaximumEntropyDistribution4} into
+    equation~\ref{eqn:3:MaximumEntropyDistribution2} yields:
+    \begin{equation}
+      \frac{\partial H}{\partial p_i} = - \log_2(p_i) - \log_2(p_n) = 0
+    \end{equation}
+    That is, $\log_2(p_i) = \log_2(p_n)$ and $p_i = p_n : i \in \{ 1 .. n - 1 \}$.
+    Since $\sum_{i = 1}^{n} p_i = 1$ and $p_n = 1 - \sum_{i = 1}^{n - 1} p_i$,
+    $p_i = \frac{1}{n}$.
+  \end{proof}
+\end{thm}
+
+Another principle is to define a uniform distribution over the set of
+probability distributions, then select the expected value of that distribution,
+i.e., its \textit{centre of mass} (definition~\ref{def:3:CentreOfMass}).
+
+\begin{dfn}
+  [Centre of mass]
+  \label{def:3:CentreOfMass}
+  Let $\mathbb{P}(K)$ be a set of probability distributions that are consistent
+  with a knowledge-base $K$. The centre of mass is:
+  \begin{equation}
+    P(w_i) = \frac{\int_{\mathbb{P}(K)} p_i \, d \mathbb{P}(K) }{\int_{\mathbb{P}(K)} d \mathbb{P}(K)}
+  \end{equation}
+\end{dfn}
+
+\subsection{Probability logic}
+
+Probability theory is not truth-functional.
+Knowledge of $P(A)$ and $P(B)$ does not imply knowledge of, e.g., $P(A \cap B)$,
+but it does imply upper and lower bounds
+(theorems~\ref{thm:3:BoundsIntersection} and \ref{thm:3:BoundsUnion}).
+
+\begin{thm}
+  [Intersection bounds]
+  \label{thm:3:BoundsIntersection}
+  Let $A, B \subseteq W$.
+  \begin{equation}
+    \label{eqn:3:BoundsIntersection}
+    \max(0, P(A) + P(B) - 1) \leq P(A \cap B) \leq \min(P(A), P(B))
+  \end{equation}
+  \begin{proof}
+    By definition~\ref{def:2:ProbabilityMeasure}:
+    \begin{align}
+      P(A) & = P(A \cap B) + P(A \cap B^c) \label{eqn:3:BoundsIntersection1} \\
+      P(B) & = P(A \cap B) + P(A^c \cap B) \label{eqn:3:BoundsIntersection2}
+    \end{align}
+    Since $P(A \cap B^c) \geq 0$ and $P(A^c \cap B) \geq 0$:
+    \begin{equation}
+      P(A \cap B) \leq \min(P(A), P(B)) \label{eqn:3:BoundsIntersection3}
+    \end{equation}
+    By theorem~\ref{thm:2:GeneralAdditivity}:
+    \begin{equation}
+      P(A \cap B) = P(A) + P(B) - P(A \cup B) \label{eqn:3:BoundsIntersection4}
+    \end{equation}
+    Since $P(A \cup B) \leq 1$ and $P(A \cap B) \geq 0$:
+    \begin{equation}
+      P(A \cap B) \geq \max(0, P(A) + P(B) - 1) \label{eqn:3:BoundsIntersection5}
+    \end{equation}
+  \end{proof}
+\end{thm}
+
+\begin{thm}
+  [Union bounds]
+  \label{thm:3:BoundsUnion}
+  Let $A, B \subseteq W$.
+  \begin{equation}
+    \max(P(A), P(B)) \leq P(A \cup B) \leq \min(P(A) + P(B), 1)
+  \end{equation}
+  \begin{proof}
+    By theorems~\ref{thm:2:GeneralAdditivity} and \ref{thm:3:BoundsIntersection}:
+    \begin{equation}
+      P(A \cup B) \geq P(A) + P(B) - \min(P(A), P(B)) = \max(P(A), P(B))
+      \label{eqn:3:BoundsUnion1}
+    \end{equation}
+    By theorem~\ref{thm:3:BoundsIntersection}:
+    \begin{align}
+      P(A \cup B) & \leq P(A) + P(B) - \max(0, P(A) + P(B) - 1)          \\
+                  & \leq \min(P(A) + P(B), 1) \label{eqn:3:BoundsUnion3}
+    \end{align}
+  \end{proof}
+\end{thm}
+
+Theorems~\ref{thm:2:Complement}, \ref{thm:3:BoundsIntersection}, and
+\ref{thm:3:BoundsUnion} define a truth-functional logic for probability
+intervals.
+For a proposition $A \subseteq W$, it can be used to infer upper and lower
+bounds on $P(A)$, i.e., $P(A) \in [L(A),\ U(A)]$.
+
+\begin{thm}
+  [Complement rule]
+  \begin{equation}
+    P(A^c) \in [1 - U(A),\ 1 - L(A)]
+  \end{equation}
+\end{thm}
+
+\begin{thm}
+  [Intersection rule]
+  \begin{equation}
+    P(A \cap B) \in [\max(0, L(A) + L(B) - 1),\ \min(U(A), U(B))]
+  \end{equation}
+\end{thm}
+
+\begin{thm}
+  [Union rule]
+  \begin{equation}
+    P(A \cup B) \in [\max(L(A), L(B)),\ \min(U(A) + U(B),\ 1)]
+  \end{equation}
+\end{thm}
+
+\begin{thm}
+  [Conditional rule]
+  \begin{equation}
+    P(A) \in [L(A \mid B) L(B),\ (U(A \mid B) - 1) U(B) + 1]
+  \end{equation}
+  \begin{proof}
+    By theorem~\ref{thm:2:TotalProbability} and
+    definition~\ref{def:2:ProbabilityMeasure}, i.e., $P(A \mid B^c) \in [0, 1]$:
+    \begin{equation}
+      P(A \mid B) P(B) \leq P(A) \leq (P(A \mid B) - 1) P(B) + 1
+    \end{equation}
+  \end{proof}
+\end{thm}
+
+\begin{thm}
+  [Jeffrey's rule]
+  \begin{equation}
+    P^\prime(A) \in [L(A \mid B) L(B),\ (U(A \mid B) - 1) U(B) + 1]
+  \end{equation}
+\end{thm}
+
+The upper and lower bounds of this logic are wider than probability theory
+constrains them to be.
+This is because the logic does not account for logical dependencies between
+propositions and their relations to definition~\ref{def:2:ProbabilityMeasure}.
+
+\subsection{Bayesian networks}
+
+\subsubsection{Joint and marginal probability distributions}
+
+\begin{dfn}
+  [Joint probability distribution]
+  The joint probability distribution of
+  ${X = \{ X_i : W \rightarrow \Omega \mid i \in 1 .. n \}}$ is:
+  \begin{align}
+    P(X)
+     & = P \bigl( \bigwedge_{i = 1}^{n} X_i = x_i \bigr) \nonumber \\
+     & = P(\{ w : X_1(w) = x_1, \ldots, X_n(w) = x_n \})
+  \end{align}
+\end{dfn}
+
+If $|\{ X_i(w) : w \in W \}| = k_i$, then the joint probability distribution
+has $k_i^n - 1$ values, i.e., the number of values grows exponentially with the
+dimension of the random variables (the \textit{curse of dimensionality}).
+
+\begin{dfn}
+  [Marginal probability distribution]
+  The marginal probability distribution of $X_i : W \rightarrow \Omega$ is:
+  \begin{equation}
+    P(X_i = x_i) = P(\{ w : X_i(w) = x_i \})
+    \ \forall\
+    i \in 1 .. n
+  \end{equation}
+\end{dfn}
+
+\begin{thm}
+  [Joint and marginal probability distributions]
+  The joint and marginal probability distributions are related by:
+  \begin{equation}
+    P(X_i = x_i) =
+    \sum_{j \neq i}
+    \sum_{x_j}
+    P \bigl( \bigwedge_{j = 1}^{n} X_j = x_j \bigr)
+    \ \forall\ i \in 1 .. n
+  \end{equation}
+\end{thm}
+
+I.e., the marginal probability distribution of $X_i$ is the sum of the joint
+probability distributions of $X$ over all values $x_j$ where $j \neq i$.
+
+\subsubsection{Independence}
+
+By definition~\ref{def:3:Independence}, if $X$ are \textit{independent}, then
+the joint probability distribution of $X$ is defined by its \textit{marginal}
+distributions.
+Then, the number of values grows only linearly with the dimension of the random
+variables.
+
+\begin{dfn}
+  [Independence]
+  \label{def:3:Independence}
+  Let $X = \{ X_i \mid i \in 1 .. j \}$ be a set of random variables.
+  $X$ are independent if:
+  \begin{equation}
+    P \bigl( \bigwedge_{i = 1}^{n} X_i = x_i \bigr)
+    = \prod_{i = 1}^{n} P(X_i = x_i)
+    \ \forall \
+    x_i \in \{ X_i(w) : w \in W \}
+  \end{equation}
+\end{dfn}
+
+\subsubsection{Conditional distributions}
+
+We cannot generally assume that random variables are independent.
+But some random variables are not directly dependent on others.
+The formalization of this intuition helps to make probabilistic reasoning
+computationally feasible.
+
+\begin{dfn}
+  [Conditional distribution]
+  Let $X = \{ X_i \mid i \in 1 .. j \}$ be a set of random variables.
+  Without loss of generality, let $\{ X_1, X_2 \} \in \mathbb{X}$ form a
+  partition of $X$:
+  \begin{align*}
+    X_1 & = \{ X_i \mid i \in 1 .. k - 1 \} \\
+    X_2 & = \{ X_i \mid i \in k .. j \}
+  \end{align*}
+  The conditional probability of $\bigwedge_{i = 1}^{k - 1} X_i = x_i$
+  given $\bigwedge_{i = k}^{j} X_i = x_i$ is:
+  \begin{equation}
+    \label{eqn:3:ConditionalDistribution}
+    P \bigl( \bigwedge_{i = 1}^{k - 1} X_i = x_i \mid \bigwedge_{i = k}^{j} X_i = x_i \bigr)
+    = \frac{P(\bigwedge_{i = 1}^{j} X_i = x_i)}{P(\bigwedge_{i = k}^{j} X_i = x_i)}
+  \end{equation}
+  The denominator of equation~\ref{eqn:3:ConditionalDistribution} is the joint
+  probability distribution:
+  \begin{equation}
+    P(\bigwedge_{i = k}^{j} X_i = x_i)
+    = \sum_{x_1} \ldots \sum_{x_{j - 1}} P(\bigwedge_{l = 1}^{j} X_l = x_l)
+  \end{equation}
+\end{dfn}
+
+I.e., if an agent receives information that $\bigwedge_{l = k}^{j} X_l = x_l$,
+then to update its probabilities for the other random variables
+$\{ X_i \mid i \in 1 .. k - 1 \}$, it evaluates the conditional probability of
+the other random variables given the information.
+
+\begin{dfn}
+  [Conditional independence]
+  Let $X = \{ X_i \mid i \in 1 .. j \}$ be a set of random variables.
+  Without loss of generality, let $\{ X_1, X_2, X_3 \} \in \mathbb{X}$ form a
+  partition of $X$:
+  \begin{align*}
+    X_1 & = \{ X_i \mid i \in 1 .. k - 1 \} \\
+    X_2 & = \{ X_i \mid i \in k .. l - 1 \} \\
+    X_3 & = \{ X_i \mid i \in l .. j \}
+  \end{align*}
+  Then $X_1$ are conditionally independent of $X_3$ given $X_2$ if:
+  \begin{multline}
+    P \bigl( \bigwedge_{i = 1}^{k - 1} X_i = x_i \mid \bigwedge_{i = k}^{j} X_i = x_i \bigr) \\
+    = P \bigl( \bigwedge_{i = 1}^{k - 1} X_i = x_i \mid \bigwedge_{i = k}^{l - 1} X_i = x_i \bigr)
+    \ \forall\
+    x_i \in \{ X_i(w) : w \in W \}
+  \end{multline}
+\end{dfn}
+
+I.e., if an agent knows the values of $\{ X_i \mid i \in k .. l - 1 \}$, then
+it can ignore the values of $\{ X_i \mid i \in l .. j \}$ when updating its
+probabilities for $\{ X_i \mid i \in 1 .. k - 1 \}$.
+
+\subsubsection{Bayesian networks}
+
+A Bayesian network is a graphical model of probabilistic reasoning with multiple
+random variables.
+It is a compromise between independence and dependence: it assumes
+\textit{independence where possible} and \textit{dependency where necessary}.
+
+\begin{dfn}
+  [Directed graph]
+  A directed graph is an ordered pair $(V, E)$ where
+  $V = \{ v_i \mid i \in 1 .. j \}$ is a set of vertices and $E$ is a binary
+  relation on $V$ that defines a set of edges.
+\end{dfn}
+
+\begin{dfn}
+  [Directed acyclic graph]
+  A directed graph $(V, E)$ is acyclic if there is no sequence of vertices
+  $v_i \ldots v_k$ where $v_i = v_k$ and $(v_l, v_{l + 1}) \in E$ for all
+  $l \in 1 .. k - 1$.
+\end{dfn}
+
+\begin{dfn}
+  [Bayesian network]
+  \label{def:3:BayesianNetwork}
+  A Bayesian network is:
+  \begin{itemize}
+    \item a directed acyclic graph $(V, E)$ where each vertex $v_i \in V$ is a
+          random variable $X_i : W \rightarrow \Omega$ and $(X_i, X_j) \in E$
+          only if $j < i$; and
+    \item a joint probability distribution on $\{ X_i \mid i \in 1 .. k \}$
+          where:
+          \begin{equation}
+            P(X_i \mid \{ X_j \mid j \in 1 .. i - 1 \})
+            = P(X_i \mid \Pi(X_i))
+          \end{equation}
+          and $\Pi(X_i) = \{ X_k : (X_k, X_i) \in E \}$ is the set of parent
+          vertices of $X_i$.
+  \end{itemize}
+\end{dfn}
+
+For a Bayesian network, we assume that $X_i$ is conditionally independent of its
+\textit{indirect} causes $\{ X_j \mid j \in 1 .. i - 1 \} - \Pi(X_i)$ given its
+\textit{direct} causes $\Pi(X_i)$.
+The joint probability distribution of $X$ is determined by its conditional
+distributions $P(X_i \mid \Pi(X_i)) \ \forall\ i \in 1 .. k$
+(theorem~\ref{thm:3:BayesianNetworkJPD}).
+
+\begin{thm}
+  [Joint probability distribution of a Bayesian network]
+  \label{thm:3:BayesianNetworkJPD}
+  \begin{equation}
+    P(X) = \prod_{i = 1}^{k} P(X_i \mid \Pi(X_i))
+  \end{equation}
+  \begin{proof}
+    Trivially:
+    \begin{equation}
+      P(\{ X_i \mid i \in 1 .. k \})
+      = \prod_{i = 1}^{k} P(X_i \mid \{ X_j \mid j \in 1 .. i - 1 \})
+    \end{equation}
+    By the conditional independence assumptions of
+    definition~\ref{def:3:BayesianNetwork}:
+    \begin{equation}
+      \prod_{i = 1}^{k} P(X_i \mid \{ X_j \mid j \in 1 .. i - 1 \})
+      = \prod_{i = 1}^{k} P(X_i \mid \Pi(X_i))
+    \end{equation}
+  \end{proof}
+\end{thm}
+
+\subsubsection{Numbers of probability values}
+
+For $n$ binary random variables, the number of probability values in the joint
+probability distribution of:
+\begin{itemize}
+  \item a dependent model is $2^n - 1$;
+  \item an independent model is $2n - 1$; and
+  \item a Bayesian network is $\sum_{i = 1}^{n} 2^{|\Pi(X_i)|}$.
+\end{itemize}
+
+\begin{thm}
+  [Number of probability values for a Bayesian network]
+  For $n$ binary random variables, the joint probability distribution of a
+  Bayesian network has between $n$ and $2^n - 1$ values.
+  \begin{proof}
+    The minimum of $|\Pi(X_i)|$ is 0, in which case:
+    \begin{equation}
+      \sum_{i = 1}^{n} 2^{|\Pi(X_i)|} = \sum_{i = 1}^{n} 2^0 = n
+    \end{equation}
+    The maximum of $|\Pi(X_i)|$ is $i - 1$, in which case:
+    \begin{equation}
+      \sum_{i = 1}^{n} 2^{|\Pi(X_i)|}
+      = \sum_{i = 1}^{n} 2^{i - 1}
+      = \sum_{i = 0}^{n - 1} 2^i
+      = \frac{1 (1 - 2^n)}{1 - 2}
+      = 1 - 2^n
+    \end{equation}
+  \end{proof}
+\end{thm}
+
+For $n$ random variables, where the random variable $X_i$ has $k_i$ possible
+values, i.e., $|\{ X_i(w) : w \in W \}| = k_i \ \forall\ i \in 1 .. n$, the
+number of values in:
+\begin{itemize}
+  \item the conditional distributions $P(X_i \mid \Pi(X_i))$ is
+        $(k_i - 1) \prod_{X_j \in \Pi(X_i)} k_j$; and
+  \item the joint probability distribution of a Bayesian network is
+
+        $\sum_{i = 1}^{n} (k_i - 1) \prod_{X_j \in \Pi(X_i)} k_j$.
+\end{itemize}

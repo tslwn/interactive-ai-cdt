@@ -1,0 +1,119 @@
+% !TEX root=week-2-binary-classification.tex
+
+\documentclass[10pt]{beamer}
+\usepackage{../../../../latex/packages/tslwn-preamble}
+\usepackage{../../../../latex/packages/tslwn-slides}
+
+\title{Binary classification}
+\author{Tim Lawson}
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Binary relations}
+	If $A$ and $B$ are sets:
+	\begin{itemize}
+		\item The Cartesian product $A \times B$ is the set of pairs $\{(x, y) \mid x \in A, y \in B \}$.
+		\item A binary relation is a set of pairs $R \subseteq A \times B$.
+		\item If $A = B$, then the relation is ``over $A$".
+		\item Instead of $(x, y) \in R$, we also write $xRy$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Binary relations}
+	\begin{itemize}
+		\item \textbf{Reflexive} if $xRx\ \forall\ x \in A$
+		\item[] For all $x$ in $A$, $(x, x)$ is in $R$.
+		\item \textbf{Symmetric} if $xRy \implies yRx\ \forall\ x,y \in A$
+		\item[] For all $x, y$ in $A$, if $(x, y)$ is in $R$, then $(y, x)$ is in $R$.
+		\item \textbf{Antisymmetric} if $xRy \land yRx \implies x=y\ \forall\ x,y \in A$
+		\item[] For all $x, y$ in $A$, if $(x, y)$ and $(y, x)$ are in $R$, then $x = y$.
+		\item \textbf{Transitive} if $xRy \land yRz \implies xRz\ \forall\ x,y,z \in A$
+		\item[] For all $x,y,z$ in $A$, if $(x, y)$ and $(y, z)$ are in $R$, then $(x, z)$ is in $R$.
+		\item \textbf{Total} if $xRy \lor yRx\ \forall\ x,y \in A$
+		\item[] For all $x, y$ in $A$, $(x, y)$ or $(y, x)$ is in $R$.
+		\item[] If a binary relation is total, then it is also reflexive.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Partial orders}
+	\begin{itemize}
+		\item A \textbf{partial order} is a binary relation that is reflexive, antisymmetric and transitive.
+		\item For instance, the \textbf{subset} relation $\subseteq$ on sets is a partial order:
+		\item[] \begin{itemize}
+			      \item[\checkmark] Reflexive:
+			            $A \subseteq A\ \forall\ A$
+			      \item[] $A$ is a subset of itself.
+			      \item[\checkmark] Antisymmetric:
+			            $A \subseteq B \land B \subseteq A \implies A = B$
+			      \item[] If $A$ is a subset of $B$ and $B$ is a subset of $A$, then $A = B$.
+			      \item[\checkmark] Transitive:
+			            $A \subseteq B \land B \subseteq C \implies A \subseteq C$
+			      \item[] If $A$ is a subset of $B$ and $B$ is a subset of $C$, then $A$ is a subset of $C$.
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Total orders}
+	\begin{itemize}
+		\item A \textbf{total order} is a binary relation that is total, antisymmetric and transitive.
+		\item For instance, the $\leq$ relation on real numbers is a total order:
+		\item[] \begin{itemize}
+			      \item[\checkmark]
+			            Total:
+			            $x \leq y \lor y \leq x\ \forall\ x, y \in \mathbb{R}$
+			      \item[\checkmark]
+			            Antisymmetric:
+			            $x \leq y \land y \leq x \implies x = y$
+			      \item[\checkmark]
+			            Transitive:
+			            $x \leq y \land y \leq z \implies x \leq z$
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Equivalence relations}
+	\begin{itemize}
+		\item An \textbf{equivalence relation} is a binary relation $\equiv$ that is reflexive, symmetric and transitive.
+		\item For instance, the relation `contains the same number of elements as' on sets, i.e., $\lvert A \rvert = \lvert B \rvert$, is an equivalence relation:
+		\item[] \begin{itemize}
+			      \item[\checkmark]
+			            Reflexive:
+			            $\lvert A \rvert = \lvert A \rvert\ \forall\ A$
+			      \item[\checkmark]
+			            Antisymmetric:
+			            $\lvert A \rvert = \lvert B \rvert \land \lvert B \rvert = \lvert A \rvert \implies \lvert A \rvert = \lvert B \rvert$
+			      \item[\checkmark]
+			            Transitive:
+			            $\lvert A \rvert = \lvert B \rvert \land \lvert B \rvert = \lvert C \rvert \implies \lvert A \rvert = \lvert C \rvert$
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Measures}
+	\begin{itemize}
+		\item ``To achieve good accuracy, a classifier should concentrate on the \textit{majority class}, particularly if the class distribution is highly unbalanced"
+		      \footcite[p.56]{Flach2012}
+		\item ``If the minority class is the class of interest and very small, accuracy and performance on the majority class are not the right quantities to optimise"
+		      \footcite[p.57]{Flach2012}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Coverage plots}
+	\begin{itemize}
+		\item ``If one classifier outperforms another classifier on all classes, the first one is said to dominate the second"
+		      \footcite[p.59]{Flach2012}
+		\item[] \begin{itemize}
+			      \item More true positives and fewer false positives
+			      \item Above and to the left
+		      \end{itemize}
+		\item ``Which one we prefer depends on whether we put more emphasis on the positives or on the negatives"
+		      \footcite[p.59]{Flach2012}
+		\item \href{https://coverage-plots.vercel.app/}{Demonstration}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Bibliography}
+	\printbibliography
+\end{frame}
+\end{document}

@@ -1,0 +1,142 @@
+\section{Naive Bayes, Text Classification, and Sentiment}
+
+\subsection{Naive Bayes Classifiers}
+
+\begin{itemize}
+      \item Probabilistic, generative, and discriminative classifiers:
+      \item[] \begin{itemize}
+                  \item A probabilistic classifier outputs the probability that an instance belongs to a class.
+                  \item Generative classifiers model the probability that a class generated an instance.
+                  \item Discriminative classifiers learn the features that best discriminate between classes.
+            \end{itemize}
+      \item Bayes' theorem, posterior and prior probabilities, and likelihoods:
+      \item[] \begin{itemize}
+                  \item Naive Bayes is a probabilistic classifier.
+                  \item For a document $d$ and classes $c \in C$, it returns the class $\hat{c}$ that has the maximum posterior probability given the document:
+                        \begin{equation}
+                              \hat{c} = \argmax_{c \in C} P(c \mid d)
+                        \end{equation}
+                  \item Bayes' theorem states that the posterior probability is:
+                        \begin{equation}
+                              P(c \mid d) = \frac{P(d \mid c) P(c)}{P(d)}
+                        \end{equation}
+                  \item $P(d)$ is the prior probability of the document, which is the same for all classes.
+                        Therefore, we can return the class:
+                        \begin{equation}
+                              \hat{c} = \argmax_{c \in C} P(d \mid c) P(c)
+                        \end{equation}
+            \end{itemize}
+      \item Naive Bayes classifiers' assumptions:
+      \item[] \begin{itemize}
+                  \item A `bag of words' is an unordered set of words.
+                        The `bag of words' assumption is that the order of words in a document does not matter.
+                  \item Naive Bayes (conditional independence) assumption.
+            \end{itemize}
+\end{itemize}
+
+\subsection{Training the Naive Bayes Classifier}
+
+\begin{itemize}
+      \item Maximum likelihood estimate (frequency counts)
+      \item Smoothing, unknown words, and stop words
+      \item Example training algorithm
+\end{itemize}
+
+\setcounter{subsection}{3}
+\subsection{Optimizing for Sentiment Analysis}
+
+\begin{itemize}
+      \item For sentiment classification and other tasks, whether a token occurs in a document is more important than how many times it occurs.
+            This is called binomial or binary naive Bayes.
+      \item A simple way to handle negation is to prepend `not' to tokens that occur between a negation token and the next punctuation mark.
+            Negation can be handled more accurately with parsing.
+      \item Sentiment lexicons are lists of tokens annotated with positive or negative sentiment.
+            When the training set is sparse or not representative of the test set, lexicon features may generalize better.
+\end{itemize}
+
+\subsection{Naive Bayes for other text classification tasks}
+
+Sets of tokens and non-linguistic features may be appropriate for other tasks.
+E.g., character or byte n-grams are effective for language identification.
+Feature selection is the process of selecting the most informative features.
+
+\subsection{Naive Bayes as a Language Model}
+
+Naive Bayes classifiers can use features that depend on multiple tokens or are non-linguistic.
+But naive Bayes classifiers that only use single-token features are similar to language models.
+Specifically, they are sets of class-specific unigram language models.
+
+\subsection{Evaluation: Precision, Recall, F-measure}
+
+\begin{itemize}
+      \item `True' (human-defined) labels are called gold or gold-standard labels.
+      \item A confusion matrix or contingency table represents the precision, recall, and accuracy of a classifier.
+      \item The F-measure is one way to combine precision and recall into a single measure.
+      \item[] \begin{itemize}
+                  \item $F_{\beta} = \frac{(\beta^2 + 1) \cdot \text{precision} \cdot \text{recall}}{\beta^2 \cdot \text{precision} + \text{recall}}$
+                  \item $\beta < 1$ favours precision and $\beta > 1$ favours recall.
+                  \item $\beta = 1$ equally balances precision and recall.
+                  \item $F_{\beta = 1}$ or $F_1 = \frac{2 \cdot \text{precision} \cdot \text{recall}}{\text{precision} + \text{recall}}$ is the most common.
+                  \item The F-measure is a weighted harmonic mean of precision and recall.
+            \end{itemize}
+      \item Multi-class classification
+      \item[] \begin{itemize}
+                  \item In macroaveraging, we compute the performance for each class, then average over classes.
+                        A microaverage is dominated by the most frequent class.
+                  \item In microaveraging, we compute the performance for all classes.
+                        A microaverage better reflects the class distribution, so it is more appropriate when performance on all classes is equally important.
+            \end{itemize}
+\end{itemize}
+
+\subsection{Test Sets and Cross-validation}
+
+\begin{itemize}
+      \item Thus far, we have described a procedure wherein we split the data into training, test, and development sets.
+      \item We can instead use all of the data for training and testing by using $k$-fold cross-validation:
+      \item[] \begin{itemize}
+                  \item Partition the data into $k$ disjoint subsets (folds).
+                  \item For each fold, train the classifier on the remaining $k - 1$ folds and test it on the fold.
+                  \item Average the test-set error rate over all folds.
+            \end{itemize}
+      \item But then we can't examine the data to look for features, because we would be looking at the test set.
+      \item Therefore, it is common to split the data into training and test sets, then use $k$-fold cross-validation on the training set.
+\end{itemize}
+
+\subsection{Statistical Significance Testing}
+
+\begin{itemize}
+      \item How do we compare the performance of two systems $A$ and $B$?
+            The effect size $\delta(x)$ is the performance difference of $A$ relative to $B$ on a test set $x$.
+            We want to know whether $\delta(x)$ is statistically significant.
+      \item The null hypothesis $H_0$ is that $\delta(x) \leq 0$.
+            We want to reject the null hypothesis to support the hypothesis that $A$ is better than $B$.
+      \item Let $X$ be a random variable over all test sets.
+            The p-value is the probability $P(\delta(X) \geq \delta(x) \mid H_0)$.
+            A result is statistically significant if the p-value is below a threshold.
+      \item Parametric tests like t-tests or ANOVAs make assumptions about the distributions of the test statistic.
+            In NLP, we typically use non-parametric tests based on sampling:
+      \item[] \begin{itemize}
+                  \item Approximate randomization
+                  \item The bootstrap test
+            \end{itemize}
+      \item Paired tests compare two sets of aligned observations, e.g., the performance of two systems on a test set.
+\end{itemize}
+
+\subsubsection{The Paired Bootstrap Test}
+
+\begin{itemize}
+      \item Bootstrapping is repeatedly sampling with replacement from a set of observations.
+            Intuitively, we can create many virtual test sets from an observed test set by sampling from it.
+      \item The test set is biased by $\delta(x)$ towards A (the expected value of $\delta(X)$ for the bootstrapped test sets is $\delta(x)$).
+            \begin{equation}
+                  \text{p-value}(x) = \frac{1}{b} \sum_{i = 1}^{b} \mathbb{I}(\delta(x_i) \geq 2 \delta(x))
+            \end{equation}
+\end{itemize}
+
+\subsection{Avoiding Harms in Classification}
+
+\begin{itemize}
+      \item Representational harms affect demographic groups, e.g., by perpetuating negative sterotypes.
+      \item Another kind of harm is censorship, which may disproportionately affect minority groups, e.g., in toxicity detection.
+      \item A model card documents its data sources, intended use, performance across demographic groups, etc.
+\end{itemize}

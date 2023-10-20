@@ -1,0 +1,39 @@
+\ProvidesPackage{tslwn-preamble}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[
+  style=authoryear,
+  doi=false,
+  isbn=false,
+  url=false
+]{biblatex}
+\usepackage{csquotes}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{thmtools}
+
+\addbibresource{~/library.bib}
+
+% Theorem environments
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{dfn}{Definition}[section]
+\newtheorem{alg}{Algorithm}[section]
+
+% Commands
+
+\newcommand{\card}[1]{|#1|}
+\newcommand{\matr}[1]{#1}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+
+% Operators
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\bel}{bel}
+\DeclareMathOperator*{\pl}{pl}
+\DeclareMathOperator{\sign}{sign}

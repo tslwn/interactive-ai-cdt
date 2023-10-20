@@ -1,0 +1,266 @@
+\section{Ignorance and uncertainty}
+
+Probability theory conflates ignorance and uncertainty.
+This section describes approaches to explicitly modelling them.
+
+\subsection{Dempster-Shafer theory}
+
+In Dempster-Shafer theory, uncertainty is quantified by two measures:
+
+\begin{itemize}
+  \item \textit{belief} (evidence that implies a proposition); and
+  \item \textit{plausibility} (evidence that is consistent with a proposition).
+\end{itemize}
+
+\begin{dfn}
+  [Belief and plausibility measures]
+  \label{def:4:BeliefPlausibility}
+  Let $W$ be a set of possible worlds and $A$ be a proposition.
+  A mass function $m : 2^W \rightarrow [0, 1]$ generates:
+  \begin{itemize}
+    \item a belief measure $\bel : 2^W \rightarrow [0, 1]$ such that:
+          \begin{equation}
+            \label{eqn:4:Belief}
+            \bel(A) =
+            \sum_{B \subseteq W : B \subseteq A} m(B)
+            \ \forall\
+            A \subseteq W
+          \end{equation}
+    \item a plausibility measure $\pl : 2^W \rightarrow [0, 1]$ such that:
+          \begin{equation}
+            \label{eqn:4:Plausibility}
+            \pl(A) =
+            \sum_{B \subseteq W : B \cap A \neq \emptyset} m(B)
+            \ \forall\
+            A \subseteq W
+          \end{equation}
+  \end{itemize}
+\end{dfn}
+
+I.e., for a proposition $A \subseteq W$:
+
+\begin{itemize}
+  \item the \textit{belief} in $A$ is the sum of the masses of the subsets of
+        $W$ that are subsets of $A$, i.e., of the evidence that implies $A$; and
+  \item the \textit{plausibility} of $A$ is the sum of the masses of the subsets
+        of $W$ that intersect $A$, i.e., of the evidence that is consistent with
+        $A$.
+\end{itemize}
+
+\begin{thm}
+  [Relations of belief and plausibility measures]
+  Let $W$ be a set of possible worlds and $A$ be a proposition.
+  \begin{alignat}{2}
+    \label{eqn:4:BeliefPlausibility1}
+    \bel(A) & \leq \pl(A)
+    \       & \forall\
+    A \subseteq W               \\
+    \label{eqn:4:BeliefPlausibility2}
+    \pl(A)  & = 1 - \bel{A^{c}}
+    \       & \forall\
+    A \subseteq W
+  \end{alignat}
+  \begin{proof}
+    $\emptyset \neq B \subseteq A \ \Rightarrow \ B \cap A \neq \emptyset$,
+    hence equation~\ref{eqn:4:BeliefPlausibility1}.
+
+    $B \cap A \neq \emptyset \ \Leftrightarrow\  B \not\subseteq A^{c}$, hence:
+    \begin{align*}
+      \pl(A)
+       & = \sum_{B \subseteq W : B \cap A \neq \emptyset} m(B)
+      \ =\ \sum_{B \subseteq W : B \not\subseteq A^{c}} m(B)   \\[3ex]
+       & = 1 - \sum_{B \subseteq W : B \subseteq A^{c}} m(B)
+      \ =\ 1 - \bel(A^{c})
+    \end{align*}
+  \end{proof}
+\end{thm}
+
+\begin{thm}
+  [Probability theory in Dempster-Shafer theory]
+  If $m$ is a mass function such that $\sum_{w \in W} m(\{w\}) = 1$, then:
+  $$
+    \bel(A) = \pl(A) = P(A) = \sum_{w \in A} m(\{w\})
+  $$
+\end{thm}
+
+I.e., if $m$ is non-zero only for singletons, then the evidence identifies a
+single possible world.
+Generally, belief and plausibility measures do not satisfy
+definition~\ref{def:2:ProbabilityMeasure}.
+
+\begin{thm}
+  [Belief measures are super-additive]
+  \begin{equation}
+    \label{eqn:4:BeliefSuperAdditive}
+    \bel(A \cup B) \geq \bel(A) + \bel(B)
+  \end{equation}
+
+  \begin{proof}
+    Let $W$ be a set of possible worlds and $A, B \subseteq W$ be propositions
+    such that $A \cap B = \emptyset$.
+    Without loss of generality, assume that $A \neq \emptyset$ and
+    $B \neq \emptyset$.
+    A proposition $C \subseteq W : C \subseteq A \cup B$ if and only if:
+    \begin{enumerate}
+      \item $C \subseteq A$;
+      \item $C \subseteq B$; or
+      \item $C = D \cup E$ where $D \neq \emptyset, D \subseteq A$ and
+            $E \neq \emptyset, E \subseteq B$.
+            \footnote{
+              I.e., if $C$ is not a subset of $A$ or $B$, then $C$ is the union of
+              sets $D$ and $E$ that are subsets of $A$ and $B$ respectively.
+            }
+    \end{enumerate}
+    By definition~\ref{def:4:BeliefPlausibility}:
+    \begin{align*}
+      \bel(A \cup B)
+       & = \sum_{C \subseteq W : C \subseteq A \cup B} m(C)              \\[3ex]
+       & = \sum_{C \subseteq W : C \subseteq A} m(C)
+      + \sum_{C \subseteq W : C \subseteq B} m(C)                        \\
+       & \quad + \sum_{D \subseteq W : D \neq \emptyset, D \subseteq A}\
+      \sum_{E \subseteq W : E \neq \emptyset, E \subseteq B}
+      m(D \cup E)                                                        \\[3ex]
+       & = \bel(A) + \bel(B)                                             \\
+       & \quad + \sum_{D \subseteq W : D \neq \emptyset, D \subseteq A}\
+      \sum_{E \subseteq W : E \neq \emptyset, E \subseteq B} m(D \cup E)
+    \end{align*}
+    $m$ is non-negative, hence equation~\ref{eqn:4:BeliefSuperAdditive}.
+  \end{proof}
+\end{thm}
+
+\begin{thm}
+  [Plausibility measures are sub-additive]
+  \begin{equation}
+    \label{eqn:4:PlausibilitySubAdditive}
+    \pl(A \cup B) \leq \pl(A) + \pl(B)
+  \end{equation}
+
+  \begin{proof}
+    Let $W$ be a set of possible worlds and $A, B \subseteq W$ be propositions
+    such that $A \cap B = \emptyset$.
+    Without loss of generality, assume that $A \neq \emptyset$ and
+    $B \neq \emptyset$.
+    A proposition $C \subseteq W : C \cap (A \cup B) \neq \emptyset$ if and only
+    if:
+    \begin{enumerate}
+      \item $C \cap A \neq \emptyset$ and $C \cap B \neq \emptyset$;
+      \item $C \cap A \neq \emptyset$ and $C \cap B = \emptyset$; or
+      \item $C \cap A = \emptyset$ and $C \cap B \neq \emptyset$.
+    \end{enumerate}
+    By definition~\ref{def:4:BeliefPlausibility}:
+    \begin{align*}
+      \pl(A \cup B)
+       & = \sum_{C \subseteq W : C \cap (A \cup B) \neq \emptyset} m(C)                    \\[3ex]
+       & = \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B \neq \emptyset} m(C)    \\
+       & \quad + \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B = \emptyset} m(C) \\
+       & \quad + \sum_{C \subseteq W : C \cap A = \emptyset, C \cap B \neq \emptyset} m(C)
+    \end{align*}
+    Similarly:
+    \begin{align*}
+      \pl(A) + \pl(B)
+       & =
+      \sum_{C \subseteq W : C \cap A \neq \emptyset} m(C) +
+      \sum_{C \subseteq W : C \cap B \neq \emptyset} m(C)
+      \\[3ex]
+       & =
+      \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B \neq \emptyset} m(C) +
+      \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B = \emptyset} m(C)
+      \\
+       & \quad +
+      \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B \neq \emptyset} m(C) +
+      \sum_{C \subseteq W : C \cap A = \emptyset, C \cap B \neq \emptyset} m(C)
+      \\[3ex]
+       & =
+      \pl(A \cup B) +
+      \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B \neq \emptyset} m(C)
+    \end{align*}
+    $m$ is non-negative, hence equation~\ref{eqn:4:PlausibilitySubAdditive}.
+  \end{proof}
+\end{thm}
+
+Given one of $m$, $\bel$ or $\pl$, the other two can be derived
+(theorem~\ref{thm:4:MassFunctionBelief}).
+
+\begin{thm}
+  [The mass function in terms of a belief measure]
+  \label{thm:4:MassFunctionBelief}
+  Let $W$ be a set of possible worlds,
+  $\bel : 2^W \rightarrow [0, 1]$ be a belief measure, and
+  $A \subseteq W$ be a proposition.
+  The mass function is:
+  \begin{equation}
+    \label{eqn:4:MassFunctionBelief}
+    m(A) = \sum_{B \subseteq A} (-1)^{|A - B|} \bel(B)
+    \ \forall\
+    A \subseteq W
+  \end{equation}
+
+  \begin{proof}
+    By induction on $|A|$.
+    In the case that $|A| = 1$, $A = \{w\} : w \in W$ and $\bel(A) = m(A)$.
+    Suppose that equation~\ref{eqn:4:MassFunctionBelief} holds for $|A| \leq n$.
+    By definition~\ref{def:4:BeliefPlausibility}, if $|A| = n + 1$:
+    \begin{equation*}
+      \bel(A) = \sum_{B \subseteq A} m(B) = m(A) + \sum_{B \subset A} m(B)
+    \end{equation*}
+    If $B \subset A$, then $|B| \leq n$.
+    By the inductive hypothesis:
+    \begin{equation*}
+      \bel(A) = m(A) + \sum_{B \subset A} \sum_{C \subseteq B} (-1)^{|B - C|} \bel(C)
+    \end{equation*}
+    Therefore:
+    \begin{align}
+      \label{eqn:4:MassFunctionBelief1}
+      m(A)
+       & =
+      \bel(A) -
+      \sum_{B \subset A} \sum_{C \subseteq B} (-1)^{|B - C|} \bel(C)
+      \nonumber \\[3ex]
+       & =
+      \bel(A) +
+      \sum_{B \subset A} \sum_{C \subseteq B} (-1)^{|B - C| + 1} \bel(C)
+      \nonumber \\[3ex]
+       & =
+      \bel(A) +
+      \sum_{C \subset A} \bel(C) \sum_{B : C \subseteq B \subseteq A} (-1)^{|B - C| + 1}
+    \end{align}
+
+    We have that:
+    \begin{itemize}
+      \item $C \subseteq B \ \Rightarrow\  |B - C| + 1 = |B| - |C| + 1$; and
+      \item $C \subseteq B \subset A \ \Rightarrow\  0 \leq |B| - |C| \leq |A| - |C| - 1$.
+    \end{itemize}
+    A set $B : C \subseteq B \subset A$ is generated by choosing $i$
+    elements from $A \cap C^c$ and taking their union with $D$.
+    There are $\binom{|A| - |C|}{i}$ ways to do this.
+    Hence:
+    \begin{align}
+      \label{eqn:4:MassFunctionBelief2}
+      \sum_{B : C \subseteq B \subset A} (-1)^{|B - C| + 1}
+       & = \sum_{i = 0}^{|A| - |C| - 1} \binom{|A| - |C|}{i} (-1)^{i + 1} \nonumber   \\[3ex]
+       & = - \sum_{i = 0}^{|A| - |C| - 1} \binom{|A| - |C|}{i} (-1)^{i} \nonumber     \\[3ex]
+       & = (- 1)^{|A| - |C|} - \sum_{i = 0}^{|A| - |C|} \binom{|A| - |C|}{i} (-1)^{i}
+    \end{align}
+    By the binomial theorem $\sum_{k = 0}^{n} \binom{n}{k} r^{k} = (1 + r)^{n}$:
+    \begin{equation}
+      \label{eqn:4:MassFunctionBelief3}
+      \sum_{i = 0}^{|A| - |C|} \binom{|A| - |C|}{i} (-1)^{i}
+      = (1 + (- 1))^{|A| - |C|}
+      = 0
+    \end{equation}
+    By substituting equation~\ref{eqn:4:MassFunctionBelief3} into
+    equation~\ref{eqn:4:MassFunctionBelief2}:
+    \begin{equation}
+      \label{eqn:4:MassFunctionBelief4}
+      \sum_{B : C \subseteq B \subset A} (-1)^{|B - C| + 1}
+      = (- 1)^{|A| - |C|}
+    \end{equation}
+    By substituting equation~\ref{eqn:4:MassFunctionBelief4} into
+    equation~\ref{eqn:4:MassFunctionBelief1}:
+    \begin{align*}
+      m(A)
+       & = \bel(A) + \sum_{C \subset A} \bel(C) (- 1)^{|A| - |C|} \\[3ex]
+       & = \sum_{C \subseteq A}  (- 1)^{|A| - |C|} \bel(C)
+    \end{align*}
+  \end{proof}
+\end{thm}

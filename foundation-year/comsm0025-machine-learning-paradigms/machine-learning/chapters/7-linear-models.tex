@@ -1,0 +1,138 @@
+\section{Linear models}
+
+\begin{itemize}
+      \item Linear models are defined in terms of the geometry of the instance space.
+      \item Real-valued features are not generally intrinsically geometric.
+      \item However, we can use geometric concepts to structure the instance space
+            (e.g., lines and planes) and represent similarity by distance.
+\end{itemize}
+
+Linear models are simple:
+
+\begin{itemize}
+      \item They are parametric: they have a fixed structure that is defined by
+            numeric parameters that are learned from the training data.
+            By contrast, tree and rule models are non-parametric: their structure
+            is not fixed prior to learning.
+      \item They are stable (have low variance): small variations in the training
+            data have a small effect on the learned model.
+            Tree models have high variance.
+      \item They are unlikely to overfit the training data because they have
+            relatively few parameters (have high bias).
+            However, they sometimes underfit the training data.
+\end{itemize}
+
+\subsection{The least-squares method}
+
+The least-squares method can be used to learn linear models for classification
+and regression.
+It finds a function estimator that minimises the sum of squared residuals
+(differences between the actual and estimated values).
+
+\paragraph{Univariate linear regression}
+
+Let $\{ (x_i, y_i) \mid i \in 1 .. n \}$ be a set of instances.
+Approximate the true function $f(x_i) = y_i$ by a linear function
+$f^\prime(x_i) = a + b x_i$.
+Univariate linear regression finds $a, b$ such that the sum of squared
+residuals $\sum_{i = 1}^{n} (y_i - (a + b x_i))^2$ is minimized.
+
+When the sum of squared residuals is minimized, its partial derivatives with
+respect to $a$ and $b$ are zero:
+
+\begin{alignat}{2}
+      \frac{\partial}{\partial a} \sum_{i = 1}^{n} (y_i - (a + b x_i))^2
+       & = - 2 \sum_{i = 1}^{n} (y_i - (a + b x_i))
+       & = 0
+      \\
+      \frac{\partial}{\partial b} \sum_{i = 1}^{n} (y_i - (a + b x_i))^2
+       & = - 2 \sum_{i = 1}^{n} (y_i - (a + b x_i)) x_i
+       & = 0
+\end{alignat}
+
+TODO
+
+\begin{itemize}
+      \item Translation does not affect the regression coefficient, only the intercept.
+            We can zero-centre the $x$-values by subtracting the mean $\bar{x}$.
+      \item If we normalize $x$ to have unit variance, then the regression
+            coefficient is the covariance between the normalized $x$ and $y$.
+\end{itemize}
+
+The least-squares solution is equivalent to the maximum likelihood estimate
+given the assumptions that the true function is linear but normally-distributed
+noise is added to the instance $y$-values.
+If noise is added to only the $y$-values, then it is called \textit{ordinary}
+least squares, which has a unique solution.
+If noise is added to both $x$- and $y$-values, then it is called \textit{total}
+least squares, which does not necessarily have a unique solution.
+
+Zero-centred matrix, scatter matrix, covariance matrix.
+
+\paragraph{Multivariate linear regression}
+
+Matrix form and homogeneous coordinates.
+Transformation to decorrelate, centre and normalize features.
+If the features are assumed to be uncorrelated, a multivariate linear regression
+problem decomposes into a set of univariate linear regression problems.
+It is computationally expensive to invert the scatter (covariance) matrix.
+
+\paragraph{Regularization}
+
+Least-squares regression can be unstable.
+Instability demonstrates a tendency to overfit.
+Regularization helps to avoid overfitting by constraining the weight vector.
+
+\begin{itemize}
+      \item Shrinkage: makes the average magnitude of the weights small.
+            This adds a scalar parameter to the diagonal of the scatter matrix,
+            which improves the numerical stability of matrix inversion.
+            Least-squares regression with shrinkage is called ridge regression.
+      \item Lasso (least absolute shrinkage and selection operator): This adds the
+            sum of the absolute weights ($L_1$ regularization).
+            This makes the magnitude of some weights smaller but sets others to
+            zero, i.e., it favours sparse solutions.
+\end{itemize}
+
+\subsection{The perceptron}
+
+\subsection{Support vector machines}
+
+\subsection{Obtaining probabilities from linear classifiers}
+
+
+\subsection{Notes}
+
+When to favour models with different characteristics?
+E.g., the quantity and quality training data.
+
+Normalization (zero-centre, unit variance)
+Write up the equivalencies between correlation coefficients etc.
+
+Regularization
+Relation to, e.g., Bayesian priors
+Technically, e.g., sparsity (Occam's razor).
+Regularization changes the optimal solution (it's included in the loss)
+
+Correlation (in the extreme case, two copies of the same feature) — your
+problem is underspecified, i.e., there are infinitely many solutions (which are
+combinations of the two).
+`Spikiness of the fitness landscape' (high variance).
+Regularization: decreasing dependence on the data, i.e., increasing bias and
+decreasing variance.
+
+When to choose ridge (L2) vs lasso (L1) regularization?
+An elastic net uses a weighted combination of the two where the weight is a
+hyperparameter that you can tune.
+
+Why does lasso produce sparse solutions?
+With Euclidean distance, the set of points at equal distance is a circle.
+If you change the exponent, e.g., Minkowski at d = 3, that changes shape.
+E.g. d = 1 `pulls you' towards a solution on one of the axes, i.e., towards one
+or the other feature instead of a combination of both (i.e., sparsity).
+Vector field analysis.
+
+LP-norm where p is an integer.
+
+Multivariate.
+

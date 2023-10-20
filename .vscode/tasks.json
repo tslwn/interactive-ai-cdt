@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Remove LaTeX build artefacts",
+      "type": "shell",
+      "command": "rm -rf **/**/*.aux **/**/*.bbl **/**/*.bcf **/**/*.blg **/**/*.fdb_latexmk **/**/*.fls **/**/*.loe **/**/*.log **/**/*.nav **/**/*.out **/**/*.run.xml **/**/*.snm **/**/*.synctex.gz **/**/*.toc",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}

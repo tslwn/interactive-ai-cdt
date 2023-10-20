@@ -1,0 +1,16 @@
+\usepackage{xpatch}
+
+\AtEveryBibitem{%
+  \clearlist{language}%
+  \clearfield{month}%
+  \clearfield{note}%
+}
+
+% Set the global item separation.
+\xpatchcmd{\itemize}
+{\def\makelabel}
+{\setlength{\itemsep}{1em}\def\makelabel}
+{}
+{}
+
+\hypersetup{colorlinks=true}

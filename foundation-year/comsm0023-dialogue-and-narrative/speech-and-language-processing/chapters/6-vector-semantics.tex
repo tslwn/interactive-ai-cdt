@@ -1,0 +1,104 @@
+\section{Vector Semantics and Embeddings}
+
+\begin{itemize}
+  \item Distributional hypothesis (quotes)
+  \item Word embeddings, static/contextualized
+  \item Representation learning
+\end{itemize}
+
+\subsection{Lexical Semantics}
+
+\begin{itemize}
+  \item Lemmas and senses, word sense disambiguation
+  \item Synonymy, propositional meaning, principle of contrast
+  \item Similarity and relatnedness (association)
+  \item Semantic fields, topic models, LDA \ldots
+  \item Semantic frames
+  \item Connotations (affective meanings) and sentiment
+\end{itemize}
+
+\subsection{Vector Semantics}
+
+\begin{itemize}
+  \item Combining vector representations and distributional semantics
+  \item Embeddings (dense, e.g., word2vec) and vectors (sparse, e.g., tf-idf)
+\end{itemize}
+
+\subsection{Words and Vectors}
+
+\begin{itemize}
+  \item Cooccurrence matrix
+  \item E.g., term-document matrix
+  \item Dimensionality
+  \item Information retrieval
+  \item Row and column vectors
+  \item E.g., term-term matrix
+\end{itemize}
+
+\subsection{Cosine for measuring similarity}
+
+\begin{itemize}
+  \item Dot/inner product and length
+  \item Normalized dot product (cosine of angle)
+  \item Cosine similarity
+\end{itemize}
+
+TF-IDF, (P)PMI, applications.
+
+\subsection{Word2vec}
+
+\begin{itemize}
+  \item Dense, short vectors
+  \item Skip-gram with negative sampling (SGNS)
+  \item Self-supervision
+\end{itemize}
+
+\subsubsection{The classifier}
+
+\begin{itemize}
+  \item Logistic/sigmoid functon
+  \item Independence assumption
+\end{itemize}
+
+\subsubsection{Learning skip-gram embeddings}
+
+\begin{itemize}
+  \item Random initial embedding vectors and iteration
+  \item Negative sampling and noise words
+  \item Maximize similarity of positive target-context pairs and minimize similarity of negative pairs
+  \item Stochastic gradient-descent
+  \item Proof of derivatives and update equations
+  \item Target and context embeddings
+  \item Context window size
+\end{itemize}
+
+\subsubsection{Other kinds of static embeddings}
+
+\begin{itemize}
+  \item fasttext and subwords
+  \item GloVe (global vectors)
+\end{itemize}
+
+\subsection{Visualizing Embeddings}
+
+\begin{itemize}
+  \item Most similar words
+  \item Clustering
+  \item Dimensionality reduction, e.g., t-SNE
+\end{itemize}
+
+\subsection{Semantic properties of embeddings}
+
+\begin{itemize}
+  \item First- and second-order cooccurrence (syntagmatic and paradigmatic association)
+  \item Analogy and relational similarity, parallelogram model
+  \item Historical semantics
+\end{itemize}
+
+\subsection{Bias and embeddings}
+
+\begin{itemize}
+  \item Allocational and representational harm
+  \item Tendency to amplify bias
+  \item Debiasing
+\end{itemize}
