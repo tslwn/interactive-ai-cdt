@@ -2,13 +2,18 @@
 
 A distance-based model is generally comprised of:
 \begin{itemize}
-  \item a distance metric (section~\ref{sec:8:distance-metrics});
-  \item a set of exemplars (centroids or medoids); and
-  \item a distance-based decision rule.
+  \item a distance metric
+        (section~\ref{sec:8:distance-metrics});
+  \item a set of exemplars
+        (paragraph~\ref{par:8:centroids-and-medoids}); and
+  \item a distance-based decision rule
+        (e.g., paragraph~\ref{par:8:binary-linear-classifiers}).
 \end{itemize}
 
 \subsection{Distance metrics}
 \label{sec:8:distance-metrics}
+
+\paragraph{Metrics}
 
 \begin{dfn}
   [Metric]
@@ -32,13 +37,7 @@ A distance-based model is generally comprised of:
   non-negativity, i.e., $d(x, y) \geq 0 \ \forall\ x, y \in M$.
 \end{dfn}
 
-\begin{dfn}
-  [Metric space]
-  A metric space is an ordered pair $(M, d)$ where $M$ is a set of points and
-  $d$ is a metric on $M$.
-\end{dfn}
-
-\subsubsection{Examples}
+\paragraph{Norms}
 
 \begin{dfn}
   [$p$-norm, $L_{p}$ norm]
@@ -47,6 +46,19 @@ A distance-based model is generally comprised of:
     \norm{\vec{x}}_{p} = \left( \sum_{i = 1}^{n} |x_i|^{p} \right)^{\frac{1}{p}}
   \end{equation}
 \end{dfn}
+
+\begin{dfn}
+  [0-``norm", $L_{0}$ ``norm"]
+  The 0-``norm" of a vector $\vec{x} \in \mathbb{R}^n$ is the number of non-zero
+  elements in $\vec{x}$:
+  \begin{equation}
+    \norm{\vec{x}}_{0} = \sum_{i = 1}^{n} |x_i|^{0}
+  \end{equation}
+\end{dfn}
+
+The 0-``norm" is not a norm because it is not homogeneous.
+
+\paragraph{Distances}
 
 \begin{dfn}
   [Minkowski distance]
@@ -94,17 +106,6 @@ Minkowski distances are translationally invariant but not scale-invariant.
 Euclidean distance is the only Minkowski distance that is rotationally invariant.
 
 \begin{dfn}
-  [0-``norm", $L_{0}$ ``norm"]
-  The 0-``norm" of a vector $\vec{x} \in \mathbb{R}^n$ is the number of non-zero
-  elements in $\vec{x}$:
-  \begin{equation}
-    \norm{\vec{x}}_{0} = \sum_{i = 1}^{n} |x_i|^{0}
-  \end{equation}
-\end{dfn}
-
-The 0-``norm" is not a norm because it is not homogeneous.
-
-\begin{dfn}
   [Hamming distance]
   The Hamming distance between two binary strings $\vec{x}, \vec{y}$ of length
   $n$ is the number of bits in which they differ:
@@ -133,6 +134,11 @@ the identity matrix.
 
 \subsection{Neighbours and exemplars}
 
+\paragraph{Means and medians}
+
+Minimising the sum of squared Euclidean distances is equivalent to minimising
+the \textit{average} squared Euclidean distance.
+
 \begin{thm}
   [Arithmetic mean minimises squared Euclidean distance]
   The arithmetic mean $\vec{\mu}$ of a set of points $X \in \mathbb{R}^n$ is the
@@ -140,7 +146,6 @@ the identity matrix.
   \begin{equation}
     \argmin_{\vec{y}} \sum_{\vec{x} \in X} \norm{\vec{x} - \vec{y}}_{2}^{2} = \vec{\mu}
   \end{equation}
-
   \begin{proof}
     The gradient of the sum of squared Euclidean distances is:
     \begin{align*}
@@ -155,8 +160,35 @@ the identity matrix.
   \end{proof}
 \end{thm}
 
-Minimising the sum of squared Euclidean distances is equivalent to minimising
-the \textit{average} squared Euclidean distance.
 The \textit{geometric median} minimises the sum of Euclidean distances.
 However, there is no closed-form expression for the geometric median of
 multivariate data.
+
+\paragraph{Centroids and medoids}
+\label{par:8:centroids-and-medoids}
+
+A \textit{centroid} is an exemplar that is not necessarily an instance, whereas
+a \textit{medoid} must be an instance.
+An algorithm to find the medoid of a set of $n$ instances has time complexity
+$O(n^2)$.
+This is because the distance between every pair of instances must be computed.
+
+\paragraph{Binary linear classifiers}
+\label{par:8:binary-linear-classifiers}
+
+A binary linear classifier finds the exemplars that minimise the sum of squared
+Euclidean distances to the instances in each class.
+Its decision boundary is the perpendicular bisector of the line segment that
+connects the exemplars.
+Alternatively, it applies the \textit{decision rule} that an instance belongs to
+the class with the nearest exemplar.
+
+\paragraph{Multi-class linear classifiers}
+
+A distance-based interpretation of the binary linear classifer generalises to
+$k > 2$ classes.
+With $k$ exemplars, each decision region is bounded by $k - 1$ line segments.
+Dependent on the distance metric, some decision regions become closed cells as
+the number of exemplars increases.
+This is called \textit{Voronoi tesselation}.
+Generally, the number of exemplars is greater than the number of classes.
