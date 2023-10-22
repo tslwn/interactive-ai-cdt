@@ -3,6 +3,11 @@
 \documentclass[a4paper]{extarticle}
 \usepackage{../../../latex/packages/tslwn-preamble}
 
+\cleartheorem{thm}
+\newtheorem{thm}{Theorem}[subsection]
+\cleartheorem{dfn}
+\newtheorem{dfn}[thm]{Definition}
+
 \title{Uncertainty Modelling for Intelligent Systems}
 \author{Tim Lawson}
 \date{\today}
@@ -18,7 +23,7 @@ Bristol.
 \tableofcontents
 
 \newpage
-\listoftheorems[title=Theorems]
+\listoftheorems[numwidth=3em,title=Theorems]
 
 \include{sections/1-possible-worlds}
 \include{sections/2-probability-theory}

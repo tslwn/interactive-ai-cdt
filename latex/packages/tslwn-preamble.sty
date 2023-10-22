@@ -24,6 +24,13 @@
 \newtheorem{dfn}[thm]{Definition}
 \newtheorem{alg}[thm]{Algorithm}
 
+\makeatletter
+\def\cleartheorem#1{%
+  \expandafter\let\csname#1\endcsname\relax
+  \expandafter\let\csname c@#1\endcsname\relax
+}
+\makeatother
+
 % Commands
 
 \newcommand{\card}[1]{|#1|}
