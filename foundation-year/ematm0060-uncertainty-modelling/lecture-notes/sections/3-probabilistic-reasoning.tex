@@ -197,9 +197,10 @@ bounds on $P(A)$, i.e., $P(A) \in [L(A),\ U(A)]$.
   \begin{proof}
     By theorem~\ref{thm:2:TotalProbability} and
     definition~\ref{def:2:ProbabilityMeasure}, i.e., $P(A \mid B^c) \in [0, 1]$:
-    \begin{equation}
-      P(A \mid B) P(B) \leq P(A) \leq (P(A \mid B) - 1) P(B) + 1
-    \end{equation}
+    \begin{itemize}
+      \item If $P(A \mid B^c) = 0$, then $P(A) = P(A \mid B) P(B)$ (lower bound).
+      \item If $P(A \mid B^c) = 1$, then $P(A) = (P(A \mid B) - 1) P(B) + 1$ (upper bound).
+    \end{itemize}
   \end{proof}
 \end{thm}
 
