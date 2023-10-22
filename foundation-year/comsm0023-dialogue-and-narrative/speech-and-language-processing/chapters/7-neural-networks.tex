@@ -6,10 +6,10 @@
   [Computational unit]
   \label{dfn:7:ComputationalUnit}
   A computational unit is a function that takes an input vector $\vec{x}$, a
-  weight vector $\vec{w}$, a scalar bias $b$, and a non-linear function $f$ and
+  weight vector $\vec{x}$, a scalar bias $b$, and a non-linear function $f$ and
   produces an activation $y$:
   \begin{equation}
-    y = f(\vec{x} \cdot \vec{w} + b)
+    y = f(\vec{x} \cdot \vec{x} + b)
   \end{equation}
 \end{dfn}
 
@@ -113,11 +113,76 @@ The weights associated with this unit are the bias value $b$:
   W_{i0} = b_i \ \forall\ i \in 0 .. n_0                          \\
 \end{align*}
 
+\subsection{Classification}
+
+A classifier could use hand-crafted features but most applications learn
+features from the data by representing words by embeddings.
+An input is generally represented by applying a \textit{pooling} function to the
+embeddings of its words, e.g., the mean or element-wise maximum.
+
+For a two-layer classifier, the equations to predict the output of a set of test
+instances are:
+\begin{itemize}
+  \item $n_i$ is the number of test instances;
+  \item $n_j$ is the dimensionality of the instance space;
+  \item $n_k$ is the number of nodes in the hidden layer;
+  \item $n_l$ is the number of classes;
+  \item $\matr{X} \in \mathbb{R}^{n_i \times n_j}$ is the set of test instances;
+  \item $\matr{W} \in \mathbb{R}^{n_k \times n_j}$ is the weight matrix;
+  \item $\matr{B} \in \mathbb{R}^{n_i \times n_k}$ is the bias matrix;
+  \item $\matr{H} = \sigma(\matr{X} \matr{W}^{T} + \matr{B}) \in \mathbb{R}^{n_i \times n_k}$
+        is the hidden-layer activation matrix;
+  \item $\matr{U} \in \mathbb{R}^{n_l \times n_k}$ is the hidden-layer weight matrix;
+  \item $\matr{Z} = \matr{H} \matr{U}^{T} \in \mathbb{R}^{n_i \times n_l}$ is the intermediate output matrix; and
+  \item $\matr{\hat{Y}} = \softmax(\matr{Z}) \in \mathbb{R}^{n_i \times n_l}$ is the output matrix.
+\end{itemize}
+
+The use of an input representation is called \textit{pretraining}.
+It is possible to train the classifier and the input representation jointly as
+part of an NLP task.
+
+\subsection{Language modelling}
+
+The task of \textit{language modelling} is to predict upcoming words from prior
+context.
+Neural language modelling is an important task in itself and a precursor to many
+others.
+Generally, modern language models use architectures like recurrent neural
+networks or transformers.
+
+\subsubsection{Inference}
+
+Forward inference is the task of producing a probability distribution over the
+possible outputs, given an input.
+For language models, the inputs and outputs are words.
+A \textit{one-hot vector} has a single element equal to 1 and the rest 0.
+
+The equations to predict the output are:
+\begin{itemize}
+  \item $n_i$ is the context window size;
+  \item $n_j$ is the number of words in the vocabulary;
+  \item $n_k$ is the dimensionality of the embeddings;
+  \item $n_l$ is the number of nodes in the hidden layer;
+  \item $\{ x_{t - i} \mid i = 1 .. n_i \} \in \mathbb{R}^{n_j}$ are one-hot word vectors;
+  \item $\matr{E} \in \mathbb{R}^{n_k \times n_j}$ is the embedding matrix;
+  \item $\vec{e}_i = \matr{E} \vec{x}_i \in \mathbb{R}^{n_k}$ is the embedding
+        of word $x_i$;
+  \item $\vec{e} = [\vec{e}_1; \ldots; \vec{e}_{n_i}] \in \mathbb{R}^{3 n_k}$
+        are the concatenated embeddings;
+  \item $\matr{W} \in \mathbb{R}^{n_l \times 3 n_k}$ is the weight matrix;
+  \item $\vec{b} \in \mathbb{R}^{n_l}$ is the bias vector;
+  \item $\vec{h} = \sigma(\matr{W} \vec{e} + \vec{b}) \in \mathbb{R}^{n_l}$ is
+        the hidden-layer activation vector;
+  \item $\matr{U} \in \mathbb{R}^{n_j \times n_l}$ is the hidden-layer weight matrix;
+  \item $\vec{z} = \matr{U} \vec{h} \in \mathbb{R}^{n_j}$ is the intermediate
+        output vector; and
+  \item $\vec{\hat{y}} = \softmax(\vec{z}) \in \mathbb{R}^{n_j}$ is the output
+        vector.
+\end{itemize}
+
 \subsection{TODO}
 
 \begin{itemize}
-  \item Example: classification
-  \item Example: language modelling
   \item Loss functions (cross-entropy)
   \item Gradients
   \item Backpropagation
