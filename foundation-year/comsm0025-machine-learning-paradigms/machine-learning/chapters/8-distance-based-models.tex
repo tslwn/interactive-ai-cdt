@@ -1,19 +1,18 @@
 \section{Distance-based models}
+\label{sec:8:distance-based-models}
 
 A distance-based model is generally comprised of:
 \begin{itemize}
   \item a distance metric
         (section~\ref{sec:8:distance-metrics});
   \item a set of exemplars
-        (paragraph~\ref{par:8:centroids-and-medoids}); and
+        (section~\ref{par:8:centroids-and-medoids}); and
   \item a distance-based decision rule
-        (e.g., paragraph~\ref{par:8:binary-linear-classifiers}).
+        (e.g., section~\ref{par:8:binary-linear-classifiers}).
 \end{itemize}
 
 \subsection{Distance metrics}
 \label{sec:8:distance-metrics}
-
-\paragraph{Metrics}
 
 \begin{dfn}
   [Metric]
@@ -37,7 +36,7 @@ A distance-based model is generally comprised of:
   non-negativity, i.e., $d(x, y) \geq 0 \ \forall\ x, y \in M$.
 \end{dfn}
 
-\paragraph{Norms}
+\subsubsection{Norms}
 
 \begin{dfn}
   [$p$-norm, $L_{p}$ norm]
@@ -56,9 +55,10 @@ A distance-based model is generally comprised of:
   \end{equation}
 \end{dfn}
 
-The 0-``norm" is not a norm because it is not homogeneous.
+The 0-``norm" is not a norm because it is not \textit{homogeneous}, i.e.,
+$f(ax) \neq a f(x) \ \forall\ a \in \mathbb{R}, x \in X$.
 
-\paragraph{Distances}
+\subsubsection{Distances}
 
 \begin{dfn}
   [Minkowski distance]
@@ -134,7 +134,7 @@ the identity matrix.
 
 \subsection{Neighbours and exemplars}
 
-\paragraph{Means and medians}
+\subsubsection{Means and medians}
 
 Minimising the sum of squared Euclidean distances is equivalent to minimising
 the \textit{average} squared Euclidean distance.
@@ -164,7 +164,7 @@ The \textit{geometric median} minimises the sum of Euclidean distances.
 However, there is no closed-form expression for the geometric median of
 multivariate data.
 
-\paragraph{Centroids and medoids}
+\subsubsection{Centroids and medoids}
 \label{par:8:centroids-and-medoids}
 
 A \textit{centroid} is an exemplar that is not necessarily an instance, whereas
@@ -173,7 +173,7 @@ An algorithm to find the medoid of a set of $n$ instances has time complexity
 $O(n^2)$.
 This is because the distance between every pair of instances must be computed.
 
-\paragraph{Binary linear classifiers}
+\subsubsection{Binary linear classifiers}
 \label{par:8:binary-linear-classifiers}
 
 A binary linear classifier finds the exemplars that minimise the sum of squared
@@ -183,7 +183,8 @@ connects the exemplars.
 Alternatively, it applies the \textit{decision rule} that an instance belongs to
 the class with the nearest exemplar.
 
-\paragraph{Multi-class linear classifiers}
+\subsubsection{Multi-class linear classifiers}
+\label{par:8:multi-class-linear-classifiers}
 
 A distance-based interpretation of the binary linear classifer generalises to
 $k > 2$ classes.
@@ -192,3 +193,161 @@ Dependent on the distance metric, some decision regions become closed cells as
 the number of exemplars increases.
 This is called \textit{Voronoi tesselation}.
 Generally, the number of exemplars is greater than the number of classes.
+
+\subsection{Nearest-neighbour classifiers}
+
+Paragraph~\ref{par:8:multi-class-linear-classifiers} generalised the binary
+linear classifier to $k > 2$ classes.
+The \textit{nearest-neighbour classifier} is simpler: it takes each instance to
+be an exemplar.
+Its decision regions are sets of Voronoi cells (because adjacent cells may have
+the same class).
+
+\subsubsection{Classifier properties}
+
+The nearest-neighbour classifier has low bias and high variance.
+For $n$ instances, it is `trained' in $O(n)$ time.
+However, it may also take $O(n)$ time to classify a new instance.
+This is because the new instance must be compared with every training instance.
+The classification time can be decreased at the expense of the training time by
+choosing the data structure that stores the instances.
+
+\subsubsection{Dimensionality}
+
+High-dimensional instance spaces are sparse, i.e., the distance between any two
+instances is large.
+The effective dimensionality may be smaller: some dimensions may be irrelevant
+or the instances may lie on a lower-dimensional manifold.
+The dimensionality of the instance space can be reduced by \textit{feature selection}
+or techniques such as \textit{principal component analysis} (PCA) before
+applying a distance-based model.
+
+\subsubsection{\textit{k}-nearest neighbours}
+
+If there is a way to aggregate over exemplars, then $k$ nearest neighbours can
+be used.
+An example of a decision rule for a $k$-nearest-neighbour classifier is to
+predict the majority class of the $k$ nearest exemplars.
+
+The model's properties depend on the choice of $k$: as it increases, the
+the refinement first increases and then decreases, the bias increases, and the
+variance decreases.
+The dependence on $k$ can be lessened by applying \textit{distance weighting}
+to the exemplars.
+
+\subsubsection{Regression}
+
+Nearest-neighbour approaches are agnostic with respect to the type of the target
+variable and can be applied to regression problems.
+With $k$-nearest-neighbours, the predicted value is typically the mean of the
+$k$ nearest exemplars, which may be distance-weighted.
+
+\subsection{Clustering}
+\label{sec:8:clustering}
+
+For distance-based models, unsupervised learning generally refers to clustering.
+A predictive distance-based clustering method has the same elements as a
+distance-based classifier (section~\ref{sec:8:distance-based-models}).
+Instead of an explicit target variable, the distance metric is taken to
+represent the learning target.
+Therefore, the aim is to find \textit{compact} clusters with respect to the
+distance metric.
+
+\begin{dfn}
+  [Within-cluster scatter matrix]
+  Let $X = \bigcup_{i = 1}^{k} X_i$ be a set of instances partitioned into $k$ classes.
+  The within-cluster scatter matrix $\matr{S}_i$ is the scatter matrix of $X_i$.
+\end{dfn}
+
+\begin{dfn}
+  [Between-cluster scatter matrix]
+  Let $X = \bigcup_{i = 1}^{k} X_i$ be a set of instances partitioned into $k$ classes.
+  The between-cluster scatter matrix $\matr{B}$ is the scatter matrix of $X$
+  where each instance is replaced by its centroid $\vec{\mu}_i$.
+\end{dfn}
+
+\begin{thm}
+  [Relation of within- and between-cluster scatter matrices]
+  \begin{align}
+    \matr{S}
+     & = \sum_{i = 1}^{k} \matr{S}_i + \matr{B} \\
+    \Tr \matr{S}
+     & = \sum_{i = 1}^{k} \Tr \matr{S}_i +
+    \sum_{i = 1}^{k} \card{X_i} \norm{\vec{\mu}_j - \vec{\mu}}^2
+  \end{align}
+\end{thm}
+
+Minimising the total within-cluster scatter is equivalent to maximising the
+scatter of the centroids, weighted by the number of instances in each class.
+
+\subsubsection{\textit{k}-means}
+
+The \textit{$k$-means} problem is to find the partition of $X$ that minimises
+the total within-cluster scatter (section~\ref{sec:8:clustering}).
+The $k$-means problem is NP-complete, i.e., there is no efficient way to find
+the global minimum.
+The typical heuristic algorithm is called $k$-means or
+\textit{Lloyd's algorithm}.
+It iterates between partitioning the data with the nearest-centroid decision
+rule and recomputing the centroids from the partition.
+
+An iteration of the $k$-means algorithm cannot decrease the total within-cluster
+scatter, so it reaches a \textit{stationary point} (a local minimum).
+It converges to a stationary point in a finite number of iterations but there is
+no way to know whether it is optimal (the global minimum).
+Therefore, it is recommended to run $k$-means multiple times and choose the
+best solution.
+
+\subsubsection{\textit{k}-medoids}
+
+The $k$-medoids algorithm uses medoids instead of centroids.
+An alternative is the \textit{partitioning around medoids} (PAM) algorithm,
+which swaps medoids with other instances in the class.
+The clustering quality is the distance between the medoids and the instances in
+the class.
+Each iteration takes $O(k(n - k)^2)$ time.
+
+\subsubsection{Shape}
+
+Methods that represent clusters only by exemplars disregard the shape of the
+clusters.
+This can lead to counter-intuitive results, e.g., scale-dependence.
+A method that also estimates the shape of clusters must take off-diagonal
+entries of the scatter matrix into account.
+
+\subsubsection{Silhouettes}
+
+\begin{dfn}
+  [Silhouette]
+  Let:
+  \begin{itemize}
+    \item $X = \bigcup_{i = 1}^{k} X_i \in \mathbb{X}$ be a set of instances
+          partitioned into $k$ clusters;
+    \item $a(\vec{x}_j)$ be the average distance to the other instances in $X_i$:
+          \begin{equation}
+            a(\vec{x}_j) =
+            \frac{1}{\card{X_i} - 1}
+            \sum_{\vec{x} \in X_i, \vec{x} \neq \vec{x}_j} D(\vec{x}_j, \vec{x})
+            \quad\forall\quad
+            \vec{x}_j \in X_i,\ X_i \in \mathbb{X}
+          \end{equation}
+    \item $b(\vec{x}_j)$ be the average distance to the instances in the
+          neighbouring cluster, i.e., the cluster with the nearest centroid:
+          \begin{equation}
+            b(\vec{x}_j) =
+            \min_{X_i \in \mathbb{X}, X_i \neq X_j}
+            \frac{1}{\card{X_j}}
+            \sum_{\vec{x} \in X_j} D(\vec{x}_j, \vec{x})
+            \quad\forall\quad
+            \vec{x}_j \in X_i,\ X_i \in \mathbb{X}
+          \end{equation}
+  \end{itemize}
+  The silhouette of $\vec{x}_j$ is:
+  \begin{equation}
+    s(\vec{x_j}) =
+    \frac{b(\vec{x}_j) - a(\vec{x}_j)}{\max(a(\vec{x}_j), b(\vec{x}_j))}
+  \end{equation}
+  The silhouette of $X$ is a plot of $s(\vec{x}_j)$ against
+  $\vec{x}_j$, grouped by $X_i$ and sorted in descending order of
+  $s(\vec{x}_j)$.
+\end{dfn}
