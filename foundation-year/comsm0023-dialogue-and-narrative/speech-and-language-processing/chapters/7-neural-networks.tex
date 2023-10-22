@@ -40,8 +40,6 @@ However, a layered network of units can compute functions like XOR.
 
 \subsection{Feedforward neural networks}
 
-\paragraph{Feedforward networks}
-
 A \textit{feedforward} network is a layered network of units that are connected
 with no cycles.
 Networks with cycles are called \textit{recurrent} networks.
@@ -167,9 +165,9 @@ The equations to predict the output are:
   \item $\matr{E} \in \mathbb{R}^{n_k \times n_j}$ is the embedding matrix;
   \item $\vec{e}_i = \matr{E} \vec{x}_i \in \mathbb{R}^{n_k}$ is the embedding
         of word $x_i$;
-  \item $\vec{e} = [\vec{e}_1; \ldots; \vec{e}_{n_i}] \in \mathbb{R}^{3 n_k}$
+  \item $\vec{e} = [\vec{e}_1; \ldots; \vec{e}_{n_i}] \in \mathbb{R}^{n_i n_k}$
         are the concatenated embeddings;
-  \item $\matr{W} \in \mathbb{R}^{n_l \times 3 n_k}$ is the weight matrix;
+  \item $\matr{W} \in \mathbb{R}^{n_l \times n_i n_k}$ is the weight matrix;
   \item $\vec{b} \in \mathbb{R}^{n_l}$ is the bias vector;
   \item $\vec{h} = \sigma(\matr{W} \vec{e} + \vec{b}) \in \mathbb{R}^{n_l}$ is
         the hidden-layer activation vector;
@@ -180,10 +178,76 @@ The equations to predict the output are:
         vector.
 \end{itemize}
 
-\subsection{TODO}
+\subsection{Training neural networks}
 
+A feedforward neural network is an example of a supervised machine learning model.
+A neural network is trained with:
 \begin{itemize}
-  \item Loss functions (cross-entropy)
-  \item Gradients
-  \item Backpropagation
+  \item a loss function, e.g., the cross-entropy loss
+        (section~\ref{sec:7:cross-entropy-loss}); and
+  \item an optimisation algorithm, e.g., gradient descent.
 \end{itemize}
+For logistic regression, the derivative of the loss function can be computed
+directly (section~\ref{sec:7:gradient}).
+For neural networks, \textit{backpropagation}
+(section~\ref{sec:7:backward-differentiation}) is necessary.
+
+\subsubsection{Cross-entropy loss}
+\label{sec:7:cross-entropy-loss}
+
+\begin{dfn}
+  [Cross-entropy loss]
+  Let $\vec{y}, \vec{\hat{y}} \in \mathbb{R}^k$ be the one-hot true output
+  vector and predicted output vector, respectively.
+  The cross-entropy loss of an instance with true class $j$ is:
+  \begin{align}
+    L(\vec{y}, \vec{\hat{y}})
+     & = -\sum_{i = 1}^{k} y_i \log \hat{y}_i \\
+     & = -\log \hat{y}_j
+  \end{align}
+\end{dfn}
+
+\subsubsection{Gradient}
+\label{sec:7:gradient}
+
+For a neural network with a single hidden layer and sigmoid activation function,
+i.e., logistic regression, the derivative of the cross-entropy loss with respect
+to the weight $w_i$ is:
+\begin{align*}
+  \frac{\partial L(\vec{y}, \vec{\hat{y}})}{\partial w_i}
+   & = (\hat{y} - y) \vec{x}_i                           \\
+   & = (\sigma(\vec{w} \cdot \vec{x} + b) - y) \vec{x}_i
+\end{align*}
+
+With a softmax activation function, i.e., multinomial logistic regression, the
+derivative of the cross-entropy loss with respect to the weight $w_{ij}$ is:
+\begin{align*}
+  \frac{\partial L(\vec{y}, \vec{\hat{y}})}{\partial w_{ij}}
+   & = - (\vec{y}_i - \vec{\hat{y}}_i) \vec{x}_j \\
+   & = - \left(
+  \vec{y}_i -
+  \frac{ \exp(\vec{w}_i \cdot \vec{x} + b_i)}{\sum_{k = 1}^{l} \exp(\vec{w}_k \cdot \vec{x} + b_k)}
+  \right) \vec{x}_j
+\end{align*}
+
+\subsubsection{Backward differentiation}
+\label{sec:7:backward-differentiation}
+
+For a neural network with multiple hidden layers, we must compute the derivative
+with respect to the weights in each layer.
+This is achieved by backpropagation or backprop, which is a form of
+\textit{backward differentiation} on the computational graph of the network.
+
+\paragraph{Example} TODO
+
+\subsubsection{Learning}
+
+For logistic regression, we can initialize the weights and biases to zero.
+For neural networks, we must initialize the weights and biases to small random
+numbers and normalize the inputs (zero mean and unit variance).
+
+Regularization, e.g., \textit{dropout}, is used to prevent overfitting.
+It is also important to tune \textit{hyperparameters}, e.g., the learning rate,
+the mini-batch size, the model architecture, and the regularization.
+
+
