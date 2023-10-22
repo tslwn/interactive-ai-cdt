@@ -351,3 +351,97 @@ entries of the scatter matrix into account.
   $\vec{x}_j$, grouped by $X_i$ and sorted in descending order of
   $s(\vec{x}_j)$.
 \end{dfn}
+
+\subsection{Hierarchical clustering}
+
+\subsubsection{Dendrograms}
+
+A \textit{dendrogram} is a tree diagram defined in terms of a distance metric.
+It is a descriptive rather than a predictive model, because it partitions the
+training set but not the entire instance space, and has high variance.
+It requires a definition of the distance between clusters.
+
+\begin{dfn}
+  [Dendrogram]
+  Let $X$ be a set of instances.
+  A dendrogram is a binary tree where each leaf is an instance in $X$, each
+  branch is a subset of instances, and the level of each node is the distance
+  between the clusters represented by its children.
+\end{dfn}
+
+\subsubsection{Linkage functions}
+
+A \textit{linkage function} translates pairwise distances between instances into
+pairwise distances between clusters.
+
+\begin{dfn}
+  [Linkage function]
+  Let $X$ be a set of instances and $D : X \times X \rightarrow \mathbb{R}$ be
+  a distance metric.
+  A linkage function $L : X \times X \rightarrow \mathbb{R}$ is the distance
+  between $X_i, X_j \subseteq X$.
+\end{dfn}
+
+\begin{dfn}
+  [Single linkage]
+  The single linkage between $X_i, X_j \subseteq X$ is the minimum distance
+  between any two instances in $X_i$ and $X_j$:
+  \begin{equation}
+    L(X_i, X_j) =
+    \min_{\vec{x} \in X_i, \vec{y} \in X_j} D(\vec{x}, \vec{y})
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Complete linkage]
+  The complete linkage between $X_i, X_j \subseteq X$ is the maximum distance
+  between any two instances in $X_i$ and $X_j$:
+  \begin{equation}
+    L(X_i, X_j) =
+    \max_{\vec{x} \in X_i, \vec{y} \in X_j} D(\vec{x}, \vec{y})
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Average linkage]
+  The average linkage between $X_i, X_j \subseteq X$ is the average distance
+  between any two instances in $X_i$ and $X_j$:
+  \begin{equation}
+    L(X_i, X_j) =
+    \frac{1}{\card{X_i} \card{X_j}}
+    \sum_{\vec{x} \in X_i, \vec{y} \in X_j} D(\vec{x}, \vec{y})
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Centroid linkage]
+  The centroid linkage between $X_i, X_j \subseteq X$ is the distance between
+  the centroids of $X_i$ and $X_j$:
+  \begin{equation}
+    L(X_i, X_j) = D\left(
+    \frac{1}{\card{X_i}} \sum_{\vec{x} \in X_i} \vec{x},\
+    \frac{1}{\card{X_j}} \sum_{\vec{y} \in X_j} \vec{y}
+    \right)
+  \end{equation}
+\end{dfn}
+
+\subsubsection{Hierarchical agglomerative clustering}
+
+The algorithm to build a dendrogram is \textit{agglomerative} (it works from the
+bottom up).
+Generally, it produces different results for different linkage functions.
+For single linkage, it adds links until there is a path between any two
+instances.
+
+Hierarchical clustering for single linkage effectively computes and sorts the
+pairwise distances between instances, which takes $O(n^2)$ time.
+For other linkage functions, it takes at least $O(n^2 \log n)$ time.
+It is deterministic and always produces a clustering, which may not be
+high-quality.
+While the number of clusters does not need to be chosen in advance, both a
+distance metric and a linkage function must be chosen.
+
+Single and complete linkage do not take the shape of clusters into account
+because they are defined in terms of the distance between a pair of instances.
+However, centroid linkage can produce counter-intuitive results because it
+violates \textit{monotonicity}.
