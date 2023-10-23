@@ -225,7 +225,7 @@ applying a distance-based model.
 \subsubsection{\textit{k}-nearest neighbours}
 
 If there is a way to aggregate over exemplars, then $k$ nearest neighbours can
-be used.
+be used (where $k$ is distinct from the number of classes).
 An example of a decision rule for a $k$-nearest-neighbour classifier is to
 predict the majority class of the $k$ nearest exemplars.
 
@@ -280,27 +280,29 @@ distance metric.
 Minimising the total within-cluster scatter is equivalent to maximising the
 scatter of the centroids, weighted by the number of instances in each class.
 
-\subsubsection{\textit{k}-means}
+\subsubsection{K-means}
 
-The \textit{$k$-means} problem is to find the partition of $X$ that minimises
+The \textit{k-means} problem is to find the partition of $X$ that minimises
 the total within-cluster scatter (section~\ref{sec:8:clustering}).
-The $k$-means problem is NP-complete, i.e., there is no efficient way to find
+In this context, $k$ is the number of clusters instead of a number of classes.
+The k-means problem is NP-complete, i.e., there is no efficient way to find
 the global minimum.
-The typical heuristic algorithm is called $k$-means or
+The typical heuristic algorithm is called k-means or
 \textit{Lloyd's algorithm}.
 It iterates between partitioning the data with the nearest-centroid decision
 rule and recomputing the centroids from the partition.
 
-An iteration of the $k$-means algorithm cannot decrease the total within-cluster
+An iteration of the k-means algorithm cannot decrease the total within-cluster
 scatter, so it reaches a \textit{stationary point} (a local minimum).
 It converges to a stationary point in a finite number of iterations but there is
 no way to know whether it is optimal (the global minimum).
-Therefore, it is recommended to run $k$-means multiple times and choose the
+Therefore, it is recommended to run k-means multiple times and choose the
 best solution.
 
-\subsubsection{\textit{k}-medoids}
+\subsubsection{K-medoids}
 
-The $k$-medoids algorithm uses medoids instead of centroids.
+The k-medoids algorithm uses medoids instead of centroids.
+Again, $k$ is the number of clusters instead of a number of classes.
 An alternative is the \textit{partitioning around medoids} (PAM) algorithm,
 which swaps medoids with other instances in the class.
 The clustering quality is the distance between the medoids and the instances in
