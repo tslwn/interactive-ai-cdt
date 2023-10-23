@@ -76,7 +76,7 @@ I.e., for a proposition $A \subseteq W$:
 \end{thm}
 
 \begin{thm}
-  [Probability theory in Dempster-Shafer theory]
+  [Relation to probability theory]
   If $m$ is a mass function such that $\sum_{w \in W} m(\{w\}) = 1$, then:
   $$
     \bel(A) = \pl(A) = P(A) = \sum_{w \in A} m(\{w\})
@@ -264,3 +264,142 @@ Given one of $m$, $\bel$ or $\pl$, the other two can be derived
     \end{align*}
   \end{proof}
 \end{thm}
+
+\subsection{Imprecise probabilities}
+
+An alternative but related approach is to represent beliefs by sets of
+probability measures (\textit{credal sets}).
+
+\begin{dfn}
+  [Lower and upper probability measures]
+  Let $\mathbb{P}(K) \subseteq \mathbb{P}$ be a closed convex set of probability
+  measures $P : 2^W \rightarrow [0, 1]$ and $A \subseteq W$ be a proposition.
+  The lower ($\underline{P}$) and upper ($\overline{P}$) probability measures are:
+  \begin{equation}
+    \underline{P}(A) = \min\ \{ P(A) : P \in \mathbb{P}(K) \}\,,\
+    \overline{P}(A)  = \max\ \{ P(A) : P \in \mathbb{P}(K) \}
+  \end{equation}
+\end{dfn}
+
+\begin{thm}
+  [Upper probability measure of complement]
+  \begin{align}
+    \overline{P}(A^{c})
+     & = \max\ \{ P(A^c) : P \in \mathbb{P}(K) \} \nonumber   \\
+     & = \max\ \{ 1 - P(A) : P \in \mathbb{P}(K) \} \nonumber \\
+     & = 1 - \min\ \{ P(A) : P \in \mathbb{P}(K) \} \nonumber \\
+     & = 1 - \underline{P}(A)
+  \end{align}
+\end{thm}
+
+Belief and plausibility measures in Dempster-Shafer theory are special cases of
+lower and upper probability measures, respectively.
+Not all lower and upper probability measures correspond to belief and
+plausibility measures.
+
+\begin{thm}
+  [Relations to belief and plausibility measures]
+  Let $\bel$ be a belief measure, $A \subseteq W$ be a proposition, and
+  $K = \{ P(A) \geq \bel(A) \}$ be a knowledge base. Then:
+  \begin{equation}
+    \bel(A) = \underline{P}(A)\,,\
+    \pl(A) = \overline{P}(A)
+    \ \forall\ A \subseteq W
+  \end{equation}
+  \begin{proof}
+    In two parts:
+    \begin{enumerate}
+      \item $\bel(A) \leq P(A) \leq \pl(A) \ \forall\ P \in \mathbb{P}(K), A \subseteq W$
+    \end{enumerate}
+
+    By the definition of $K$,
+    $P(A) \geq \bel(A)$ and $\bel(A^c) \leq P(A^c) \ \forall\ P \in \mathbb{P}(K)$.
+    Hence, $1 - P(A^c) \leq 1 - \bel(A^c)$ and $P(A) \leq \pl(A)$.
+
+    \begin{enumerate}
+      \setcounter{enumi}{1}
+      \item $\exists\ P \in \mathbb{P}(K) : P(A) = \bel(A) \ \forall\ A \subseteq W$
+    \end{enumerate}
+
+    For every $B \subseteq W$, choose a possible world $w_B \in B$ such that
+    for a given $A \subseteq W$,  $B \not\subseteq A \implies w_B \in A^c$.
+    Define $P$ in terms of the mass function $m$ of $\bel$:
+    \begin{equation*}
+      P(w) = \sum_{B \subseteq W : w_B = w} m(B)
+    \end{equation*}
+    $m(B)$ is non-zero only for $w_b$, so
+    $\sum_{w \in W} P(w) = \sum_{B \subseteq W} m(B) = 1$.
+
+    $P \in \mathbb{P}(K)$ because:
+    \begin{align*}
+      \bel(C)
+       & = \sum_{B \subseteq W : B \subseteq C} m(B) \ \forall\ C \subseteq W
+      = \sum_{w \in C} \sum_{B \subseteq W : B \subseteq C, w_B = w} m(B)     \\
+       & \leq \sum_{w \in C} \sum_{B \subseteq W : w_B = w} m(B)
+      = \sum_{w \in C} P(w)
+      = P(C)
+    \end{align*}
+    Similarly:
+    \begin{align*}
+      \bel(A)
+       & = \sum_{B \subseteq W : B \subseteq A} m(B)
+      = \sum_{w \in A} \sum_{B \subseteq W : B \subseteq A, w_B = w} m(B) \\
+       & = \sum_{w \in A} \sum_{B \subseteq W : w_B = w} m(B)
+      = \sum_{w \in A} P(w)
+      = P(A)
+    \end{align*}
+  \end{proof}
+\end{thm}
+
+A mass function assigns `weights' to the evidence associated with a proposition.
+The definition of conditional probability (\ref{def:2:ConditionalProbability})
+can be generalised to mass functions.
+
+\begin{dfn}
+  [Posterior probability given a mass function]
+  \label{def:4:PosteriorProbability}
+  Let $P : 2^W \rightarrow [0, 1]$ be a prior probability distribution and
+  $m : 2^W \rightarrow [0, 1]$ be a mass function.
+  The posterior probability of $A$ given $m$ is:
+  \begin{equation}
+    P(A \mid m) = \sum_{B \subseteq W} P(A \mid B) m(B)
+  \end{equation}
+  $m(B) > 0 \implies P(B) > 0$, otherwise $P(A \mid m)$ is undefined.
+  The posterior probability of $w$ given $m$ is:
+  \begin{equation}
+    P(w \mid m) = P(w) \sum_{B \subseteq W : w \in B} \frac{m(B)}{P(B)}
+  \end{equation}
+\end{dfn}
+
+\begin{thm}
+  [Relations to belief and plausibility measures]
+  \begin{equation}
+    \bel(A) \leq P(A \mid m) \leq \pl(A) \ \forall\ A \subseteq W
+  \end{equation}
+  \begin{proof}
+    By definition~\ref{def:4:PosteriorProbability} and
+    $B \subseteq A \implies P(A \mid B) = 1$:
+    \begin{align*}
+      P(A \mid m)
+       & = \sum_{B \subseteq W} P(A \mid B) m(B)                  \\[1.5ex]
+       & = \sum_{B \subseteq W : B \subseteq A} P(A \mid B) m(B)
+      + \sum_{B \subseteq W : B \not\subseteq A} P(A \mid B) m(B) \\[1.5ex]
+       & = \sum_{B \subseteq W : B \subseteq A} m(B)
+      + \sum_{B \subseteq W : B \not\subseteq A} P(A \mid B) m(B) \\[1.5ex]
+       & \geq \sum_{B \subseteq W : B \subseteq A} m(B) = \bel(A) \\[3ex]
+      P(A \mid m)
+       & = 1 - P(A^c \mid m)                                      \\[1.5ex]
+       & \leq 1 - \bel(A^c) = \pl(A)
+    \end{align*}
+  \end{proof}
+\end{thm}
+
+If the prior probability distribution is uniform, then
+definition~\ref{def:4:PosteriorProbability} is:
+\begin{equation*}
+  P(w \mid m) = \sum_{B \subseteq W : w \in B} \frac{m(B)}{\card{B}}
+\end{equation*}
+I.e., the posterior probability distribution redistributes the mass values
+associated with non-singleton sets uniformly to the singleton sets of their
+elements.
+This is called the \textit{pignistic distribution} of a mass function.
