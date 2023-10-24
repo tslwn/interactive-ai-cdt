@@ -10,7 +10,7 @@ Definition~\ref{def:2:ProbabilityMeasure} states that probability measures are a
   A probability measure is a function $P : 2^W \rightarrow [0, 1]$ such that:
   \begin{enumerate}
     \item[P1] $P(W) = 1$ and $P(\emptyset) = 0$
-    \item[P2] $A \cap B = \emptyset \implies P(A \cup B) = P(A) + P(B)$
+    \item[P2] $A \cap B = \emptyset \Rightarrow P(A \cup B) = P(A) + P(B)$
   \end{enumerate}
 \end{dfn}
 
@@ -20,7 +20,7 @@ Additive uncertainty measures are monotonic.
 \begin{thm}[Monotonicity]
   \begin{equation}
     \label{eqn:2:Monotonicity}
-    A \subseteq B \implies P(A) \leq P(B)
+    A \subseteq B \Rightarrow P(A) \leq P(B)
   \end{equation}
   \begin{proof}
     Let $A, B \subseteq W$ such that $A \subseteq B$.

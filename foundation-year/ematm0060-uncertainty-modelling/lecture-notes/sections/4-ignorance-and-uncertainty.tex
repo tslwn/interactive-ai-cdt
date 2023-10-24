@@ -15,7 +15,7 @@ In Dempster-Shafer theory, uncertainty is quantified by two measures:
 \begin{dfn}
   [Belief and plausibility measures]
   \label{def:4:BeliefPlausibility}
-  Let $W$ be a set of possible worlds and $A$ be a proposition.
+  Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
   A mass function $m : 2^W \rightarrow [0, 1]$ generates:
   \begin{itemize}
     \item a belief measure $\bel : 2^W \rightarrow [0, 1]$ such that:
@@ -49,7 +49,7 @@ I.e., for a proposition $A \subseteq W$:
 
 \begin{thm}
   [Relations of belief and plausibility measures]
-  Let $W$ be a set of possible worlds and $A$ be a proposition.
+  Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
   \begin{alignat}{2}
     \label{eqn:4:BeliefPlausibility1}
     \bel(A) & \leq \pl(A)
@@ -64,7 +64,8 @@ I.e., for a proposition $A \subseteq W$:
     $\emptyset \neq B \subseteq A \ \Rightarrow \ B \cap A \neq \emptyset$,
     hence equation~\ref{eqn:4:BeliefPlausibility1}.
 
-    $B \cap A \neq \emptyset \ \Leftrightarrow\  B \not\subseteq A^{c}$, hence:
+    $B \cap A \neq \emptyset \ \Leftrightarrow\  B \not\subseteq A^{c}$, hence
+    equation~\ref{eqn:4:BeliefPlausibility2}:
     \begin{align*}
       \pl(A)
        & = \sum_{B \subseteq W : B \cap A \neq \emptyset} m(B)
@@ -77,14 +78,15 @@ I.e., for a proposition $A \subseteq W$:
 
 \begin{thm}
   [Relation to probability theory]
-  If $m$ is a mass function such that $\sum_{w \in W} m(\{w\}) = 1$, then:
-  $$
+  If $m : 2^W \rightarrow [0, 1]$ is a mass function such that
+  $\sum_{w \in W} m(\{w\}) = 1$, then:
+  \begin{equation}
     \bel(A) = \pl(A) = P(A) = \sum_{w \in A} m(\{w\})
-  $$
+  \end{equation}
 \end{thm}
 
-I.e., if $m$ is non-zero only for singletons, then the evidence identifies a
-single possible world.
+I.e., if $m$ is non-zero only for singletons, then each piece of evidence
+identifies a single possible world.
 Generally, belief and plausibility measures do not satisfy
 definition~\ref{def:2:ProbabilityMeasure}.
 
@@ -187,7 +189,7 @@ Given one of $m$, $\bel$ or $\pl$, the other two can be derived
   Let $W$ be a set of possible worlds,
   $\bel : 2^W \rightarrow [0, 1]$ be a belief measure, and
   $A \subseteq W$ be a proposition.
-  The mass function is:
+  The mass function $m : 2^W \rightarrow [0, 1]$ is:
   \begin{equation}
     \label{eqn:4:MassFunctionBelief}
     m(A) = \sum_{B \subseteq A} (-1)^{|A - B|} \bel(B)
@@ -294,13 +296,12 @@ probability measures (\textit{credal sets}).
 
 Belief and plausibility measures in Dempster-Shafer theory are special cases of
 lower and upper probability measures, respectively.
-Not all lower and upper probability measures correspond to belief and
-plausibility measures.
 
 \begin{thm}
   [Relations to belief and plausibility measures]
-  Let $\bel$ be a belief measure, $A \subseteq W$ be a proposition, and
-  $K = \{ P(A) \geq \bel(A) \}$ be a knowledge base. Then:
+  Let $W$ be a set of possible worlds, $A \subseteq W$ be a proposition,
+  $\bel : 2^W \rightarrow [0, 1]$ be a belief measure, and
+  $K = \{ P(A) \geq \bel(A) \}$.
   \begin{equation}
     \bel(A) = \underline{P}(A)\,,\
     \pl(A) = \overline{P}(A)
@@ -322,7 +323,7 @@ plausibility measures.
     \end{enumerate}
 
     For every $B \subseteq W$, choose a possible world $w_B \in B$ such that
-    for a given $A \subseteq W$,  $B \not\subseteq A \implies w_B \in A^c$.
+    for a given $A \subseteq W$,  $B \not\subseteq A \Rightarrow w_B \in A^c$.
     Define $P$ in terms of the mass function $m$ of $\bel$:
     \begin{equation*}
       P(w) = \sum_{B \subseteq W : w_B = w} m(B)
@@ -351,20 +352,21 @@ plausibility measures.
   \end{proof}
 \end{thm}
 
-A mass function assigns `weights' to the evidence associated with a proposition.
+A mass function assigns `weights' to pieces of evidence (sets of possible worlds).
 The definition of conditional probability (\ref{def:2:ConditionalProbability})
 can be generalised to mass functions.
 
 \begin{dfn}
   [Posterior probability given a mass function]
   \label{def:4:PosteriorProbability}
-  Let $P : 2^W \rightarrow [0, 1]$ be a prior probability distribution and
+  Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions,
+  $P : 2^W \rightarrow [0, 1]$ be a prior probability distribution, and
   $m : 2^W \rightarrow [0, 1]$ be a mass function.
   The posterior probability of $A$ given $m$ is:
   \begin{equation}
     P(A \mid m) = \sum_{B \subseteq W} P(A \mid B) m(B)
   \end{equation}
-  $m(B) > 0 \implies P(B) > 0$, otherwise $P(A \mid m)$ is undefined.
+  $m(B) > 0 \Rightarrow P(B) > 0$, otherwise $P(A \mid m)$ is undefined.
   The posterior probability of $w$ given $m$ is:
   \begin{equation}
     P(w \mid m) = P(w) \sum_{B \subseteq W : w \in B} \frac{m(B)}{P(B)}
@@ -378,7 +380,7 @@ can be generalised to mass functions.
   \end{equation}
   \begin{proof}
     By definition~\ref{def:4:PosteriorProbability} and
-    $B \subseteq A \implies P(A \mid B) = 1$:
+    $B \subseteq A \Rightarrow P(A \mid B) = 1$:
     \begin{align*}
       P(A \mid m)
        & = \sum_{B \subseteq W} P(A \mid B) m(B)                  \\[1.5ex]
