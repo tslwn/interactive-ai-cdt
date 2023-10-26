@@ -413,8 +413,8 @@ distributions $P(X_i \mid \Pi(X_i)) \ \forall\ i \in 1 .. k$
 For $n$ binary random variables, the number of probability values in the joint
 probability distribution of:
 \begin{itemize}
-  \item a dependent model is $2^n - 1$;
-  \item an independent model is $2n - 1$; and
+  \item a fully dependent model is $2^n - 1$;
+  \item a fully independent model is $2n - 1$; and
   \item a Bayesian network is $\sum_{i = 1}^{n} 2^{|\Pi(X_i)|}$.
 \end{itemize}
 
@@ -448,3 +448,6 @@ number of values in:
 
         $\sum_{i = 1}^{n} (k_i - 1) \prod_{X_j \in \Pi(X_i)} k_j$.
 \end{itemize}
+
+Generally, the number of values for a Bayesian network is inversely proportional
+to the numbers of direct causes of the random variables.
