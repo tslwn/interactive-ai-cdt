@@ -1,0 +1,130 @@
+\section{Sequence Labelling}
+
+\textit{Parts of speech} (POS) include nouns, verbs, pronounds, adverbs,
+conjunctions, participles, and articles.
+\textit{Part-of-speech (POS) tagging} is the task of labelling each word in a
+sequence with a part-of-speech tag.
+
+\textit{Named entities} are referred to with proper names and include people,
+locations, and organisations.
+\textit{Named-entity recognition (NER)} is the task of labelling each word in a
+sequence with a named-entity tag.
+
+\subsection{Word classes}
+
+\subsection{Part-of-speech tagging}
+
+Part-of-speech tagging is a \textit{disambiguation} task: words are ambiguous
+because they have multiple possible parts of speech.
+The task is to resolve these ambiguities by choosing the proper tags.
+Part-of-speech tagging algorithms are highly accurate.
+
+\subsection{Named-entity recognition}
+
+\subsection{Hidden Markov models}
+
+\textit{Hidden Markov models} (HMMs) are based on Markov chains.
+They are probabilistic: given a sequence of observations, they compute the
+probability distribution over possible sequences of labels and choose the best
+one.
+
+\paragraph{Markov chains}
+
+\begin{dfn}
+  [Markov assumption]
+  \label{dfn:8:markov-assumption}
+  Given a sequence of states $U = u_1 \dots u_{i - 1}$, the probability of a
+  state $u_i$ depends only on the previous state $u_{i - 1}$:
+  \begin{equation}
+    P(u_i = s_j \mid u_1 \dots u_{i - 1}) = P(u_i = s_j \mid u_{i - 1})
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Markov chain]
+  \label{dfn:8:markov-chain}
+  A Markov chain is a tuple $(S, \matr{T}, P)$ where:
+  \begin{itemize}
+    \item $S = \{ s_i \mid i = 1 .. n_s \}$ is a set of $n_s$ states;
+    \item $\matr{T} \in \mathbb{R}^{n_s \times n_s}$ is a transition probability
+          matrix where $t_{ij}$ is the probability of transitioning from $s_i$
+          to $s_j$, i.e.,
+          $\sum_{j = 1}^{n_s} t_{ij} = 1 \ \forall\ i \in 1 .. n_s$;
+    \item $P_0 = \{ p_i \mid i = 1 .. n_s \}$ is the initial probability
+          distribution where $p_i$ is the probability that the first state is
+          $s_i$, i.e.,
+          $\sum_{i = 1}^{n_s} p_i = 1$.
+  \end{itemize}
+\end{dfn}
+
+\paragraph{Hidden Markov models}
+
+A HMM represents both observed and \textit{hidden} events, which are not
+observed directly (like part-of-speech tags).
+
+\begin{dfn}
+  [Hidden Markov model]
+  \label{dfn:8:hidden-markov-model}
+  A hidden Markov model is a Markov chain (definition~\ref{dfn:8:markov-chain})
+  where additionally:
+  \begin{itemize}
+    \item $W = w_1 \dots w_{n_w}$ is a sequence of $n_w$ observations, each of
+          which is taken from a vocabulary $V = \{ v_1, \dots, v_{n_v} \}$; and
+    \item $p_{ij} = P(w_j \mid s_i)$ is an observation likelihood or emission
+          probability, i.e., the probability of observing $w_j$ given $s_i$.
+  \end{itemize}
+\end{dfn}
+
+As well as the Markov assumption (definition \ref{dfn:8:markov-assumption}), a
+HMM assumes \textit{output independence}: that the probability of an observation
+depends only on the current state, i.e.,
+$P(w_i = v_j \mid u_1 u_2 \dots u_i) = P(w_i = v_j \mid u_i)$.
+
+\subsubsection{HMM tagging and decoding}
+
+The task of determining the most likely sequence of hidden states $U$ given a
+sequence of observations $W$ is called \textit{decoding}.
+For part-of-speech tagging, this task is (applying Bayes' theorem):
+
+\begin{align}
+  \hat{u}_1 \hat{u}_2 \dots \hat{u}_{n_u}
+   & = \argmax_{u_1 u_2 \dots u_{n_u}}
+  P(u_1 u_2 \dots u_{n_u} \mid w_1 w_2 \dots w_{n_w})                                                           \\[3ex]
+   & = \argmax_{u_1 u_2 \dots u_{n_u}}
+  \frac{P(w_1 w_2 \dots w_{n_w} \mid u_1 u_2 \dots u_{n_u}) P(u_1 u_2 \dots u_{n_u})}{P(w_1 w_2 \dots w_{n_w})} \\[3ex]
+   & = \argmax_{u_1 u_2 \dots u_{n_u}}
+  P(w_1 w_2 \dots w_{n_w} \mid u_1 u_2 \dots u_{n_u}) P(u_1 u_2 \dots u_{n_u})
+  \label{eqn:8:hmm-tagging-1}
+\end{align}
+HMM tagging makes two more simplifying assumptions:
+\begin{itemize}
+  \item The probability of a word depends only on its own tag (is independent of
+        the other words in the sequence), i.e.,
+        \begin{equation}
+          \label{eqn:8:hmm-tagging-assumption-1}
+          P(w_1 w_2 \dots w_{n_w} \mid u_1 u_2 \dots u_{n_u})
+          \approx \prod_{i = 1}^{n_w} P(w_i \mid u_i)
+        \end{equation}
+  \item The \textit{bigram} assumption: the probability of a tag depends only on
+        the previous tag (is independent of the other tags in the sequence),
+        i.e.,
+        \begin{equation}
+          \label{eqn:8:hmm-tagging-assumption-2}
+          P(u_1 u_2 \dots u_{n_u})
+          \approx \prod_{i = 1}^{n_u} P(u_i \mid u_{i - 1})
+        \end{equation}
+\end{itemize}
+Substituting equations~\ref{eqn:8:hmm-tagging-assumption-1} and
+\ref{eqn:8:hmm-tagging-assumption-2} into equation~\ref{eqn:8:hmm-tagging-1}
+gives:
+\begin{equation}
+  \hat{u}_1 \hat{u}_2 \dots \hat{u}_{n_u}
+  = \argmax_{u_1 u_2 \dots u_{n_u}}
+  \prod_{i = 1}^{n_w} P(w_i \mid u_i) P(u_i \mid u_{i - 1})
+\end{equation}
+where $P(w_i \mid u_i)$ is the \textit{emission probability} and
+$P(u_i \mid u_{i - 1})$ is the \textit{transition probability} from
+definitions~\ref{dfn:8:hidden-markov-model} and \ref{dfn:8:markov-chain},
+respectively.
+
+\subsubsection{The Viterbi algorithm}
