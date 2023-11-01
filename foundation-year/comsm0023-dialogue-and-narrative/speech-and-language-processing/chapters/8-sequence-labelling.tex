@@ -69,7 +69,8 @@ observed directly (like part-of-speech tags).
   where additionally:
   \begin{itemize}
     \item $W = w_1 \dots w_{n_w}$ is a sequence of $n_w$ observations, each of
-          which is taken from a vocabulary $V = \{ v_1, \dots, v_{n_v} \}$; and
+          which is taken from a vocabulary $V = \{ v_i \mid i \in 1 .. n_v \}$;
+          and
     \item $p_{ij} = P(w_j \mid s_i)$ is an observation likelihood or emission
           probability, i.e., the probability of observing $w_j$ given $s_i$.
   \end{itemize}
@@ -128,3 +129,43 @@ definitions~\ref{dfn:8:hidden-markov-model} and \ref{dfn:8:markov-chain},
 respectively.
 
 \subsubsection{The Viterbi algorithm}
+
+The Viterbi algorithm is a dynamic programming algorithm that computes the most
+likely sequence of labels.
+
+A matrix $X \in \mathbb{R}^{n_w \times n_s}$ is initialised with a column for
+each observation and a row for each state.
+An element $x_{ij}$ is the probability that the HMM is in state $s_j$ after
+observing $w_1 \dots w_i$.
+
+The elements $x_{ij}$ are computed by recursively taking the most likely paths
+that lead to their observations given the HMM $\lambda$.
+\begin{equation}
+  x_{ij} = \max_{u_1 \dots u_{i - 1}}
+  P(u_1 \dots u_{i - 1},\ w_1 \dots w_{i},\ u_i = s_j \mid \lambda)
+\end{equation}
+The most likely path to an element $x_{ij}$ is the most likely path to an
+element for the \textit{previous} observation $x_{i - 1, k}$ whose state $s_k$
+maximises the the probability of transitioning into state $s_j$ \textit{and}
+observing $w_i$, i.e.:
+\begin{equation}
+  x_{ij} = \max_{k \in 1 .. n_s} x_{i - 1, k}\ t_{kj}\ p_{ji}
+\end{equation}
+where:
+\begin{itemize}
+  \item $x_{i - 1, k}$ is the probability of $s_k$ after observing $w_1 \dots w_{i - 1}$;
+  \item $t_{kj}$ is the probability of transitioning from $s_k$ to $s_j$; and
+  \item $p_{ji}$ is the probability of observing $w_i$ given $s_j$.
+\end{itemize}
+
+\subsection{Conditional random fields}
+
+\subsection{Evaluation}
+
+Part-of-speech tagging is evaluated by \textit{accuracy}.
+Named-entity recognition is evaluated by \textit{recall}, \textit{precision},
+and \textit{$F_1$ measure}.
+The statistical significance of a difference between the $F_1$ measures of two
+named-entity recognition systems is evaluated by the
+\textit{paired bootstrap test} or similar.
+The segmentation component of named-entity recognition complicates evaluation.
