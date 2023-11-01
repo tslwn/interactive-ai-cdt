@@ -1,0 +1,190 @@
+\section{Probabilistic models}
+\label{sec:9:probabilistic-models}
+
+Recall that:
+\begin{itemize}
+  \item $P(Y \mid X)$ is the posterior probability distribution of $Y$ given $X$;
+  \item $P(Y, X)$ is the joint probability distribution of $Y$ and $X$;
+  \item $P(X \mid Y)$ is the likelihood function; and
+  \item $P(X)$ is the prior distribution of $X$.
+\end{itemize}
+
+\paragraph{Discriminative and generative models}
+
+\begin{itemize}
+  \item A \textit{discriminative} model describes the posterior distribution of
+        the target given the input.
+        It does not describe the prior distribution of the input.
+  \item A \textit{generative} model describes a joint distribution of the target
+        and input.
+        If the prior distribution of the target can be estimated, then it can
+        be described by a likelihood function.
+        It can be used to generate data by sampling from the joint distribution.
+\end{itemize}
+
+Generative models can do more than discriminative models.
+However, joint distributions are harder to learn than conditional distributions
+like the posterior distribution because they are described by more probability
+values (parameters).
+This may be handled by simplifying assumptions like independence but they are
+not always appropriate.
+
+\paragraph{Uncertainty}
+
+A probabilistic view treats learning as a procedure that reduces uncertainty.
+
+\subsection{Normal distributions}
+
+\paragraph{Univariate}
+
+\begin{dfn}
+  [Univariate normal distribution]
+  \label{dfn:9:univariate-normal-distribution}
+  \begin{align}
+    P(x \mid \mu, \sigma)
+     & = \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right) \\
+     & = \frac{1}{E} \exp \left( - \frac{z^2}{2} \right) ,\
+    E = \sqrt{2 \pi} \sigma
+  \end{align}
+  \begin{itemize}
+    \item $\mu \in \mathbb{R}$ is the mean;
+    \item $\sigma \in \mathbb{R}$ is the standard deviation; and
+    \item $z = \frac{x - \mu}{\sigma}$ is the $z$-score.
+  \end{itemize}
+\end{dfn}
+If $\mu = 0$ and $\sigma = 1$, then it is the \textit{standard} univariate
+normal distribution:
+\begin{equation}
+  P(x \mid \mu = 0, \sigma = 1)
+  = \frac{1}{\sqrt{2 \pi}} \exp \left( - \frac{x^2}{2} \right)
+\end{equation}
+
+\paragraph{Multivariate}
+
+\begin{dfn}
+  [Multivariate normal distribution]
+  \label{dfn:9:multivariate-normal-distribution}
+  \begin{equation}
+    \begin{split}
+      P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
+      = \frac{1}{E_n} \exp \left(
+      - \frac{1}{2} (\vec{x} - \vec{\mu})^T \matr{\Sigma}^{-1} (\vec{x} - \vec{\mu})
+      \right) ,\\
+      E_n = (2 \pi)^{n/2} \sqrt{\det \matr{\Sigma}}
+    \end{split}
+  \end{equation}
+  \begin{itemize}
+    \item $\vec{\mu} \in \mathbb{R}^n$ is the mean; and
+    \item $\matr{\Sigma} \in \mathbb{R}^{n \times n}$ is the covariance matrix.
+  \end{itemize}
+\end{dfn}
+If $\vec{\mu} = \vec{0}$ and $\matr{\Sigma} = \matr{I}$, then it is the
+\textit{standard} multivariate normal distribution:
+\begin{equation}
+  P(\vec{x} \mid \vec{\mu} = \vec{0}, \matr{\Sigma} = \matr{I})
+  = \frac{1}{(2 \pi)^{n / 2}} \exp \left( - \frac{\vec{x} \cdot \vec{x}}{2} \right)
+\end{equation}
+
+\subsubsection{Gaussian mixture models}
+
+A Gaussian mixture model is a mixture of $k$ Gaussian distributions.
+For $k = 2$, i.e., binary classification,
+$X = \{ x_i \mid i = 1 .. n \} = X_+ \cup X_-$.
+
+\paragraph{Univariate}
+
+In the univariate case, the likelihood ratio is:
+\begin{equation*}
+  \frac{P(X_+)}{P(X_-)}
+  = \frac{\sigma_-}{\sigma_+} \exp \left(
+  - \frac{1}{2} \left(
+    \left( \frac{x - \mu_+}{\sigma_+} \right)^2
+    - \left( \frac{x - \mu_-}{\sigma_-} \right)^2
+    \right)
+  \right)
+\end{equation*}
+
+If $\sigma_+ = \sigma_- = \sigma$, then the likelihood ratio is:
+\begin{equation*}
+  \exp (\gamma (x - \mu)) ,\
+  \gamma = \frac{\mu_+ - \mu_-}{\sigma^2} ,\
+  \mu = \frac{\mu_+ + \mu_-}{2}
+\end{equation*}
+and the maximum-likelihood decision threshold, i.e., the value of $x$ such
+that the likelihood ratio is 1, is $\mu$.
+
+If the standard deviations of the two Gaussian distributions are different, then
+there are two decision boundaries and a non-contiguous decision region for one
+of the classes.
+
+\paragraph{Multivariate}
+
+In the multivariate case, the likelihood ratio is:
+\begin{equation*}
+  \sqrt{\frac{\det\Sigma_+}{\det\Sigma_-}}
+  \exp \left(-\frac{1}{2} \left(
+    \left(\vec{x} - \vec{\mu}_+ \right)^T \Sigma_+^{-1}
+    \left(\vec{x} - \vec{\mu}_+ \right) -
+    \left(\vec{x} - \vec{\mu}_- \right)^T \Sigma_-^{-1}
+    \left(\vec{x} - \vec{\mu}_- \right)
+    \right) \right)
+\end{equation*}
+
+If $\matr{\Sigma}_+ = \matr{\Sigma}_- = \matr{I}$, i.e., for each class, the
+features are uncorrelated and have unit variance, then the likelihood ratio is:
+\begin{equation*}
+  \exp \left(
+  -\frac{1}{2} \left(
+    \norm{\vec{x} - \vec{\mu}_+}^2 - \norm{\vec{x} - \vec{\mu}_-}^2
+    \right)\right)
+\end{equation*}
+and the maximum-likehood decision boundary, i.e., the values of $\vec{x}$ such
+that the likelihood ratio is 1, is the hyperplane equidistant from $\vec{\mu}_+$
+and $\vec{\mu}_-$.
+
+This is the same as the decision boundary for the basic linear classifier.
+In other words, for uncorrelated Gaussian features with unit variance, the basic
+linear classifier is \textit{Bayes-optimal}.
+
+\paragraph{Distances and probabilities}
+
+The normal distribution demonstrates the connection between the geometric and
+probabilistic views of models.
+
+The multivariate normal distribution (definition~\ref{dfn:9:multivariate-normal-distribution})
+translates the Mahalanobis distance (definition~\ref{dfn:8:mahalanobis-distance})
+into a probability:
+
+\begin{equation}
+  P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
+  = \frac{1}{E_n} \exp\left( - \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)
+\end{equation}
+
+For $n = 2$ dimensions, the standard normal distribution translates the
+Euclidean distance (definition~\ref{dfn:8:euclidean-distance}) into a
+probability:
+
+\begin{equation}
+  P(\vec{x} \mid \vec{0}, \matr{I})
+  = \frac{1}{E_2} \exp\left( - \frac{1}{2} D_2 (\vec{x}, \vec{0})^2 \right)
+\end{equation}
+
+The logarithm transforms a multiplicative scale into an additive scale.
+Thus, the negative logarithm of the Gaussian likelihood can be interpreted as a
+squared distance:
+
+\begin{equation}
+  - \ln P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
+  = \ln E_d + \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2
+\end{equation}
+
+\subsection{TODO}
+
+\begin{itemize}
+  \item Linear regression
+  \item Categorical variables
+  \item Categorical probability distributions
+  \item Decision rules
+  \item Naïve Bayes
+  \item Logistic regression
+\end{itemize}
