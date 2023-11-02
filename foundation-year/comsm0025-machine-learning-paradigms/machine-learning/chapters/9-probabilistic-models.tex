@@ -146,45 +146,186 @@ This is the same as the decision boundary for the basic linear classifier.
 In other words, for uncorrelated Gaussian features with unit variance, the basic
 linear classifier is \textit{Bayes-optimal}.
 
-\paragraph{Distances and probabilities}
+\subsubsection{Distances and probabilities}
 
 The normal distribution demonstrates the connection between the geometric and
 probabilistic views of models.
+Effectively, it translates distances into probabilities.
 
-The multivariate normal distribution (definition~\ref{dfn:9:multivariate-normal-distribution})
-translates the Mahalanobis distance (definition~\ref{dfn:8:mahalanobis-distance})
-into a probability:
+\begin{dfn}
+  \label{dfn:9:normal-mahalanobis}
+  The multivariate normal distribution
+  (definition~\ref{dfn:9:multivariate-normal-distribution})
+  can be expressed in terms of the Mahalanobis distance
+  (definition~\ref{dfn:8:mahalanobis-distance}):
+  \begin{equation}
+    P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
+    = \frac{1}{E_n} \exp \left(
+    -\frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2
+    \right)
+  \end{equation}
+\end{dfn}
 
-\begin{equation}
-  P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
-  = \frac{1}{E_n} \exp\left( - \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)
-\end{equation}
+\begin{dfn}
+  \label{dfn:9:normal-log-likelihood}
+  The negative logarithm of the Gaussian likelihood is proportional to the
+  squared Mahalanobis distance (definition~\ref{dfn:8:mahalanobis-distance}):
+  \begin{equation}
+    - \ln P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
+    = \ln E_d + \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2
+  \end{equation}
+\end{dfn}
 
-For $n = 2$ dimensions, the standard normal distribution translates the
-Euclidean distance (definition~\ref{dfn:8:euclidean-distance}) into a
-probability:
+\begin{thm}
+  Let $P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})$ be a multivariate normal
+  distribution.
+  The maximum-likelihood estimate of $\vec{\mu}$ is the point that minimises
+  the sum of squared Mahalanobis distances to the data points
+  $X = \{ \vec{x}_i \mid i = 1 .. n \}$.
 
-\begin{equation}
-  P(\vec{x} \mid \vec{0}, \matr{I})
-  = \frac{1}{E_2} \exp\left( - \frac{1}{2} D_2 (\vec{x}, \vec{0})^2 \right)
-\end{equation}
+  \begin{proof}
+    The maximum-likelihood estimate is the value of $\vec{\mu}$ that maximises
+    the joint likelihood of $X$:
+    \begin{equation}
+      \vec{\hat{\mu}} = \argmax_{\vec{\mu}} P(X \mid \vec{\mu}, \matr{\Sigma})
+    \end{equation}
+    Assume that the data points are independently sampled from
+    $P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})$.
+    Then, the joint likelihood is the product of the likelihoods of the data
+    points:
+    \begin{equation}
+      P(X \mid \vec{\mu}, \matr{\Sigma})
+      = \prod_{i = 1}^n P(\vec{x}_i \mid \vec{\mu}, \matr{\Sigma})
+    \end{equation}
+    By definitions~\ref{dfn:9:normal-mahalanobis} and
+    \ref{dfn:9:normal-log-likelihood}:
+    \begin{align}
+      \vec{\hat{\mu}}
+       & = \argmax_{\vec{\mu}}
+      \prod_{i = 1}^n
+      \frac{1}{E_n}
+      \exp \left( -\frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)        \\
+       & = \argmin_{\vec{\mu}}
+      \sum_{i = 1}^n
+      \left( \ln E_d + \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)    \\
+       & = \argmin_{\vec{\mu}} \sum_{i = 1}^n D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2
+    \end{align}
+  \end{proof}
+\end{thm}
 
-The logarithm transforms a multiplicative scale into an additive scale.
-Thus, the negative logarithm of the Gaussian likelihood can be interpreted as a
-squared distance:
+\begin{dfn}
+  \label{dfn:9:normal-euclidean}
+  The standard normal distribution with $n = 2$
+  (definition~\ref{dfn:9:multivariate-normal-distribution})
+  can be expressed in terms of the Euclidean distance
+  (definition~\ref{dfn:8:euclidean-distance}):
+  \begin{equation}
+    P(\vec{x} \mid \vec{0}, \matr{I})
+    = \frac{1}{E_2} \exp\left( - \frac{1}{2} D_2 (\vec{x}, \vec{0})^2 \right)
+  \end{equation}
+\end{dfn}
 
-\begin{equation}
-  - \ln P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
-  = \ln E_d + \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2
-\end{equation}
+\begin{thm}
+  Let $P(\vec{x} \mid \vec{\mu}, \matr{I})$ be a multivariate normal
+  distribution.
+  The maximum-likelihood estimate of $\vec{\mu}$ is the point that minimises
+  the sum of squared Euclidean distances to the data points
+  $X = \{ \vec{x}_i \mid i = 1 .. n \}$.
+\end{thm}
+
+\subsubsection{Ordinary least-squares regression}
+
+\begin{thm}
+  Let $\hat{y}(x) = \alpha + \beta x$ be a univariate linear regression model
+  and $X = \{ x_i \mid i = 1 .. n \},\ Y = \{ y_i \mid i = 1 .. n \}$ be a set of
+  data points.
+  If the noise is normally distributed, then the maximum-likelihood estimates of
+  $\alpha$ and $\beta$ are equivalent to the ordinary least-squares solution.
+
+  \begin{proof}
+    Assume that $y_i$ is a noisy observation of $\hat{y}(x_i)$, i.e.,
+    $y_i = \hat{y}(x_i) + \epsilon_i$.
+    If the noise is normally distributed, then the likelihood of $y_i$ is:
+    \begin{equation}
+      P(y_i \mid x_i, \alpha, \beta, \sigma)
+      = \frac{1}{\sqrt{2 \pi} \sigma} \exp \left(
+      - \frac{(y_i - \hat{y}(x_i))^2}{2 \sigma^2}
+      \right)
+    \end{equation}
+    Assume that $\epsilon_i$ and $y_i$ are independent.
+    Then, the joint likelihood of $Y$ is the product of the likelihoods of
+    $y_i$:
+    \begin{align}
+      P(Y \mid X, \alpha, \beta, \sigma)
+       & = \prod_{i = 1}^n P(y_i \mid x_i, \alpha, \beta, \sigma)    \\
+       & = \prod_{i = 1}^n \frac{1}{\sqrt{2 \pi} \sigma} \exp \left(
+      - \frac{(y_i - \hat{y}(x_i))^2}{2 \sigma^2}
+      \right)                                                        \\
+       & = \frac{1}{(2 \pi)^{n / 2}\,\sigma^n} \exp \left(
+      -\frac{1}{2\sigma^2} \sum_{i = 1}^{n} (y_i - \hat{y}(x_i))^2
+      \right)
+    \end{align}
+    Apply the negative logarithm and substitute $\hat{y}(x_i)$:
+    \begin{equation}
+      - \ln P(Y \mid X, \alpha, \beta, \sigma)
+      = \frac{n}{2}\ln 2\pi + n\ln\sigma + \frac{1}{2\sigma^2} \sum_{i = 1}^{n} (y_i - (\alpha + \beta x_i))^2
+    \end{equation}
+    The negative log likelihood is minimised when its partial derivatives with
+    respect to $\alpha$, $\beta$, and $\sigma^2$ are zero:
+    \begin{equation}
+      \begin{split}
+        \frac{\partial}{\partial \alpha} - \ln P(Y \mid X, \alpha, \beta, \sigma)
+        = \frac{1}{\sigma^2} \sum_{i = 1}^{n} (y_i - (\alpha + \beta x_i)) = 0 \\
+        \implies \sum_{i = 1}^{n} (y_i - (\alpha + \beta x_i)) = 0
+      \end{split}
+    \end{equation}
+    \begin{equation}
+      \begin{split}
+        \frac{\partial}{\partial \beta} - \ln P(Y \mid X, \alpha, \beta, \sigma)
+        = \frac{1}{\sigma^2} \sum_{i = 1}^{n} (y_i - (\alpha + \beta x_i)) x_i = 0 \\
+        \implies \sum_{i = 1}^{n} (y_i - (\alpha + \beta x_i)) x_i = 0
+      \end{split}
+    \end{equation}
+    \begin{equation}
+      \begin{split}
+        \frac{\partial}{\partial \sigma^2} - \ln P(Y \mid X, \alpha, \beta, \sigma)
+        = \frac{n}{2\sigma^2} - \frac{1}{2\sigma^4} \sum_{i = 1}^{n} (y_i - (\alpha + \beta x_i))^2 = 0 \\
+        \implies \sum_{i = 1}^{n} (y_i - (\alpha + \beta x_i))^2 = n\sigma^2
+      \end{split}
+    \end{equation}
+  \end{proof}
+\end{thm}
+
+\subsection{Naïve Bayes}
+
+In the context of classification, it is assumed that a distribution that models
+the data $X$ depends on the class $Y$.
+The greater the differences between the distributions for the different classes,
+the better the model can discriminate between them.
+Several decision rules can be applied:
+\begin{itemize}
+  \item Maximum likelihood (ML):
+        \begin{equation}
+          \hat{y} = \argmax_y P(X = x \mid Y = y)
+        \end{equation}
+  \item Maximum a posteriori (MAP):
+        \begin{equation}
+          \hat{y} = \argmax_y P(X = x \mid Y = y) P(Y = y)
+        \end{equation}
+  \item Recalibrated likelihood:
+        \begin{equation}
+          \hat{y} = \argmax_y w_y P(X = x \mid Y = y)
+        \end{equation}
+\end{itemize}
+ML and MAP are equivalent if the prior distribution of $Y$ is uniform.
+The recalibrated likelihood generalises ML and MAP by a set of weights $w_y$.
+With uncalibrated probability estimates, the recalibrated likelihood is needed.
 
 \subsection{TODO}
 
 \begin{itemize}
-  \item Linear regression
   \item Categorical variables
   \item Categorical probability distributions
-  \item Decision rules
   \item Naïve Bayes
   \item Logistic regression
 \end{itemize}
