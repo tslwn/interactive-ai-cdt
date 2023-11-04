@@ -1,0 +1,70 @@
+\section*{Appendix}
+
+\subsection*{Gradient descent for RNNs}
+
+Recall that:
+\[
+  \begin{array}{lll}
+    \suppar{\vec{e}}{t} = \matr{E} \suppar{\vec{x}}{t}
+    , &
+    \suppar{\vec{h}}{t} = \softmax(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1})
+    , &
+    \suppar{\vec{\hat{y}}}{t} = \softmax(\matr{E}^T \suppar{\vec{h}}{t})
+  \end{array}
+\]
+$$
+  \mathcal{L}(\suppar{\vec{\hat{y}}}{t}, \suppar{\vec{y}}{t})
+  = -\log\suppar{\hat{y}_{w_{t + 1}}}{t}
+$$
+
+\begin{itemize}
+  \item $\suppar{\vec{x}}{t} \in \mathbb{R}^{n_x}$ is the input vector at time $t$;
+  \item $\suppar{\vec{e}}{t} \in \mathbb{R}^{n_h}$ is the input embedding vector at time $t$; and
+  \item $\suppar{\vec{h}}{t} \in \mathbb{R}^{n_h}$ is the hidden-layer activation vector at time $t$;
+  \item $\suppar{\vec{\hat{y}}}{t} \in \mathbb{R}^{n_y}$ is the output vector at time $t$;
+  \item $\matr{E} \in \mathbb{R}^{n_h \times n_x}$ is the embedding matrix;
+  \item $\matr{W} \in \mathbb{R}^{n_h \times n_x}$ is the weight matrix between the input and hidden layers;
+  \item $\matr{U} \in \mathbb{R}^{n_h \times n_h}$ is the weight matrix between the hidden layer and itself;
+  \item $\softmax : \mathbb{R}^{n_h} \to \mathbb{R}^{n_h}$ is the hidden-layer activation function; and
+  \item $\softmax : \mathbb{R}^{n_y} \to \mathbb{R}^{n_y}$ is the output-layer activation function.
+\end{itemize}
+
+In index notation:
+\[
+  \begin{array}{lll}
+    \suppar{e_i}{t} = E_{ij} \suppar{x_j}{t}
+    , &
+    \suppar{h_i}{t} = \softmax(\matr{W}_{ij} \suppar{e_j}{t} + \matr{U}_{ij} \suppar{h_j}{t - 1})
+    , &
+    \suppar{\hat{y}_i}{t} = \softmax(\suppar{h_j}{t} \matr{E}_{ji})
+  \end{array}
+\]
+
+For an input sequence of length three:
+\[
+  \begin{array}{lll}
+    \suppar{e_i}{0} = E_{ij} \suppar{x_j}{0}
+    , &
+    \suppar{h_i}{0} = \softmax(\matr{W}_{ij} \suppar{e_j}{0})
+    , &
+    \suppar{\hat{y}_i}{0} = \softmax(\suppar{h_j}{0} \matr{E}_{ji})
+    \\[2ex]
+    \suppar{e_i}{1} = E_{ij} \suppar{x_j}{1}
+    , &
+    \suppar{h_i}{1} = \softmax(\matr{W}_{ij} \suppar{e_j}{1} + \matr{U}_{ij} \suppar{h_j}{0})
+    , &
+    \suppar{\hat{y}_i}{1} = \softmax(\suppar{h_j}{1} \matr{E}_{ji})
+    \\[2ex]
+    \suppar{e_i}{2} = E_{ij} \suppar{x_j}{2}
+    , &
+    \suppar{h_i}{2} = \softmax(\matr{W}_{ij} \suppar{e_j}{2} + \matr{U}_{ij} \suppar{h_j}{1})
+    , &
+    \suppar{\hat{y}_i}{2} = \softmax(\suppar{h_j}{2} \matr{E}_{ji})
+  \end{array}
+\]
+$$
+  \mathcal{L} =
+  \sum_{t} \mathcal{L}(\suppar{\vec{\hat{y}}}{t}, \suppar{\vec{y}}{t}) =
+  -\log\suppar{\hat{y}_{w_{1}}}{0}
+  -\log\suppar{\hat{y}_{w_{2}}}{1}
+$$

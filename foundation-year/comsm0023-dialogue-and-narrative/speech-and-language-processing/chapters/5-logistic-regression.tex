@@ -141,7 +141,7 @@ It maximises the log probability of the true outputs given the input feature vec
 The cross-entropy loss is:
 \begin{equation}
   \label{eqnCrossEntropyLoss}
-  L_{CE}(\vec{\hat{y}}, \vec{y}) = - \sum_{i = 1}^{k} y_i \log \hat{y}_i
+  \mathcal{L}(\vec{\hat{y}}, \vec{y}) = - \sum_{i = 1}^{k} y_i \log \hat{y}_i
 \end{equation}
 
 \paragraph{Derivation for binary regression}
@@ -184,14 +184,14 @@ The equation to update the weights is:
 For binary logistic regression, the cross-entropy loss function is:
 \begin{equation}
   \label{eqnBinaryCrossEntropy}
-  L_{\text{CE}}(\hat{y}, y) = - y \log \hat{y} - (1 - y) \log (1 - \hat{y})
+  \mathcal{L}(\hat{y}, y) = - y \log \hat{y} - (1 - y) \log (1 - \hat{y})
   \quad \text{where} \quad
   \hat{y} = \sigma(\vec{w} \cdot \vec{x} + b)
 \end{equation}
 
 Its derivative with respect to $w_i$ is:
 \begin{align}
-  \frac{\partial L_{\text{CE}}}{\partial w_j}
+  \frac{\partial \mathcal{L}}{\partial w_j}
    & = - y \frac{\partial \log \hat{y}}{\partial w_j} - (1 - y) \frac{\partial \log (1 - \hat{y})}{\partial w_j}                         \\
    & = - \frac{y}{\hat{y}} \frac{\partial \hat{y}}{\partial w_j} - \frac{1 - y}{1 - \hat{y}} \frac{\partial (1 - \hat{y})}{\partial w_j} \\
    & = - \biggl( \frac{y}{\hat{y}} - \frac{1 - y}{1 - \hat{y}} \biggr) \frac{\partial \hat{y}}{\partial w_j}
@@ -203,7 +203,7 @@ The derivative of the sigmoid function is:
 \end{equation}
 Therefore:
 \begin{align}
-  \frac{\partial L_{\text{CE}}}{\partial w_j}
+  \frac{\partial \mathcal{L}}{\partial w_j}
    & =  - (y - \hat{y}) \frac{\partial (\vec{w} \cdot \vec{x} + b)}{\partial w_j} \\
    & = (\hat{y} - y) x_j
 \end{align}
