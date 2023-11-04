@@ -1,6 +1,7 @@
 \newcommand{\suppar}[2]{#1^{\,(#2)}}
 
 \section{RNNs and LSTMs}
+\label{sec:9:rnn-lstm}
 
 Language is inherently temporal.
 Some language-processing algorithms are temporal, e.g., the Viterbi algorithm
@@ -11,6 +12,7 @@ to $n$-gram models or feedforward neural networks: they do not require a fixed
 window size.
 
 \subsection{Recurrent Neural Networks}
+\label{sec:9:rnn}
 
 A \textit{recurrent} neural network (RNN) has a cycle in its connections.
 Generally, RNNs are difficult to train but constrained architectures like
@@ -48,7 +50,8 @@ But generally, a feedforward network is generated from the structure of an RNN
 for a given input sequence.
 Long input sequences can be divided into fixed-length subsequences.
 
-\subsection{RNNs as Language Models}
+\subsection{Language modelling}
+\label{sec:9:rnn-lm}
 
 \subsubsection{Inference}
 \label{sec:9:rnn-lm-inference}
@@ -85,6 +88,7 @@ probabilities of the words in the sequence:
 \end{equation}
 
 \subsubsection{Training}
+\label{sec:9:rnn-lm-training}
 
 The model is trained to minimise the difference between the predicted and
 correct probability distributions, which is measured by the cross-entropy loss
@@ -122,3 +126,71 @@ of the model and improves its perplexity:
   \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1}) \\
   \suppar{\vec{y}}{t} & = \softmax(\matr{E}^T \suppar{\vec{h}}{t})
 \end{align}
+
+\subsection{Other tasks}
+\label{sec:9:rnn-other-tasks}
+
+\subsubsection{Sequence labelling}
+
+In an RNN for sequence labelling (section~\ref{sec:8:sequence-labelling}), the
+input vectors are pre-trained embeddings and the output vectors are probability
+distributions over the labels.
+The RNN infers the most likely label at each time step and is trained as in
+section~\ref{sec:9:rnn-lm-training}.
+
+\subsubsection{Sequence classification}
+\label{sec:9:rnn-sequence-classification}
+
+In an RNN for sequence classification, the hidden layer for the last time step
+is treated as a compressed representation of the entire sequence.
+This representation can be input to a feedforward network for classification
+(section~\ref{sec:7:nn-classification}).
+
+Alternatively, a \textit{pooling} function can be used to represent the entire
+sequence by an aggregate of the hidden layers at each time step, e.g., the
+element-wise mean or maximum.
+In this instance, the RNN is trained \textit{end-to-end}: the loss function is
+based only on the classification task.
+
+\subsubsection{Text generation}
+
+The approach of incrementally generating text from a language model by
+repeatedly sampling the next word from the predicted probability distribution
+conditioned on the previous samples is called \textit{autoregressive} or causal
+language-model generation.
+Task-appropriate context can be provided by conditioning the model on a prefix
+as well as the previous samples.
+
+\subsection{Stacked RNNs}
+
+In sections~\ref{sec:9:rnn} to \ref{sec:9:rnn-other-tasks}, the input vectors
+are embeddings and the output vectors are probability distributions that predict
+words or labels.
+\textit{Stacked} RNNs consist of multiple networks, where the output vectors of
+one network are the input vectors of the next.
+
+Generally, stacked RNNs outperform single-layer networks.
+They seem to induce representations at different levels of abstraction in the
+different layers.
+However, they are more expensive to train.
+
+\subsection{Bidirectional RNNs}
+
+In sections~\ref{sec:9:rnn} to \ref{sec:9:rnn-other-tasks}, the networks use
+information from only the prior context (previous time steps).
+However, for some tasks, the entire sequence can be accessed at once, i.e.,
+information from subsequent time steps could also be used.
+\textit{Bidirectional} RNNs consist of two networks, one that processes the
+sequence from left to right and one that processes it from right to left.
+
+The hidden-layer activation vectors of the two networks can be concatenated at
+each time step to produce a single vector that represents both contexts:
+\begin{equation}
+  \suppar{\vec{h}}{t} = \begin{bmatrix}
+    \suppar{\vec{h}}{t}_\text{left} & \suppar{\vec{h}}{t}_\text{right}
+  \end{bmatrix}
+\end{equation}
+Alternatively, the two vectors can be combined with a pooling function, e.g.,
+element-wise addition or multiplication.
+Bidirectional RNNs have been successfully applied to sequence classification
+(section~\ref{sec:9:rnn-sequence-classification}).
