@@ -1,0 +1,124 @@
+\newcommand{\suppar}[2]{#1^{\,(#2)}}
+
+\section{RNNs and LSTMs}
+
+Language is inherently temporal.
+Some language-processing algorithms are temporal, e.g., the Viterbi algorithm
+(section~\ref{sec:8:viterbi-algorithm}), but others access the entire input
+sequence at once, e.g., bag-of-words models.
+Recurrent neural networks, e.g., LSTMs, represent prior context differently
+to $n$-gram models or feedforward neural networks: they do not require a fixed
+window size.
+
+\subsection{Recurrent Neural Networks}
+
+A \textit{recurrent} neural network (RNN) has a cycle in its connections.
+Generally, RNNs are difficult to train but constrained architectures like
+\textit{Elman} or \textit{simple} recurrent networks have proved successful for
+language modelling tasks.
+
+\subsubsection{Inference}
+\label{sec:9:rnn-inference}
+
+For a simple RNN with one hidden layer, inference at time $t$ is computed by:
+\begin{align}
+  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{x}}{t} + \matr{U} \suppar{\vec{h}}{t - 1}) \\
+  \suppar{\vec{y}}{t} & = g(\matr{V} \suppar{\vec{h}}{t})
+\end{align}
+\begin{itemize}
+  \item $\suppar{\vec{x}}{t} \in \mathbb{R}^{n_x}$ is the input vector at time $t$;
+  \item $\suppar{\vec{h}}{t} \in \mathbb{R}^{n_h}$ is the hidden-layer activation vector at time $t$;
+  \item $\suppar{\vec{y}}{t} \in \mathbb{R}^{n_y}$ is the output vector at time $t$;
+  \item $\matr{W} \in \mathbb{R}^{n_h \times n_x}$ is the weight matrix between the input and hidden layers;
+  \item $\matr{U} \in \mathbb{R}^{n_h \times n_h}$ is the weight matrix between the hidden layer and itself;
+  \item $\matr{V} \in \mathbb{R}^{n_y \times n_h}$ is the weight matrix between the hidden and output layers;
+  \item $f : \mathbb{R}^{n_h} \to \mathbb{R}^{n_h}$ is the hidden-layer activation function; and
+  \item $g : \mathbb{R}^{n_y} \to \mathbb{R}^{n_y}$ is the output-layer activation function.
+\end{itemize}
+The computation is incremental because the hidden-layer activation vector at
+time $t$ depends on the hidden-layer activation vector at time $t - 1$.
+The network is effectively \textit{unrolled} over time, i.e., the vectors are
+copied for each time step, but the weight matrices are shared across time steps.
+
+\subsubsection{Training}
+
+Historically, RNNs were trained with \textit{backpropagation through time}, a
+two-pass algorithm.
+But generally, a feedforward network is generated from the structure of an RNN
+for a given input sequence.
+Long input sequences can be divided into fixed-length subsequences.
+
+\subsection{RNNs as Language Models}
+
+\subsubsection{Inference}
+\label{sec:9:rnn-lm-inference}
+
+For a simple recurrent language model with one hidden layer, inference at time
+$t$ is computed by (section~\ref{sec:9:rnn-inference}):
+\begin{align}
+  \suppar{\vec{e}}{t} & = \matr{E} \suppar{\vec{x}}{t}                                       \\
+  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1}) \\
+  \suppar{\vec{y}}{t} & = \softmax(\matr{V} \suppar{\vec{h}}{t})
+\end{align}
+\begin{itemize}
+  \item $\matr{X} = \begin{bmatrix} \vec{x}_1 & \dots & \vec{x}_n \end{bmatrix}
+          \in \mathbb{R}^{n_x \times n}$ is the input matrix, i.e., a sequence
+        of $n$ word embeddings represented by one-hot vectors of size $n_x$ (the
+        vocabulary size);
+  \item $\suppar{\vec{e}}{t} \in \mathbb{R}^{n_h}$ is the input embedding vector at time $t$; and
+  \item $\matr{E} \in \mathbb{R}^{n_h \times n_x}$ is the input embedding matrix.
+\end{itemize}
+
+\subsubsection{Predicted probabilities}
+
+The output vector $\suppar{\vec{y}}{t}$ is the predicted probability
+distribution over the vocabulary.
+The predicted probability that the next word is the $i$-th word is
+$\suppar{y_i}{t}$, i.e., the $i$-th component of $\suppar{\vec{y}}{t}$:
+\begin{equation}
+  P(w_{t + 1} = i \mid w_{1} \dots w_{t}) = \suppar{y_i}{t}
+\end{equation}
+The predicted probability of a sequence of length $n$ is the product of the
+probabilities of the words in the sequence:
+\begin{equation}
+  P(w_{1} \dots w_{n}) = \prod_{i = 1}^n \suppar{y_{w_i}}{i}
+\end{equation}
+
+\subsubsection{Training}
+
+The model is trained to minimise the difference between the predicted and
+correct probability distributions, which is measured by the cross-entropy loss
+function.
+The correct probability distribution is represented by a one-hot vector that is
+1 for the next true word and 0 otherwise.
+Therefore, the cross-entropy loss is solely determined by the predicted
+probability of the next true word:
+\begin{equation}
+  \mathcal{L}(\suppar{\vec{\hat{y}}}{t}, \suppar{\vec{y}}{t})
+  = -\log\suppar{\hat{y}_{w_{t + 1}}}{t}
+\end{equation}
+
+At each time $t$ of the input sequence, inference is performed with the true
+sequence $w_1 \dots w_t$ to generate the predicted probability distribution
+$\suppar{\vec{\hat{y}}}{t}$ and the cross-entropy loss is computed from the
+predicted probability of the next true word $\suppar{\hat{y}_{w_{t + 1}}}{t}$.
+The procedure is repeated at time $t + 1$, ignoring the predicted word at time
+$t$.
+
+\subsubsection{Weight tying}
+
+The output vector $\suppar{\vec{y}}{t} \in \mathbb{R}^{n_x}$ of a language model
+has the same dimensions as the input vector.
+Therefore, the input embedding matrix $\matr{E} \in \mathbb{R}^{n_h \times n_x}$
+and the weight matrix between the hidden and output layers
+$\matr{V} \in \mathbb{R}^{n_x \times n_h}$ are similar: both can be interpreted
+as word embeddings.
+
+\textit{Weight tying} is the practice of setting $\matr{V} = \matr{E}^T$
+(section~\ref{sec:9:rnn-lm-inference}), which reduces the number of parameters
+of the model and improves its perplexity:
+\begin{align}
+  \suppar{\vec{e}}{t} & = \matr{E} \suppar{\vec{x}}{t}                                       \\
+  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1}) \\
+  \suppar{\vec{y}}{t} & = \softmax(\matr{E}^T \suppar{\vec{h}}{t})
+\end{align}
