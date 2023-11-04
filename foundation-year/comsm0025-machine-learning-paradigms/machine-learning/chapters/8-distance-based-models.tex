@@ -16,7 +16,7 @@ A distance-based model is generally comprised of:
 
 \begin{dfn}
   [Metric]
-  A metric is a function $d : M \times M \rightarrow \mathbb{R}$, where $M$ is a
+  A metric is a function $d : M \times M \to \mathbb{R}$, where $M$ is a
   set of points, such that:
   \begin{enumerate}
     \item $d(x, x) = 0 \ \forall\ x \in M$
@@ -95,10 +95,10 @@ $f(ax) \neq a f(x) \ \forall\ a \in \mathbb{R}, x \in X$.
 \begin{dfn}
   [Chebyshev distance]
   The Chebyshev distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$
-  is the Minkowski distance of order $p \rightarrow \infty$:
+  is the Minkowski distance of order $p \to \infty$:
   \begin{equation}
     D_{\infty}(\vec{x}, \vec{y})
-    = \lim_{p \rightarrow \infty} \left( \sum_{i = 1}^{n} |x_i - y_i|^{p} \right)^{\frac{1}{p}}
+    = \lim_{p \to \infty} \left( \sum_{i = 1}^{n} |x_i - y_i|^{p} \right)^{\frac{1}{p}}
     = \max_{i = 1}^{n} |x_i - y_i|
   \end{equation}
 \end{dfn}
@@ -380,9 +380,9 @@ pairwise distances between clusters.
 
 \begin{dfn}
   [Linkage function]
-  Let $X$ be a set of instances and $D : X \times X \rightarrow \mathbb{R}$ be
+  Let $X$ be a set of instances and $D : X \times X \to \mathbb{R}$ be
   a distance metric.
-  A linkage function $L : X \times X \rightarrow \mathbb{R}$ is the distance
+  A linkage function $L : X \times X \to \mathbb{R}$ is the distance
   between $X_i, X_j \subseteq X$.
 \end{dfn}
 

@@ -26,7 +26,7 @@ Logistic regression learns a vector of \textit{weights} and a \textit{bias} term
   z = \biggl( \sum_{i = 1}^{n} w_i x_i \biggr) + b \equiv \vec{w} \cdot \vec{x} + b
 \end{equation}
 
-The \textit{sigmoid} or logistic function $\sigma : \mathbb{R} \rightarrow [0, 1]$ is:
+The \textit{sigmoid} or logistic function $\sigma : \mathbb{R} \to [0, 1]$ is:
 \begin{equation}
   \label{eqnSigmoid}
   \sigma(z) = \frac{1}{1 + e^{-z}}
@@ -69,7 +69,7 @@ This transformation is called the \textit{z-score}.
   \sigma_i = \sqrt{\frac{1}{N} \sum_{j = 1}^{N} (x_{ij} - \mu_i)^2}
 \end{equation}
 
-Alternatively, we can \textit{normalize} features by $f : \mathbb{R} \rightarrow [0, 1]$:
+Alternatively, we can \textit{normalize} features by $f : \mathbb{R} \to [0, 1]$:
 \begin{equation}
   \label{eqnNormalize}
   x_{ij}^{\prime} = \frac{x_{ij} - \min(x_i)}{\max(x_i) - \min(x_i)}

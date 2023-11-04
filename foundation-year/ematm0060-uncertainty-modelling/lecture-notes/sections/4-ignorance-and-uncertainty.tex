@@ -16,9 +16,9 @@ In Dempster-Shafer theory, uncertainty is quantified by two measures:
   [Belief and plausibility measures]
   \label{def:4:BeliefPlausibility}
   Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
-  A mass function $m : 2^W \rightarrow [0, 1]$ generates:
+  A mass function $m : 2^W \to [0, 1]$ generates:
   \begin{itemize}
-    \item a belief measure $\bel : 2^W \rightarrow [0, 1]$ such that:
+    \item a belief measure $\bel : 2^W \to [0, 1]$ such that:
           \begin{equation}
             \label{eqn:4:Belief}
             \bel(A) =
@@ -26,7 +26,7 @@ In Dempster-Shafer theory, uncertainty is quantified by two measures:
             \ \forall\
             A \subseteq W
           \end{equation}
-    \item a plausibility measure $\pl : 2^W \rightarrow [0, 1]$ such that:
+    \item a plausibility measure $\pl : 2^W \to [0, 1]$ such that:
           \begin{equation}
             \label{eqn:4:Plausibility}
             \pl(A) =
@@ -78,7 +78,7 @@ I.e., for a proposition $A \subseteq W$:
 
 \begin{thm}
   [Relation to probability theory]
-  If $m : 2^W \rightarrow [0, 1]$ is a mass function such that
+  If $m : 2^W \to [0, 1]$ is a mass function such that
   $\sum_{w \in W} m(\{w\}) = 1$, then:
   \begin{equation}
     \bel(A) = \pl(A) = P(A) = \sum_{w \in A} m(\{w\})
@@ -187,9 +187,9 @@ Given one of $m$, $\bel$ or $\pl$, the other two can be derived
   [The mass function in terms of a belief measure]
   \label{thm:4:MassFunctionBelief}
   Let $W$ be a set of possible worlds,
-  $\bel : 2^W \rightarrow [0, 1]$ be a belief measure, and
+  $\bel : 2^W \to [0, 1]$ be a belief measure, and
   $A \subseteq W$ be a proposition.
-  The mass function $m : 2^W \rightarrow [0, 1]$ is:
+  The mass function $m : 2^W \to [0, 1]$ is:
   \begin{equation}
     \label{eqn:4:MassFunctionBelief}
     m(A) = \sum_{B \subseteq A} (-1)^{|A - B|} \bel(B)
@@ -275,7 +275,7 @@ probability measures (\textit{credal sets}).
 \begin{dfn}
   [Lower and upper probability measures]
   Let $\mathbb{P}(K) \subseteq \mathbb{P}$ be a closed convex set of probability
-  measures $P : 2^W \rightarrow [0, 1]$ and $A \subseteq W$ be a proposition.
+  measures $P : 2^W \to [0, 1]$ and $A \subseteq W$ be a proposition.
   The lower ($\underline{P}$) and upper ($\overline{P}$) probability measures are:
   \begin{equation}
     \underline{P}(A) = \min\ \{ P(A) : P \in \mathbb{P}(K) \}\,,\
@@ -300,7 +300,7 @@ lower and upper probability measures, respectively.
 \begin{thm}
   [Relations to belief and plausibility measures]
   Let $W$ be a set of possible worlds, $A \subseteq W$ be a proposition,
-  $\bel : 2^W \rightarrow [0, 1]$ be a belief measure, and
+  $\bel : 2^W \to [0, 1]$ be a belief measure, and
   $K = \{ P(A) \geq \bel(A) \}$.
   \begin{equation}
     \bel(A) = \underline{P}(A)\,,\
@@ -360,8 +360,8 @@ can be generalised to mass functions.
   [Posterior probability given a mass function]
   \label{def:4:PosteriorProbability}
   Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions,
-  $P : 2^W \rightarrow [0, 1]$ be a prior probability distribution, and
-  $m : 2^W \rightarrow [0, 1]$ be a mass function.
+  $P : 2^W \to [0, 1]$ be a prior probability distribution, and
+  $m : 2^W \to [0, 1]$ be a mass function.
   The posterior probability of $A$ given $m$ is:
   \begin{equation}
     P(A \mid m) = \sum_{B \subseteq W} P(A \mid B) m(B)

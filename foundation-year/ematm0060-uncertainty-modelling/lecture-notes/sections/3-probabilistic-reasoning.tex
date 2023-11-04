@@ -223,7 +223,7 @@ propositions and their relations to definition~\ref{def:2:ProbabilityMeasure}.
 \begin{dfn}
   [Joint probability distribution]
   The joint probability distribution of
-  ${X = \{ X_i : W \rightarrow \Omega \mid i \in 1 .. n \}}$ is:
+  ${X = \{ X_i : W \to \Omega \mid i \in 1 .. n \}}$ is:
   \begin{align}
     P(X)
      & = P \bigl( \bigwedge_{i = 1}^{n} X_i = x_i \bigr) \nonumber \\
@@ -237,7 +237,7 @@ dimension of the random variables (the \textit{curse of dimensionality}).
 
 \begin{dfn}
   [Marginal probability distribution]
-  The marginal probability distribution of $X_i : W \rightarrow \Omega$ is:
+  The marginal probability distribution of $X_i : W \to \Omega$ is:
   \begin{equation}
     P(X_i = x_i) = P(\{ w : X_i(w) = x_i \})
     \ \forall\
@@ -367,7 +367,7 @@ It is a compromise between independence and dependence: it assumes
   A Bayesian network is:
   \begin{itemize}
     \item a directed acyclic graph $(V, E)$ where each vertex $v_i \in V$ is a
-          random variable $X_i : W \rightarrow \Omega$ and $(X_i, X_j) \in E$
+          random variable $X_i : W \to \Omega$ and $(X_i, X_j) \in E$
           only if $j < i$; and
     \item a joint probability distribution on $\{ X_i \mid i \in 1 .. k \}$
           where:
