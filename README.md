@@ -12,6 +12,7 @@ University of Bristol.
 - [Notes](./foundation-year/comsm0023-dialogue-and-narrative/speech-and-language-processing/speech-and-language-processing.pdf)
   on Jurafsky and Martin's [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/)
 - [Slides on vector semantics](./foundation-year/comsm0023-dialogue-and-narrative/slides/week-4-vector-semantics/week-4-vector-semantics.pdf)
+- [Slides on recurrent networks](./foundation-year/comsm0023-dialogue-and-narrative/slides/week-7-recurrent-networks/week-7-recurrent-networks.pdf)
 
 [Machine Learning Paradigms](https://www.bris.ac.uk/unit-programme-catalogue/UnitDetails.jsa?ayrCode=23%2F24&unitCode=COMSM0025)
 
