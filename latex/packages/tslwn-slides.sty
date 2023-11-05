@@ -4,7 +4,19 @@
   \clearlist{language}%
   \clearfield{month}%
   \clearfield{note}%
+  \clearfield{eprint}%
 }
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldset=urldate, null]
+    }
+  }
+}
+
+\setbeamertemplate{bibliography item}{}
+\setlength\bibitemsep{1.5\itemsep}
 
 % Set the global item separation.
 \xpatchcmd{\itemize}

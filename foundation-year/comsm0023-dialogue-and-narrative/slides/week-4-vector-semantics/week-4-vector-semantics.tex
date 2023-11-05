@@ -83,15 +83,9 @@
   {Skip-gram with negative sampling}
   {Feature engineering}
   \begin{itemize}
-    \item \href
-          {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L19-L52}
-          {Find unigram counts and weights}
-    \item \href
-          {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L97-L106}
-          {Find $n$-grams where $n - 1$ is the window size}
-    \item \href
-          {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L79-L95}
-          {Find positive examples (target-context word pairs)}
+    \item Find unigram counts and weights
+    \item Find $n$-grams where $n - 1$ is the window size
+    \item Find positive examples (target-context word pairs)
   \end{itemize}
 \end{frame}
 
@@ -99,23 +93,13 @@
   {Skip-gram with negative sampling}
   {Training}
   \begin{itemize}
-    \item \href
-          {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L154-L156}
-          {Initialize target- and context-word matrices}
-    \item \href
-          {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L180-L185}
-          {Iterate until stopping criterion is met}
+    \item Initialize target- and context-word matrices
+    \item Iterate until stopping criterion is met
     \item[]
           \begin{itemize}
-            \item \href
-                  {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L202-L222}
-                  {Update the positive context-word vector}
-            \item \href
-                  {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L54-L60}
-                  {Find negative examples by sampling from the vocabulary}
-            \item \href
-                  {https://github.com/tslwn/dialogue_and_narrative/blob/main/exercises/word2vec.py\#L224-L256}
-                  {Update the negative context- and target-word vectors}
+            \item Update the positive context-word vector
+            \item Find negative examples by sampling from the vocabulary
+            \item Update the negative context- and target-word vectors
           \end{itemize}
   \end{itemize}
 \end{frame}
@@ -169,6 +153,7 @@
 
 \begin{frame}
   {Bibliography}
+  \renewcommand*{\bibfont}{\footnotesize}
   \printbibliography
 \end{frame}
 
