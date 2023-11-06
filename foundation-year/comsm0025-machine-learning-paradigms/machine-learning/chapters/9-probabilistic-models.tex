@@ -35,35 +35,35 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
 
 \subsection{Normal distributions}
 
-\paragraph{Univariate}
-
 \begin{dfn}
   [Univariate normal distribution]
   \label{dfn:9:univariate-normal-distribution}
+  Let $x \in \mathbb{R}$ be a random variable of mean $\mu$ and standard
+  deviation $\sigma$.
+  The normal distribution is:
   \begin{align}
     P(x \mid \mu, \sigma)
      & = \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right) \\
      & = \frac{1}{E} \exp \left( - \frac{z^2}{2} \right) ,\
+    z = \frac{x - \mu}{\sigma} ,\
     E = \sqrt{2 \pi} \sigma
   \end{align}
-  \begin{itemize}
-    \item $\mu \in \mathbb{R}$ is the mean;
-    \item $\sigma \in \mathbb{R}$ is the standard deviation; and
-    \item $z = \frac{x - \mu}{\sigma}$ is the $z$-score.
-  \end{itemize}
 \end{dfn}
-If $\mu = 0$ and $\sigma = 1$, then it is the \textit{standard} univariate
-normal distribution:
-\begin{equation}
-  P(x \mid \mu = 0, \sigma = 1)
-  = \frac{1}{\sqrt{2 \pi}} \exp \left( - \frac{x^2}{2} \right)
-\end{equation}
 
-\paragraph{Multivariate}
+\begin{dfn}
+  [Standard univariate normal distribution]
+  \begin{equation}
+    P(x \mid \mu = 0, \sigma = 1)
+    = \frac{1}{\sqrt{2 \pi}} \exp \left( - \frac{x^2}{2} \right)
+  \end{equation}
+\end{dfn}
 
 \begin{dfn}
   [Multivariate normal distribution]
   \label{dfn:9:multivariate-normal-distribution}
+  Let $\vec{x} \in \mathbb{R}^n$ be a random variable of mean $\vec{\mu}$ and
+  covariance matrix $\matr{\Sigma}$.
+  The normal distribution is:
   \begin{equation}
     \begin{split}
       P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
@@ -73,78 +73,161 @@ normal distribution:
       E_n = (2 \pi)^{n/2} \sqrt{\det \matr{\Sigma}}
     \end{split}
   \end{equation}
-  \begin{itemize}
-    \item $\vec{\mu} \in \mathbb{R}^n$ is the mean; and
-    \item $\matr{\Sigma} \in \mathbb{R}^{n \times n}$ is the covariance matrix.
-  \end{itemize}
 \end{dfn}
-If $\vec{\mu} = \vec{0}$ and $\matr{\Sigma} = \matr{I}$, then it is the
-\textit{standard} multivariate normal distribution:
-\begin{equation}
-  P(\vec{x} \mid \vec{\mu} = \vec{0}, \matr{\Sigma} = \matr{I})
-  = \frac{1}{(2 \pi)^{n / 2}} \exp \left( - \frac{\vec{x} \cdot \vec{x}}{2} \right)
-\end{equation}
+
+\begin{dfn}
+  [Standard multivariate normal distribution]
+  \begin{equation}
+    P(\vec{x} \mid \vec{\mu} = \vec{0}, \matr{\Sigma} = \matr{I})
+    = \frac{1}{(2 \pi)^{n / 2}} \exp \left( - \frac{\norm{\vec{x}}^2}{2} \right)
+  \end{equation}
+\end{dfn}
 
 \subsubsection{Gaussian mixture models}
 
-A Gaussian mixture model is a mixture of $k$ Gaussian distributions.
-For $k = 2$, i.e., binary classification,
-$X = \{ x_i \mid i = 1 .. n \} = X_+ \cup X_-$.
+\begin{dfn}
+  [Mixture model]
+  Let $X = \bigcup_{i = 1}^k X_i$ be a set of instances partitioned into $k$ classes.
+  A mixture model is a set of probability distributions or components
+  $\{ P(X_i) \mid i \in 1 .. k \}$.
+\end{dfn}
 
-\paragraph{Univariate}
+\begin{dfn}
+  [Gaussian mixture model]
+  Let $X = \bigcup_{i = 1}^k X_i$ be a set of instances partitioned into $k$ classes.
+  A Gaussian mixture model (GMM) is a set of Gaussian distributions
+  $\{ P(X_i \mid \vec{\mu}_i, \matr{\Sigma}_i) \mid i \in 1 .. k \}$.
+\end{dfn}
 
-In the univariate case, the likelihood ratio is:
-\begin{equation*}
-  \frac{P(X_+)}{P(X_-)}
-  = \frac{\sigma_-}{\sigma_+} \exp \left(
-  - \frac{1}{2} \left(
-    \left( \frac{x - \mu_+}{\sigma_+} \right)^2
-    - \left( \frac{x - \mu_-}{\sigma_-} \right)^2
-    \right)
-  \right)
-\end{equation*}
+\begin{dfn}
+  [Likelihood ratio of a binary classifier]
+  Let $X = X_+ \cup X_-$ be a set of instances partitioned into two classes and
+  $P(x \mid X_i)$ be the likelihood that an instance $x$ belongs to class $X_i$.
+  The likelihood ratio is:
+  \begin{equation*}
+    \lambda(x) = \frac{P(x \mid X_+)}{P(x \mid X_-)}
+  \end{equation*}
+\end{dfn}
 
-If $\sigma_+ = \sigma_- = \sigma$, then the likelihood ratio is:
-\begin{equation*}
-  \exp (\gamma (x - \mu)) ,\
-  \gamma = \frac{\mu_+ - \mu_-}{\sigma^2} ,\
-  \mu = \frac{\mu_+ + \mu_-}{2}
-\end{equation*}
-and the maximum-likelihood decision threshold, i.e., the value of $x$ such
-that the likelihood ratio is 1, is $\mu$.
+\begin{proposition}
+  [Likelihood ratio of a binary univariate GMM]
+  \begin{align*}
+    \lambda(x)
+     & = \frac{P(x \mid X_+)}{P(x \mid X_-)}
+    = \frac{P(x \mid \mu_+, \sigma_+)}{P(x \mid \mu_-, \sigma_-)} \\
+     & = \frac{\sigma_-}{\sigma_+}\exp\left(-\frac{1}{2}\left(
+      \left(\frac{x - \mu_+}{\sigma_+} \right)^2 -
+      \left(\frac{x - \mu_-}{\sigma_-} \right)^2
+      \right)\right)
+  \end{align*}
+\end{proposition}
 
-If the standard deviations of the two Gaussian distributions are different, then
-there are two decision boundaries and a non-contiguous decision region for one
-of the classes.
+\begin{dfn}
+  [Maximum-likelihood decision threshold of a binary classifier]
+  Let $X = X_+ \cup X_-$ be a set of instances partitioned into two classes.
+  The maximum-likelihood decision threshold is $x : \lambda(x) = 1$.
+\end{dfn}
 
-\paragraph{Multivariate}
+\begin{proposition}
+  Let $\{ P(X_+ \mid \mu_+, \sigma), P(X_- \mid \mu_-, \sigma) \}$ be a binary
+  univariate GMM.
+  The maximum-likelihood decision threshold is $x = \frac{1}{2}(\mu_+ + \mu_-)$.
+  \begin{proof}
+    \begin{align*}
+      \lambda(x)
+       & = \exp\left(-\frac{1}{2}\left(
+        \left(\frac{x - \mu_+}{\sigma} \right)^2 -
+        \left(\frac{x - \mu_-}{\sigma} \right)^2
+      \right)\right)                                      \\[2ex]
+       & = \exp\left(\frac{\mu_+ - \mu_-}{\sigma^2}\left(
+        x - \frac{\mu_+ + \mu_-}{2}
+        \right)\right)
+    \end{align*}
+    $x : \lambda(x) = 1 \implies x = \frac{1}{2}(\mu_+ + \mu_-)$.
+  \end{proof}
+\end{proposition}
 
-In the multivariate case, the likelihood ratio is:
-\begin{equation*}
-  \sqrt{\frac{\det\Sigma_+}{\det\Sigma_-}}
-  \exp \left(-\frac{1}{2} \left(
-    \left(\vec{x} - \vec{\mu}_+ \right)^T \Sigma_+^{-1}
-    \left(\vec{x} - \vec{\mu}_+ \right) -
-    \left(\vec{x} - \vec{\mu}_- \right)^T \Sigma_-^{-1}
-    \left(\vec{x} - \vec{\mu}_- \right)
-    \right) \right)
-\end{equation*}
+\begin{proposition}
+  Let $\{ P(X_+ \mid \mu_+, \sigma_+), P(X_- \mid \mu_-, \sigma_-) \}, \sigma_+ \neq \sigma_-$
+  be a binary univariate GMM.
+  There are two maximum-likelihood decision thresholds.
+  \begin{proof}
+    \begin{equation*}
+      \lambda(x)
+      = \frac{\sigma_-}{\sigma_+}\exp\left(-\frac{1}{2}\left(
+        \left(\frac{x - \mu_+}{\sigma_+} \right)^2 -
+        \left(\frac{x - \mu_-}{\sigma_-} \right)^2
+        \right)\right)
+    \end{equation*}
+    \begin{align*}
+      \lambda(x) = 1 \implies \frac{\sigma_+}{\sigma_-}
+       & = \exp\left(-\frac{1}{2}\left(
+        \left(\frac{x - \mu_+}{\sigma_+} \right)^2 -
+        \left(\frac{x - \mu_-}{\sigma_-} \right)^2
+      \right)\right)                                    \\[2ex]
+      -2 \ln \frac{\sigma_+}{\sigma_-}
+       & = \left(\frac{x - \mu_+}{\sigma_+} \right)^2 -
+      \left(\frac{x - \mu_-}{\sigma_-} \right)^2
+    \end{align*}
+    This is a quadratic equation in $x$:
+    \begin{align*}
+      \left(\sigma_-^2 - \sigma_+^2\right) x^2
+      + 2\left(\mu_+\sigma_-^2 - \mu_-\sigma_+^2\right) x
+      + \left(
+      \mu_-^2\sigma_+^2 -
+      \mu_+^2\sigma_-^2 -
+      2\sigma_-^2\sigma_+^2\ln\frac{\sigma_+}{\sigma_-}
+      \right)
+       & = 0
+    \end{align*}
+    It can be shown that:
+    \begin{equation*}
+      x = \frac{1}{\sigma_+^2 - \sigma_-^2}\left(
+      \mu_-\sigma_+^2 - \mu_+\sigma_-^2 \pm
+      \sigma_+\sigma_-\sqrt{
+          2(\sigma_+^2 - \sigma_-^2)\ln\frac{\sigma_+}{\sigma_-} +
+          (\mu_+ - \mu_-)^2
+        }
+      \right)
+    \end{equation*}
+    The argument of the square-root function is non-negative; hence, there are
+    two real-valued solutions for $x$.
+  \end{proof}
+\end{proposition}
 
-If $\matr{\Sigma}_+ = \matr{\Sigma}_- = \matr{I}$, i.e., for each class, the
-features are uncorrelated and have unit variance, then the likelihood ratio is:
-\begin{equation*}
-  \exp \left(
-  -\frac{1}{2} \left(
-    \norm{\vec{x} - \vec{\mu}_+}^2 - \norm{\vec{x} - \vec{\mu}_-}^2
-    \right)\right)
-\end{equation*}
-and the maximum-likehood decision boundary, i.e., the values of $\vec{x}$ such
-that the likelihood ratio is 1, is the hyperplane equidistant from $\vec{\mu}_+$
-and $\vec{\mu}_-$.
+\begin{proposition}
+  [Likelihood ratio of a binary multivariate GMM]
+  \begin{align*}
+    \lambda(\vec{x})
+     & = \frac{P(\vec{x} \mid X_+)}{P(\vec{x} \mid X_-)}                                                \\[2ex]
+     & = \sqrt{\frac{\det\Sigma_+}{\det\Sigma_-}} \exp \Bigg( -\frac{1}{2} \bigg(
+    \left(\vec{x} - \vec{\mu}_+ \right)^T \Sigma_+^{-1} \left(\vec{x} - \vec{\mu}_+ \right)             \\
+     & \qquad - \left(\vec{x} - \vec{\mu}_- \right)^T \Sigma_-^{-1} \left(\vec{x} - \vec{\mu}_- \right)
+      \bigg) \Bigg)
+  \end{align*}
+\end{proposition}
 
-This is the same as the decision boundary for the basic linear classifier.
-In other words, for uncorrelated Gaussian features with unit variance, the basic
-linear classifier is \textit{Bayes-optimal}.
+\begin{proposition}
+  Let $\{ P(X_+ \mid \vec{\mu}_+, \matr{I}), P(X_- \mid \vec{\mu}_-, \matr{I}) \}$
+  be a binary multivariate GMM.
+  The maximum-likelihood decision boundary is
+  $\vec{x} = \frac{1}{2}(\vec{\mu}_+ + \vec{\mu}_-)$.
+  \begin{proof}
+    \begin{equation*}
+      \lambda(\vec{x}) = \exp \left(-\frac{1}{2}\left(
+        \norm{\vec{x} - \vec{\mu}_+}^2 - \norm{\vec{x} - \vec{\mu}_-}^2
+        \right)\right)
+    \end{equation*}
+    $\lambda(\vec{x}) = 1 \implies \norm{\vec{x} - \vec{\mu}_+}^2 = \norm{\vec{x} - \vec{\mu}_-}^2$,
+    i.e., $\vec{x} = \frac{1}{2}(\vec{\mu}_+ + \vec{\mu}_-)$.
+  \end{proof}
+\end{proposition}
+
+The maximum-likelihood decision boundary of a binary multivariate GMM for
+uncorrelated features with unit variance is the same as the decision boundary of
+the basic linear classifier.
+In other words, the basic linear classifer is \textit{Bayes-optimal} under these
+conditions.
 
 \subsubsection{Distances and probabilities}
 
