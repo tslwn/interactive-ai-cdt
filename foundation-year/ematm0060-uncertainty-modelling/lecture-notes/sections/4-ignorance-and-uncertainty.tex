@@ -48,24 +48,31 @@ I.e., for a proposition $A \subseteq W$:
 \end{itemize}
 
 \begin{thm}
-  [Relations of belief and plausibility measures]
+  [Plausibility is greater than or equal to belief]
   Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
-  \begin{alignat}{2}
-    \label{eqn:4:BeliefPlausibility1}
-    \bel(A) & \leq \pl(A)
-    \       & \forall\
-    A \subseteq W               \\
-    \label{eqn:4:BeliefPlausibility2}
-    \pl(A)  & = 1 - \bel{A^{c}}
-    \       & \forall\
-    A \subseteq W
-  \end{alignat}
+  \begin{equation}
+    \label{eqn:4:PlausibilityGreaterThanBelief}
+    \bel(A) \leq \pl(A) \ \forall\ A \subseteq W
+  \end{equation}
   \begin{proof}
-    $\emptyset \neq B \subseteq A \ \Rightarrow \ B \cap A \neq \emptyset$,
-    hence equation~\ref{eqn:4:BeliefPlausibility1}.
+    $B \neq \emptyset,\ B \subseteq A \ \implies \ B \cap A \neq \emptyset$,
+    i.e., a summation term in equation~\ref{eqn:4:Belief} is also a summation
+    term in equation~\ref{eqn:4:Plausibility}.
+    $m$ is non-negative, hence equation~\ref{eqn:4:PlausibilityGreaterThanBelief}.
+  \end{proof}
+\end{thm}
 
-    $B \cap A \neq \emptyset \ \Leftrightarrow\  B \not\subseteq A^{c}$, hence
-    equation~\ref{eqn:4:BeliefPlausibility2}:
+\begin{thm}
+  [Dual relationship]
+  \label{thm:4:DualRelationship}
+  Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
+  \begin{equation}
+    \label{eqn:4:DualRelationship}
+    \pl(A) = 1 - \bel{A^{c}} \ \forall\ A \subseteq W
+  \end{equation}
+  \begin{proof}
+    $B \cap A \neq \emptyset \ \iff\  B \not\subseteq A^{c}$ and
+    $\sum_{B \subseteq W} m(B) = 1$, hence:
     \begin{align*}
       \pl(A)
        & = \sum_{B \subseteq W : B \cap A \neq \emptyset} m(B)
@@ -181,7 +188,7 @@ definition~\ref{def:2:ProbabilityMeasure}.
 \end{thm}
 
 Given one of $m$, $\bel$ or $\pl$, the other two can be derived
-(theorem~\ref{thm:4:MassFunctionBelief}).
+(theorems~\ref{thm:4:DualRelationship} and \ref{thm:4:MassFunctionBelief}).
 
 \begin{thm}
   [The mass function in terms of a belief measure]
