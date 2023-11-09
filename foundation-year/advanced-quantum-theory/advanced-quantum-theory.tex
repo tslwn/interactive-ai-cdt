@@ -1,0 +1,140 @@
+\documentclass[a4paper]{extarticle}
+\usepackage{../../latex/packages/tslwn-preamble}
+
+\newcommand{\tpr}{t^\prime}
+\newcommand{\dtpr}{\text{d}t^\prime}
+\newcommand{\ihbar}{\frac{i}{\hbar}}
+\newcommand{\propagator}{K(\vec{r}_f, \vec{r}_0, t)}
+
+\title{Advanced Quantum Theory}
+\author{Tim Lawson}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{intro}
+
+\begin{itemize}
+  \item Identity for discrete and eigenmomentum states
+  \item Almost ready to do path integrals
+  \item Solution of time evolution of wavefunction works if you ignore that H is an operator
+\end{itemize}
+
+If you're more careful, you'd want to consider that it's an operator.
+What's the square of an operator? Apply it twice.
+Conclusion is that there's a nice way to study time-evolution in QM with a time-evolution operator.
+
+Next, we can define a propagator.
+
+The propagator is referred to as the matrix element of the time-evolution operator.
+For a discrete basis, it produces a matrix.
+
+\begin{dfn}
+  [Time-evolution operator]
+  \begin{equation}
+    e^{-\frac{i}{\hbar} \hat{H} t}
+  \end{equation}
+\end{dfn}
+
+\begin{dfn}
+  [Propagator]
+  \begin{equation}
+    K(\vec{r}_f, \vec{r}_0, t) = \bra{\vec{r}_f} e^{-i \hat{H} t / \hbar} \ket{\vec{r}_0}
+  \end{equation}
+\end{dfn}
+
+At $t = 0$, you have the initial condition which is the delta function localised
+at $\vec{r}_0$, i.e., it's zero everywhere except at that position.
+
+The boundary conditions are less clear in this definition (than?).
+Mathematically implicit in terms of the space to which the Hamiltonian is applied.
+
+\paragraph{Path integral}
+
+\begin{equation}
+  K(\vec{r}_f, \vec{r}_0, t) = \int D \left[\vec{r}\right] e^{\frac{i}{\hbar} S\left[\vec{r}\right] }
+\end{equation}
+where the integral is over trajectories $\vec{r}_0$ to $\vec{r}_f$ in time $t$.
+Crucially, the integral is over trajectories that do not necessarily satisfy the
+classical laws of motion.
+
+This raises lots of issues.
+Mathematically, how can we integrate over trajectories?
+They are described by functions $\vec{r}(\tpr)$ where $\vec{r}(0) = \vec{r}_0$ and
+$\vec{r}(\tpr) = \vec{r}_f$ ($t$ is reserved for the duration of the trajectory).
+Problems will be solved by the derivation.
+Discretisation into timesteps.
+The function values after each timestep can be turned into a vector.
+Integrals over vectors we can do, then you need to make it into a limit.
+Somehow, discretising is the answer to how we integrate over trajectories (functions).
+
+Next we'll talk about the integrand: the action $S$.
+\begin{equation}
+  S = \int_0^t L\left(\vec{r}(t), \dot{\vec{r}}(t)\right) \dtpr
+\end{equation}
+The square brackets are a convention when dealing with a function (functionals).
+
+It's exact but it's only exact because it includes trajectories that don't satisfy
+the classical laws of motion.
+The Hamiltonian appears in classical mechanics but $i$ and $\hbar$ only in QM.
+
+Eventually, we can understand the relation between the two.
+Lagrangian mechanics.
+Should not be changed to linear order (small changes) in trajector.
+When stationary, some trajectories dominate and those are precisely those that
+satsify the classical laws of motion.
+Lagrange equations are equivalent to the action being stationary.
+
+Derivation: start with short times and generalise to arbitrary times.
+
+\paragraph{Short times}
+
+\begin{align}
+  \hat{H}
+   & = \frac{\vec{\hat{p}}^2}{2m} + \hat{U}(\vec{\hat{r}})                            \\[1.5ex]
+  \propagator
+   & = \bra{\vec{r}_f} e^{-\ihbar (\hat{T} + \hat{U}) t} \ket{\vec{r}_0}              \\[1.5ex]
+   & \approx \bra{\vec{r}_f} -\ihbar (\hat{T} + \hat{U}) t \ket{\vec{r}_0}            \\[1.5ex]
+   & \approx \bra{\vec{r}_f} (1 - \ihbar\hat{T})(1 - \ihbar\hat{U}) t \ket{\vec{r}_0} \\[1.5ex]
+   & \approx \bra{\vec{r}_f} e^{-\ihbar\hat{T}t} e^{-\ihbar\hat{U}t} \ket{\vec{r}_0}
+\end{align}
+The extra term is OK because we're working to linear order so can discard the
+quadratic term.
+Now we can apply the momentum operator to the wavefunction.
+\begin{align}
+   & = \bra{\vec{r}_f} e^{-\ihbar\hat{T}t} e^{-\ihbar U(\vec{r}_0) t} \ket{\vec{r}_0} \\
+   & = \bra{\vec{r}_f} e^{-\ihbar\hat{T}t} \ket{\vec{r}_0} e^{-\ihbar U(\vec{r}_0) t}
+\end{align}
+Call the first bit $A$.
+Density, resolution of identity.
+$\hat{T}$ is important because it involves momentum.
+Hard to combine momentum with position eigenstate so could involve a momentum eigenstate.
+\begin{align}
+  A
+   & = \bra{\vec{r}_f} e^{-\ihbar\hat{T}t} \int \text{d}^n \ket{\vec{p}} \braket{\vec{p}}{\vec{r}_0}                  \\
+   & = \int \text{d}^n\vec{p} \bra{\hat{\vec{r}_f}} e^{-\ihbar\frac{\hat{\vec{p}}}{2m^2}} \braket{\vec{p}}{\vec{r}_0} \\
+   & = \int \text{d}p e^{-\ihbar\frac{p^2}{2m}t} \braket{\vec{r}_f}{\vec{p}} \braket{\vec{p}}{\vec{r}_0}
+\end{align}
+Momentunm operator will give the eigenvalue.
+Set a single p-hat, apply for p, etc., get a number.
+Can rewrite the brakets $\braket{\vec{r}_f}{\vec{p}} = \omega(\vec{p})$.
+
+Complex conjugate so can exchange two factors if we conjugate.
+
+
+Position operator applied to the wavefunction is just multiplying with its argument.
+But generally it's an operator so we keep the hat.
+Split into kinetic and potential terms.
+
+\dots
+
+What's useful? We have a position, so applying the position operator to it is useful.
+There might be ways to apply an operator to the bra but not sure.
+Linear term in exponential for small t.
+Small t means linear order.
+Try to factorise it in different ways.
+
+\end{document}
