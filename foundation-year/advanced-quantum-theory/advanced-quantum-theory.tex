@@ -14,6 +14,20 @@
 \maketitle
 
 \tableofcontents
+\listoftheorems
+
+\section{Basics}
+
+\subsection{Classical mechanics}
+
+\subsection{Quantum mechanics}
+
+In quantum mechanics, variables $q_\alpha, p_\alpha$ are replaced by operators
+$\hat{q}_\alpha, \hat{p}_\alpha$ that act on wavefunctions.
+In the position representation, the operator $\hat{q}_\alpha$ acts by
+multiplying the wavefunction by $q_\alpha$.
+
+\subsubsection{The delta `function'}
 
 \section{intro}
 
@@ -136,5 +150,145 @@ There might be ways to apply an operator to the bra but not sure.
 Linear term in exponential for small t.
 Small t means linear order.
 Try to factorise it in different ways.
+
+\begin{align*}
+  A = \prod_{k = 1}^{n} = \frac{1}{2\pi} \int_{}
+  \exp\left[
+    -\ihbar \frac{1}{2m}
+    \right]
+\end{align*}
+
+
+Use the shifted Fresnel integral to evaluate $A$ above.
+
+\begin{align*}
+  A = \prod_{k = 1}^{n} \left( \frac{m}{2\pi i\hbar t} \right)^{\frac{1}{2}}
+  \exp\left[ \ihbar \frac{m}{2} \left( \frac{r_{f, k} - r_{0, k}}{t} \right)^2 t \right]
+\end{align*}
+
+General case (arbitrary times): expect an integral.
+We have an exponential so it'd be nice if it had something to do with the
+exponential above.
+
+Difference between positions over time is a velocity.
+Multiplied by $m/2$ gives a kinetic energy.
+Then minus the potential energy gives the action.
+And multiplied by $t$.
+
+For small $t$ and $\vec{r}_f$ close to $\vec{r}_0$, the dominant path between
+them is a straight line.
+Then we get exactly the kinetic energy, etc.
+
+$\frac{1}{2}m \left( \frac{r_{f, k} - r_{0, k}}{t} \right)^2$ is a good
+approximation for the kinetic energy for small $t$.
+$U(\vec{r}_0)$ is a good approximation for the potential energy for small $t$.
+Therefore, the difference between the two is a good approximation for the
+Lagrangian along this trajectory.
+Integrating over something that's approximately constant is approximated by
+multiplying the $\approx$ constant by $t$.
+
+\paragraph{2.2 Arbitrary times}
+
+If we want to use the propagator for short times to derive the propagator for
+arbitrary times, then we want to divide the integral into intervals that are
+short.
+
+Divide $t$ into intervals $\tau = \frac{t}{N}, N \to \infty$.
+$N$ is the number of timesteps whereas $n$ is the dimension.
+
+\begin{align*}
+  \propagator
+   & = \bra{\vec{r}_f} e^{-\ihbar \hat{H} t} \ket{\vec{r}_0}                     \\
+   & = \bra{\vec{r}_f} \left( e^{-\ihbar \hat{H} \tau} \right)^N \ket{\vec{r}_0}
+\end{align*}
+
+We can insert $N - 1$ resolutions of identity
+$1 = \int \text{d}^n r_{i} \ket{\vec{r}_{i}} \bra{\vec{r}_{i}} : i \in 1 .. N - 1$.
+Let $\vec{r}_N := \vec{r}_f$.
+Hence:
+\begin{align*}
+   & = \int \text{d}^n r_1 \dots \text{d}^n r_{N - 1}
+  \bra{\vec{r}_N} e^{-\ihbar \hat{H} \tau} \ket{\vec{r}_{N - 1}} \dots
+  \bra{\vec{r}_1} e^{-\ihbar \hat{H} \tau} \ket{\vec{r}_{0}}                      \\
+   & = \int \text{d}^n r_1 \dots \text{d}^n r_{N - 1} \prod_{j = 0}^{N - 1}
+  \bra{\vec{r}_{j + 1}} e^{-\ihbar \hat{H} \tau} \ket{\vec{r}_{j}}                \\
+   & \approx \int \text{d}^n r_1 \dots \text{d}^n r_{N - 1} \prod_{j = 0}^{N - 1}
+  \left(\frac{m}{2\pi i\hbar\tau}\right)^{\frac{n}{2}}
+  \exp\left[ \ihbar\left[
+      \frac{1}{2}m\left( \frac{\vec{r}_{j + 1} - \vec{r}_{j}}{\tau} \right)^2 -
+      U(\vec{r}_j)
+  \right] \tau \right]                                                            \\
+   & \approx
+  \left(\frac{m N}{2\pi i\hbar t}\right)^{\frac{n N}{2}}
+  \int \text{d}^n r_1 \dots \text{d}^n r_{N - 1}
+  \exp\left[
+    \ihbar\sum_{j = 0}^{N - 1} \left[
+      \frac{1}{2}m\left( \frac{\vec{r}_{j + 1} - \vec{r}_{j}}{\tau} \right)^2 -
+      U(\vec{r}_j)
+      \right] \tau
+    \right]
+\end{align*}
+Note that we have substituted $\tau = \frac{t}{N}$ in the prefactor.
+
+Interpret the integration variables $\vec{r}_j$ as positions at the intermediate
+times $t_j = j \tau$.
+The initial and final positions $\vec{r}_0$ and $\vec{r}_N$ are given.
+The integral is over all possible trajectories $\vec{r}_1, \dots, \vec{r}_{N - 1}$.
+
+In the limit $N \to \infty$, the sum becomes an integral.
+This interpretation applies in the case that the paths are smooth.
+Next time, we'll talk about the case in which trajectories are not differentiable.
+
+\section*{Appendix}
+
+\begin{thm}
+  [Gauss integral]
+  \label{thm:a:gauss-integral}
+  Let $a \in \mathbb{R}$ and $a > 0$.
+  \begin{equation}
+    \label{eqn:a:gauss-integral}
+    \intfty e^{-ax^2} \dx = \sqrt{\frac{\pi}{a}}
+  \end{equation}
+\end{thm}
+
+\begin{thm}
+  [Fresnel integral]
+  \label{thm:a:fresnel-integral}
+  Let $a \in \mathbb{R}$.
+  \begin{equation}
+    \label{eqn:a:fresnel-integral}
+    \intfty e^{\mp iax^2}
+    = \sqrt{\frac{\pi}{\abs{a}}} \exp\left(\pm i\frac{\pi}{4} \emph{sgn}\,a\right)
+    = \sqrt{\frac{\pi}{\pm ia}}
+  \end{equation}
+  \begin{proof}
+    Heuristically, the result follows from theorem~\ref{thm:a:gauss-integral} by
+    replacing $a \to \pm ia$ and using $i = e^{i\frac{\pi}{2}}$.
+    The rigorous derivation involves contour integration in the complex plane.
+  \end{proof}
+\end{thm}
+
+\begin{thm}
+  [Shifted Fresnel integral]
+  \label{thm:a:shifted-fresnel-integral}
+  Let $a, b \in \mathbb{R}$.
+  \begin{align}
+    \label{eqn:a:shifted-fresnel-integral}
+    \intfty e^{-iax^2 + bx} \dx = \sqrt{\frac{\pi}{ia}} e^{i \frac{b^2}{4a}}
+  \end{align}
+  \begin{proof}
+    By completing the square:
+    \begin{equation*}
+      -iax^2 + bx = -ia\left(x - \frac{b}{2a}\right)^2 + \frac{b^2}{4a}
+    \end{equation*}
+    By substituting $y = x - \frac{b}{2a}$:
+    \begin{align*}
+      \intfty e^{-iax^2 + bx} \dx
+       & = \intfty \exp\left(-ia\left(x - \frac{b}{2a}\right)^2 + \frac{b^2}{4a}\right) \dx \\
+       & = e^{i \frac{b^2}{4a}} \intfty e^{-iay^2} \dy
+    \end{align*}
+    Theorem~\ref{thm:a:fresnel-integral} gives the result.
+  \end{proof}
+\end{thm}
 
 \end{document}
