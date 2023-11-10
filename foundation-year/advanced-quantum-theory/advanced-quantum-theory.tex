@@ -239,6 +239,132 @@ In the limit $N \to \infty$, the sum becomes an integral.
 This interpretation applies in the case that the paths are smooth.
 Next time, we'll talk about the case in which trajectories are not differentiable.
 
+The exponent is close to an action.
+Integrating over positions at discretised points along trajectories.
+
+\begin{itemize}
+  \item $(\vec{r}_{j + 1} - \vec{r}_j)/\tau$ is a good approximation for the velocity;
+  \item the summand is a good approximation for the Lagrangian between $j\tau$ and $(j + 1)\tau$;
+  \item the sum is a good approximation for the action (multiplication by $t$)
+\end{itemize}
+
+The approximation becomes better as we discretise more finely.
+In the limit $N \to \infty$, the approximation becomes exact, i.e., we can
+replace $=$ by $\approx$ and the sum by an integral.
+
+The general definition of the integral is the sum of the contributions of
+the little intervals, i.e., their values multiplied by their lengths.
+
+\begin{equation}
+  \lim_{N \to \infty} \sum_{j = 0}^{N - 1} \left[
+    \frac{1}{2}m\left( \frac{\vec{r}_{j + 1} - \vec{r}_{j}}{\tau} \right)^2 -
+    U(\vec{r}_j)
+    \right] \tau
+  = \int_0^t L(\vec{r}(\tpr), \dot{\vec{r}}(\tpr)) \dtpr
+\end{equation}
+
+$D\left[\vec{r}\right]$ is some kind of integration measure.
+We define it as the limit $N \to \infty$...
+
+Result:
+\begin{equation}
+  \int D\left[\vec{r}\right] \cdots
+  \lim_{N \to \infty} prefactor \int d^n r_1 \dots d^n r_{N - 1} \cdots
+\end{equation}
+The dots are any property of the trajectory of the path.
+
+Thus:
+\begin{equation}
+  \propagator = \int_{\vec{r}(0) = \vec{r}_0, \vec{r}(t) = \vec{r}_f}
+  D\left[\vec{r}\right] e^{\ihbar S\left[\vec{r}\right]}
+\end{equation}
+
+Remarks
+
+A pure mathematician (analyst) would be more careful/rigorous.
+We've assumed that the trajectories are smooth.
+The velocity only works if the trajectory is differentiable.
+
+Rigorous treatment requires care with non-differentiable trajectories.
+Integration measure.
+Fewer issues with discretised version because you don't have to work with
+derivatives.
+
+The prefactor looks dangerous because it includes $N$.
+It has to be seen in the context of the integral.
+You have to check that it converges for a given integrand.
+
+Condition is that all the possible points are accessible for r.
+If some positions are impossible, can get additional phase.
+
+Hamiltonian mechanics version
+The action is first defined as the integral over the Lagrangian.
+Probably don't want exactly that, something with the Hamiltonian.
+
+In this context, $H = \vec{p}\cdot\vec{r} - L$.
+Example of a Legendre transformation.
+We have to be careful that we're writing the Hamiltonian in the same way.
+
+\begin{equation}
+  \propagator
+  = \int D\left[\vec{r}\right] D\left[vec{p}\right]
+  \exp\left(
+  \ihbar \int \dtpr \left[
+      \vec{p}(\tpr) \cdot \dot{\vec{r}}(\tpr) - H(\vec{r}(\tpr), \vec{p}(\tpr))
+      \right]
+  \right)
+\end{equation}
+where the integral is over trajectories in phase space.
+
+Homework: 2.1.
+
+Where to get momentum integrals? Modelling on previous lectures.
+Can use resolution of identity in phase space.
+Don't have to change where I'm doing that because I already did to split the
+short-time propagator. Could just keep p-integral.
+
+How many variables?
+$\vec{r}_0$ and $\vec{r}_f$ are fixed.
+Integrate over $\vec{r}_1, \dots, \vec{r}_{N - 1}$.
+How many momentum variables are integrated over when discretised? $N$.
+You have $N$ short-time propagators, each of which involves a $p$ integral.
+Be careful with indices!
+There isn't complete symmetry because you have the initial and final position,
+whereas you don't have the initial and final momentum.
+
+Homework 2.6a.
+
+\begin{equation}
+  \bra{p_f} e^{-\ihbar \hat{H} t} \ket{p_0},
+  \hat{H} = \frac{\hat{p}^2}{2} + \hat{U}(\vec{x})
+\end{equation}
+for short times.
+\begin{equation}
+  \bra{p_f} e^{-\ihbar (\hat{T} + \hat{U}) t} \ket{p_0}
+\end{equation}
+Separate exponentials (for short times).
+Now we have p on the right instead of r, so we want the T operator on the right,
+which involves the momentum.
+\begin{equation}
+  \bra{p_f} e^{-\ihbar \hat{U} t} e^{-\ihbar \hat{T} t} \ket{p_0}
+\end{equation}
+Could try to apply T to the state on the left with a dagger.
+Momentum operator plus momentum eigenstate.
+Insert resolution of identity for position.
+U has x has an operator inside, so applying it to the ket gives a position eigenstate.
+Then we have lots of numbers (good).
+\begin{equation}
+  \int \dx \exp(-\ihbar ( \frac{p^2}{2} + U(x)) t) \braket{p_f}{x} \braket{x}{p_0}
+\end{equation}
+Replace brakets with states.
+\begin{equation}
+  \frac{1}{2\pi\hbar} \intfty\dx
+  \exp(-\ihbar ( \frac{p^2}{2} + U(x)) t) \exp(-\frac{i}{\hbar} (p_f - p_0) x)
+\end{equation}
+
+Similarly with $t = N\tau$, insert lots of resolutions of identity.
+
+
 \section*{Appendix}
 
 \begin{thm}
