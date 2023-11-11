@@ -79,7 +79,7 @@ distribution over the vocabulary.
 The predicted probability that the next word is the $i$-th word is
 $\suppar{y_i}{t}$, i.e., the $i$-th component of $\suppar{\vec{y}}{t}$:
 \begin{equation}
-  P(w_{t + 1} = i \mid w_{1} \dots w_{t}) = \suppar{y_i}{t}
+  P(w_{t + 1} = i \mid w_{1} \dots w_t) = \suppar{y_i}{t}
 \end{equation}
 The predicted probability of a sequence of length $n$ is the product of the
 probabilities of the words in the sequence:
@@ -194,3 +194,99 @@ Alternatively, the two vectors can be combined with a pooling function, e.g.,
 element-wise addition or multiplication.
 Bidirectional RNNs have been successfully applied to sequence classification
 (section~\ref{sec:9:rnn-sequence-classification}).
+
+\subsection{Encoder-decoder models}
+
+An encoder-decoder or \textit{sequence-to-sequence} model translates an input
+sequence into an output of a different length.
+This model architecture is commonly applied to machine translation,
+summarisation, question answering, dialogue, etc.
+
+The architecture has three components:
+\begin{itemize}
+  \item an \textit{encoder} takes an input sequence $\vec{x}_0 \cdots \vec{x}_n$
+        and generates a sequence of representations
+        $\vec{h}^{(e)}_0 \cdots \vec{h}^{(e)}_n$;
+  \item the sequence of representations generates a \textit{context vector}
+        $\vec{c}$; and
+  \item a \textit{decoder} takes a context vector $\vec{c}$ and generates a
+        sequence of hidden states $\vec{h}^{(d)}_0 \cdots \vec{h}^{(d)}_n$ and
+        an output sequence $\vec{y}_0 \cdots \vec{y}_n$.
+\end{itemize}
+The encoder and decoder variants of a recurrent network.
+The equations to compute the output $y_t$ at time $t$ are:
+\begin{multline}
+  \vec{c}
+  = \vec{h}^{(e)}_n
+  ,\quad
+  \vec{h}^{(d)}_{0}
+  = \vec{c}
+  ,\quad
+  \vec{h}^{(d)}_t
+  = \text{RNN}(\hat{y}_{t - 1},\, \vec{h}^{(d)}_{t - 1},\, \vec{c})
+  \\
+  \vec{z}_t
+  = f(\vec{h}^{(d)}_t)
+  ,\quad
+  \vec{y}_t
+  = \softmax(\vec{z}_t)
+  ,\quad
+  \hat{y}_t
+  = \argmax_{w \in \mathcal{V}} \vec{y}_t(w)
+\end{multline}
+
+\paragraph{Training}
+
+Encoder-decoder models are trained end-to-end with pairs of input and output
+texts, e.g., aligned sentence pairs for machine translation.
+For inference, the decoder uses its estimated output $\hat{y}_t$ as the input to
+the next time step $x_{t + 1}$, which leads the decoder to deviate from the true
+output.
+For training, it is common to use \textit{teacher forcing}, i.e., for the
+decoder to use the true output $y_t$ as the input to the next time step instead.
+
+\subsection{Attention}
+
+In a simple encoder-decoder model, the context vector $\vec{c}$ is the last
+hidden state of the encoder.
+The last hidden state may act as a \textit{bottleneck}, i.e., it may not be a
+good representation of the entire input text.
+The \textit{attention} mechanism is a way to allow the decoder to access
+information from all the hidden states of the encoder.
+
+The context vector becomes a function of the encoder's hidden states:
+\begin{equation}
+  \vec{c} = f(\vec{h}^{(e)}_1, \dots, \vec{h}^{(e)}_n)
+\end{equation}
+The weightings that the function applies to the hidden states `pay attention to'
+the parts of the input sequence that are relevant to the output at a given time
+step.
+The decoder's hidden state is conditioned on the context vector:
+\begin{equation}
+  \vec{h}^{(d)}_i = \text{RNN}(\hat{y}_{i - 1},\, \vec{h}^{(d)}_{i - 1},\, \vec{c}_{i - 1})
+\end{equation}
+
+The relevance of the encoder states to the decoder state $\vec{h}^{(d)}_i$ is
+computed via a score $(\vec{h}^{(d)}_{i - 1}, \vec{h}^{(e)}_j)$.
+The simplest example of a scoring function is \textit{dot-product} attention:
+$\vec{h}^{(d)}_{i - 1} \cdot \vec{h}^{(e)}_j$.
+The scores are normalised with softmax to obtain a vector of weights:
+\begin{equation}
+  \alpha^{(i)}_j
+  = \softmax(\vec{h}^{(d)}_{i - 1} \cdot \vec{h}^{(e)}_j)
+  = \frac{\exp(\vec{h}^{(d)}_{i - 1} \cdot \vec{h}^{(e)}_j)}{\sum_{k = 1}^n \exp(\vec{h}^{(d)}_{i - 1} \cdot \vec{h}^{(e)}_k)}
+\end{equation}
+Finally, given $\alpha^{(i)}_1, \dots, \alpha^{(i)}_n$, the context vector is:
+\begin{equation}
+  \vec{c}_i = \sum_{j = 1}^n \alpha^{(i)}_j \vec{h}^{(e)}_j
+\end{equation}
+
+A more complex scoring function has its own weights $\matr{W}_{s}$:
+\begin{equation}
+  \alpha^{(i)}_j = \softmax(\vec{h}^{(d)}_{i - 1} \matr{W}_{s} \vec{h}^{(e)}_j)
+\end{equation}
+The weights are learned in end-to-end training and allow the network to learn
+which aspects of similarity between the encoder and decoder hidden states are
+relevant to the task.
+They also allow the hidden states to have different dimensionality, unlike the
+dot-product scoring function.
