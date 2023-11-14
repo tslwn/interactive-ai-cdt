@@ -1,0 +1,52 @@
+defaultIndent: "  "
+modifyLineBreaks:
+  preserveBlankLines: 1
+  condenseMultipleBlankLinesInto: 1
+  oneSentencePerLine:
+    manipulateSentences: 1
+    textWrapSentences: 1
+    sentenceIndent: ""
+  textWrapOptions:
+    columns: 80
+    when: after
+  environments:
+    BeginStartsOnOwnLine: 1
+    BodyStartsOnOwnLine: 1
+    EndStartsOnOwnLine: 1
+    EndFinishesWithLineBreak: 1
+    DBSStartsOnOwnLine: 1
+    DBSFinishesWithLineBreak: 1
+fineTuning:
+  modifyLineBreaks:
+    betterFullStop: |-
+      (?x)                  #
+      (?:                   #
+        \.\)                # .)
+        (?!\h*[a-z])        # not *followed by* a-z
+      )                     #
+      |                     # OR
+      (?:                   #
+        (?<!                # not *preceded by*
+          (?:               #
+            (?:[eE]\.[gG])  # e.g
+            |               #
+            (?:[iI]\.[eE])  # i.e
+            |               #
+            (?:etc)         # etc
+            |               #
+          \.                # .
+          )                 #
+        )                   #
+      )                     #
+      \.                    # .
+      (?!                   # not *followed by*
+        (?:                 #
+          [a-zA-Z0-9-~,]    #
+          |                 #
+          \),               # ),
+          |                 #
+          \)\.              # ).
+          |                 #
+          \.                # .
+        )                   #
+      )                     #
