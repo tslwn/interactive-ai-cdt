@@ -3,6 +3,7 @@
 
 \newcommand{\tpr}{t^\prime}
 \newcommand{\dtpr}{\text{d}t^\prime}
+\newcommand{\ddtpr}{\frac{\text{d}}{\text{d}t^\prime}}
 \newcommand{\ihbar}{\frac{i}{\hbar}}
 \newcommand{\propagator}{K(\vec{r}_f, \vec{r}_0, t)}
 
@@ -138,7 +139,6 @@ Can rewrite the brakets $\braket{\vec{r}_f}{\vec{p}} = \omega(\vec{p})$.
 
 Complex conjugate so can exchange two factors if we conjugate.
 
-
 Position operator applied to the wavefunction is just multiplying with its argument.
 But generally it's an operator so we keep the hat.
 Split into kinetic and potential terms.
@@ -157,7 +157,6 @@ Try to factorise it in different ways.
     -\ihbar \frac{1}{2m}
     \right]
 \end{align*}
-
 
 Use the shifted Fresnel integral to evaluate $A$ above.
 
@@ -364,6 +363,26 @@ Replace brakets with states.
 
 Similarly with $t = N\tau$, insert lots of resolutions of identity.
 
+\section{Tue 14 Nov}
+
+Remarks:
+
+``Classical trajectories'': trajectories that satisfy the classical laws of motion.
+Hamilton's principle: trajectories that satsify the classical laws of motion
+are stationary (how?).
+
+\begin{itemize}
+  \item all trajectories integrated over; expect classical trajectories to dominate
+  \item the action is stationary for classical trajectories
+  \item trajectories close to a classical trajectory have similar actions and
+        make similar contributions to the path integral and hence an important
+        joint contribution - that means they dominate the integral
+\end{itemize}
+
+When is it a good approximation? We used the fact that $\hbar$ is small in the
+argument that classical trajectories dominate. Really we mean that it's small
+with respect to the dimensions of what we're evaluating, e.g., classical
+actions (distances, etc.).
 
 \section*{Appendix}
 
@@ -417,4 +436,32 @@ Similarly with $t = N\tau$, insert lots of resolutions of identity.
   \end{proof}
 \end{thm}
 
+\subsection{The harmonic oscillator}
+
+\begin{align*}
+  L
+   & = \frac{1}{2}m\dot{x}^2 - \frac{1}{2}m\omega^2 x^2                                                        \\
+  S\left[ x \right]
+   & = \int_{0}^{t} \frac{1}{2}m\dot{x}(\tpr)^2 - \frac{1}{2}m\omega^2 x\tpr \dtpr                             \\
+  x(\tpr)
+   & = x_{\text{cl}}(\tpr) + \delta x(\tpr),\ \delta x(0) = \delta x(t) = 0                                    \\
+  S \left[ x \right]
+   & = \int_{0}^{t} \frac{1}{2}m\dot{x}_{\text{cl}}(\tpr)^2 - \frac{1}{2}m\omega^2 x_{\text{cl}}(\tpr)^2 \dtpr
+\end{align*}
+The linear term vanishes due to the stationarity of the action.
+The quadratic term is:
+\begin{align*}
+  \int_{0}^{t} \frac{1}{2}m\dot{\delta x}(\tpr)^2 - \frac{1}{2}m\omega^2 \delta x(\tpr)^2 \dtpr
+\end{align*}
+
+Therefore, specifically for the harmonic oscillator, the action is:
+$$
+  S\left[x\right] = S\left[x_{\text{cl}}\right] + S\left[\delta x\right]
+$$
+
+First, determine $x_{cl}(\tpr)$.
+We're working in Lagrangian mechanics, so we can write the Lagrange equations.
+\begin{align*}
+  \frac{\partial L}{\partial x} = \ddtpr \frac{\partial L}{\partial\dot{x}}
+\end{align*}
 \end{document}
