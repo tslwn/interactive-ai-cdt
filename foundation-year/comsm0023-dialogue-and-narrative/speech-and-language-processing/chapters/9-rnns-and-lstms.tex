@@ -7,8 +7,8 @@ Language is inherently temporal.
 Some language-processing algorithms are temporal, e.g., the Viterbi algorithm
 (section~\ref{sec:8:viterbi-algorithm}), but others access the entire input
 sequence at once, e.g., bag-of-words models.
-Recurrent neural networks, e.g., LSTMs, represent prior context differently
-to $n$-gram models or feedforward neural networks: they do not require a fixed
+Recurrent neural networks, e.g., LSTMs, represent prior context differently to
+$n$-gram models or feedforward neural networks: they do not require a fixed
 window size.
 
 \subsection{Recurrent Neural Networks}
@@ -24,7 +24,8 @@ language modelling tasks.
 
 For a simple RNN with one hidden layer, inference at time $t$ is computed by:
 \begin{align}
-  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{x}}{t} + \matr{U} \suppar{\vec{h}}{t - 1}) \\
+  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{x}}{t} + \matr{U} \suppar{\vec{h}}{t - 1})
+  \\
   \suppar{\vec{y}}{t} & = g(\matr{V} \suppar{\vec{h}}{t})
 \end{align}
 \begin{itemize}
@@ -40,7 +41,8 @@ For a simple RNN with one hidden layer, inference at time $t$ is computed by:
 The computation is incremental because the hidden-layer activation vector at
 time $t$ depends on the hidden-layer activation vector at time $t - 1$.
 The network is effectively \textit{unrolled} over time, i.e., the vectors are
-copied for each time step, but the weight matrices are shared across time steps.
+copied for each time step, but the weight matrices are shared across time
+steps.
 
 \subsubsection{Training}
 
@@ -59,12 +61,17 @@ Long input sequences can be divided into fixed-length subsequences.
 For a simple recurrent language model with one hidden layer, inference at time
 $t$ is computed by (section~\ref{sec:9:rnn-inference}):
 \begin{align}
-  \suppar{\vec{e}}{t} & = \matr{E} \suppar{\vec{x}}{t}                                       \\
-  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1}) \\
+  \suppar{\vec{e}}{t} & = \matr{E} \suppar{\vec{x}}{t}
+  \\
+  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1})
+  \\
   \suppar{\vec{y}}{t} & = \softmax(\matr{V} \suppar{\vec{h}}{t})
 \end{align}
 \begin{itemize}
-  \item $\matr{X} = \begin{bmatrix} \vec{x}_1 & \dots & \vec{x}_n \end{bmatrix}
+  \item $\matr{X} =
+          \begin{bmatrix}
+            \vec{x}_1 & \dots & \vec{x}_n
+          \end{bmatrix}
           \in \mathbb{R}^{n_x \times n}$ is the input matrix, i.e., a sequence
         of $n$ word embeddings represented by one-hot vectors of size $n_x$ (the
         vocabulary size);
@@ -87,12 +94,11 @@ probabilities of the words in the sequence:
   P(w_{1} \dots w_{n}) = \prod_{i = 1}^n \suppar{y_{w_i}}{i}
 \end{equation}
 
-\subsubsection{Training}
-\label{sec:9:rnn-lm-training}
+\subsubsection{Training} \label{sec:9:rnn-lm-training}
 
-The model is trained to minimise the difference between the predicted and
-correct probability distributions, which is measured by the cross-entropy loss
-function.
+The model is trained to minimise the difference between the
+predicted and correct probability distributions, which is measured by the
+cross-entropy loss function.
 The correct probability distribution is represented by a one-hot vector that is
 1 for the next true word and 0 otherwise.
 Therefore, the cross-entropy loss is solely determined by the predicted
@@ -111,19 +117,21 @@ $t$.
 
 \subsubsection{Weight tying}
 
-The output vector $\suppar{\vec{y}}{t} \in \mathbb{R}^{n_x}$ of a language model
-has the same dimensions as the input vector.
-Therefore, the input embedding matrix $\matr{E} \in \mathbb{R}^{n_h \times n_x}$
-and the weight matrix between the hidden and output layers
-$\matr{V} \in \mathbb{R}^{n_x \times n_h}$ are similar: both can be interpreted
-as word embeddings.
+The output vector $\suppar{\vec{y}}{t} \in \mathbb{R}^{n_x}$ of a language
+model has the same dimensions as the input vector.
+Therefore, the input embedding matrix $\matr{E} \in \mathbb{R}^{n_h \times
+    n_x}$ and the weight matrix between the hidden and output layers $\matr{V} \in
+  \mathbb{R}^{n_x \times n_h}$ are similar: both can be interpreted as word
+embeddings.
 
 \textit{Weight tying} is the practice of setting $\matr{V} = \matr{E}^T$
 (section~\ref{sec:9:rnn-lm-inference}), which reduces the number of parameters
 of the model and improves its perplexity:
 \begin{align}
-  \suppar{\vec{e}}{t} & = \matr{E} \suppar{\vec{x}}{t}                                       \\
-  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1}) \\
+  \suppar{\vec{e}}{t} & = \matr{E} \suppar{\vec{x}}{t}
+  \\
+  \suppar{\vec{h}}{t} & = f(\matr{W} \suppar{\vec{e}}{t} + \matr{U} \suppar{\vec{h}}{t - 1})
+  \\
   \suppar{\vec{y}}{t} & = \softmax(\matr{E}^T \suppar{\vec{h}}{t})
 \end{align}
 
@@ -164,10 +172,11 @@ as well as the previous samples.
 \subsection{Stacked RNNs}
 
 In sections~\ref{sec:9:rnn} to \ref{sec:9:rnn-other-tasks}, the input vectors
-are embeddings and the output vectors are probability distributions that predict
-words or labels.
-\textit{Stacked} RNNs consist of multiple networks, where the output vectors of
-one network are the input vectors of the next.
+are embeddings and the output vectors are probability distributions that
+predict words or labels.
+\textit{Stacked}
+RNNs consist of multiple networks, where the output vectors of one network are
+the input vectors of the next.
 
 Generally, stacked RNNs outperform single-layer networks.
 They seem to induce representations at different levels of abstraction in the
@@ -180,13 +189,15 @@ In sections~\ref{sec:9:rnn} to \ref{sec:9:rnn-other-tasks}, the networks use
 information from only the prior context (previous time steps).
 However, for some tasks, the entire sequence can be accessed at once, i.e.,
 information from subsequent time steps could also be used.
-\textit{Bidirectional} RNNs consist of two networks, one that processes the
-sequence from left to right and one that processes it from right to left.
+\textit{Bidirectional}
+RNNs consist of two networks, one that processes the sequence from left to
+right and one that processes it from right to left.
 
 The hidden-layer activation vectors of the two networks can be concatenated at
 each time step to produce a single vector that represents both contexts:
 \begin{equation}
-  \suppar{\vec{h}}{t} = \begin{bmatrix}
+  \suppar{\vec{h}}{t} =
+  \begin{bmatrix}
     \suppar{\vec{h}}{t}_\text{left} & \suppar{\vec{h}}{t}_\text{right}
   \end{bmatrix}
 \end{equation}
@@ -239,11 +250,12 @@ The equations to compute the output $y_t$ at time $t$ are:
 
 Encoder-decoder models are trained end-to-end with pairs of input and output
 texts, e.g., aligned sentence pairs for machine translation.
-For inference, the decoder uses its estimated output $\hat{y}_t$ as the input to
-the next time step $x_{t + 1}$, which leads the decoder to deviate from the true
-output.
+For inference, the decoder uses its estimated output $\hat{y}_t$ as the input
+to the next time step $x_{t + 1}$, which leads the decoder to deviate from the
+true output.
 For training, it is common to use \textit{teacher forcing}, i.e., for the
-decoder to use the true output $y_t$ as the input to the next time step instead.
+decoder to use the true output $y_t$ as the input to the next time step
+instead.
 
 \subsection{Attention}
 
@@ -258,9 +270,9 @@ The context vector becomes a function of the encoder's hidden states:
 \begin{equation}
   \vec{c} = f(\vec{h}^{(e)}_1, \dots, \vec{h}^{(e)}_n)
 \end{equation}
-The weightings that the function applies to the hidden states `pay attention to'
-the parts of the input sequence that are relevant to the output at a given time
-step.
+The weightings that the function applies to the hidden states `pay attention
+to' the parts of the input sequence that are relevant to the output at a given
+time step.
 The decoder's hidden state is conditioned on the context vector:
 \begin{equation}
   \vec{h}^{(d)}_i = \text{RNN}(\hat{y}_{i - 1},\, \vec{h}^{(d)}_{i - 1},\, \vec{c}_{i - 1})

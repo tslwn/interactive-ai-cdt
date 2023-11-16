@@ -13,22 +13,22 @@
 
 \section{Objects}
 
-\begin{dfn}
-  [Vector]
+\begin{dfn}[Vector]
   $$
     \vec{x} = \left[ x_{1}, \ldots, x_{n} \right]
     \in \mathbb{R}^{n}
   $$
 \end{dfn}
 
-\begin{dfn}
-  [Matrix]
+\begin{dfn}[Matrix]
   $$
     \matr{X} =
     \left[
       \begin{matrix}
-        x_{11} & \cdots & x_{1n} \\
-        \vdots & \ddots & \vdots \\
+        x_{11} & \cdots & x_{1n}
+        \\
+        \vdots & \ddots & \vdots
+        \\
         x_{m1} & \cdots & x_{mn}
       \end{matrix}
       \right]
@@ -41,33 +41,40 @@ r and c vecs
 \section{Operations}
 
 \begin{center}
-  \begin{tabular}
-    {ccc}
+  \begin{tabular}{ccc}
     Operation
      & Matrix/vector notation
-     & Index notation                            \\
+     & Index notation
+    \\
     \hline
     Scalar multiplication
      & $y \vec{x} = \vec{z}$
-     & $y x_{i} = z_{i}$                         \\
+     & $y x_{i} = z_{i}$
+    \\
     Vector addition
      & $\vec{x} + \vec{y} = \vec{z}$
-     & $x_{i} + y_{i} = z_{i}$                   \\
+     & $x_{i} + y_{i} = z_{i}$
+    \\
     Vector dot product
      & $\vec{x} \cdot \vec{y} = z$
-     & $\sum_{i = 1}^{n} x_{i} y_{i} = z$        \\
+     & $\sum_{i = 1}^{n} x_{i} y_{i} = z$
+    \\
     Vector norm
      & $\norm{\vec{x}} = y$
-     & $\sqrt{\sum_{i = 1}^{n} x_{i}^2} = y$     \\
+     & $\sqrt{\sum_{i = 1}^{n} x_{i}^2} = y$
+    \\
     Matrix transpose
      & $\matr{X}^{T} = \matr{Y}$
-     & $x_{ij} = y_{ji}$                         \\
+     & $x_{ij} = y_{ji}$
+    \\
     Matrix addition
      & $\matr{X} + \matr{Y} = \matr{Z}$
-     & $x_{ij} + y_{ij} = z_{ij}$                \\
+     & $x_{ij} + y_{ij} = z_{ij}$
+    \\
     Matrix product
      & $\matr{X} \matr{Y} = \matr{Z}$
-     & $\sum_{k = 1}^{n} x_{ik} y_{kj} = z_{ij}$ \\
+     & $\sum_{k = 1}^{n} x_{ik} y_{kj} = z_{ij}$
+    \\
   \end{tabular}
 \end{center}
 
@@ -75,25 +82,29 @@ r and c vecs
   \section{Objects}
 
   \begin{center}
-    \begin{tabular}
-      {ccc}
+    \begin{tabular}{ccc}
       Object
        & Matrix/vector notation
-       & Index notation                                                                                                                                    \\
+       & Index notation
+      \\
       \hline
       % TODO: check this
       Column-mean vector
        & $\vec{\mu} = \frac{1}{n} \matr{X}^{T} \vec{1}$
-       & $\mu_{i} = \frac{1}{n} \sum_{j = 1}^{n} x_{ji}$                                                                                                   \\
+       & $\mu_{i} = \frac{1}{n} \sum_{j = 1}^{n} x_{ji}$
+      \\
       Zero-centred matrix
        & $\matr{X}^{\prime} = \matr{X} - \vec{1} \vec{\mu}^{T}$
-       & $x_{ij}^{\prime} = x_{ij} - \mu_{j}$                                                                                                              \\
+       & $x_{ij}^{\prime} = x_{ij} - \mu_{j}$
+      \\
       Scatter matrix
        & $\matr{S} = \matr{X^{\prime T}} \matr{X^{\prime}}$
-       & $s_{ij} = \sum_{k = 1}^{n} x_{ki}^{\prime} x_{kj}^{\prime} = \sum_{k = 1}^{n} (x_{ki} - \mu_{i}) (x_{kj} - \mu_{j}) $                             \\
+       & $s_{ij} = \sum_{k = 1}^{n} x_{ki}^{\prime} x_{kj}^{\prime} = \sum_{k = 1}^{n} (x_{ki} - \mu_{i}) (x_{kj} - \mu_{j}) $
+      \\
       Covariance matrix
        & $\matr{\Sigma} = \frac{1}{n} \matr{S}$
-       & $\sigma_{ij} = \frac{1}{n} \sum_{k = 1}^{n} x_{ki}^{\prime} x_{kj}^{\prime} = \frac{1}{n} \sum_{k = 1}^{n} (x_{ki} - \mu_{i}) (x_{kj} - \mu_{j})$ \\
+       & $\sigma_{ij} = \frac{1}{n} \sum_{k = 1}^{n} x_{ki}^{\prime} x_{kj}^{\prime} = \frac{1}{n} \sum_{k = 1}^{n} (x_{ki} - \mu_{i}) (x_{kj} - \mu_{j})$
+      \\
     \end{tabular}
   \end{center}
 \end{landscape}
@@ -111,15 +122,13 @@ It is assumed throughout that:
   \item $\hat{y}$ is a predicted label or value
 \end{itemize}
 
-\begin{dfn}
-  [Centroid, centre of mass]
+\begin{dfn}[Centroid, centre of mass]
   \begin{equation}
     \vec{\mu}_{i} = \frac{1}{\card{X_{i}}} \sum_{\vec{x} \in X_{i}} \vec{x}
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Binary linear classifier]
+\begin{dfn}[Binary linear classifier]
   Let $\{ X_{+}, X_{-} \}$ be a partition of $X$
   and $b \in \mathbb{R}$ be the decision boundary.
   \begin{equation}

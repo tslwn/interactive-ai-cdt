@@ -14,5 +14,8 @@
 **/*.synctex.gz
 **/*.toc
 
+# latexindent
+**/__latexindent_temp*.tex
+
 # macOS
 .DS_Store

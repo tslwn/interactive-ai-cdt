@@ -17,8 +17,8 @@ Recall that:
         It does not describe the prior distribution of the input.
   \item A \textit{generative} model describes a joint distribution of the target
         and input.
-        If the prior distribution of the target can be estimated, then it can
-        be described by a likelihood function.
+        If the prior distribution of the target can be estimated, then it can be
+        described by a likelihood function.
         It can be used to generate data by sampling from the joint distribution.
 \end{itemize}
 
@@ -35,31 +35,29 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
 
 \subsection{Normal distributions}
 
-\begin{dfn}
-  [Univariate normal distribution]
+\begin{dfn}[Univariate normal distribution]
   \label{dfn:9:univariate-normal-distribution}
   Let $x \in \mathbb{R}$ be a random variable of mean $\mu$ and standard
   deviation $\sigma$.
   The normal distribution is:
   \begin{align}
     P(x \mid \mu, \sigma)
-     & = \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right) \\
+     & = \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+    \\
      & = \frac{1}{E} \exp \left( - \frac{z^2}{2} \right) ,\
     z = \frac{x - \mu}{\sigma} ,\
     E = \sqrt{2 \pi} \sigma
   \end{align}
 \end{dfn}
 
-\begin{dfn}
-  [Standard univariate normal distribution]
+\begin{dfn}[Standard univariate normal distribution]
   \begin{equation}
     P(x \mid \mu = 0, \sigma = 1)
     = \frac{1}{\sqrt{2 \pi}} \exp \left( - \frac{x^2}{2} \right)
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Multivariate normal distribution]
+\begin{dfn}[Multivariate normal distribution]
   \label{dfn:9:multivariate-normal-distribution}
   Let $\vec{x} \in \mathbb{R}^n$ be a random variable of mean $\vec{\mu}$ and
   covariance matrix $\matr{\Sigma}$.
@@ -69,14 +67,14 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
       P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})
       = \frac{1}{E_n} \exp \left(
       - \frac{1}{2} (\vec{x} - \vec{\mu})^T \matr{\Sigma}^{-1} (\vec{x} - \vec{\mu})
-      \right) ,\\
+      \right) ,
+      \\
       E_n = (2 \pi)^{n/2} \sqrt{\det \matr{\Sigma}}
     \end{split}
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Standard multivariate normal distribution]
+\begin{dfn}[Standard multivariate normal distribution]
   \begin{equation}
     P(\vec{x} \mid \vec{\mu} = \vec{0}, \matr{\Sigma} = \matr{I})
     = \frac{1}{(2 \pi)^{n / 2}} \exp \left( - \frac{\norm{\vec{x}}^2}{2} \right)
@@ -85,22 +83,19 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
 
 \subsubsection{Gaussian mixture models}
 
-\begin{dfn}
-  [Mixture model]
+\begin{dfn}[Mixture model]
   Let $X = \bigcup_{i = 1}^k X_i$ be a set of instances partitioned into $k$ classes.
-  A mixture model is a set of probability distributions or components
-  $\{ P(X_i) \mid i \in 1 .. k \}$.
+  A mixture model is a set of probability distributions or components $\{ P(X_i)
+    \mid i \in 1 .. k \}$.
 \end{dfn}
 
-\begin{dfn}
-  [Gaussian mixture model]
+\begin{dfn}[Gaussian mixture model]
   Let $X = \bigcup_{i = 1}^k X_i$ be a set of instances partitioned into $k$ classes.
-  A Gaussian mixture model (GMM) is a set of Gaussian distributions
-  $\{ P(X_i \mid \vec{\mu}_i, \matr{\Sigma}_i) \mid i \in 1 .. k \}$.
+  A Gaussian mixture model (GMM) is a set of Gaussian distributions $\{ P(X_i
+    \mid \vec{\mu}_i, \matr{\Sigma}_i) \mid i \in 1 .. k \}$.
 \end{dfn}
 
-\begin{dfn}
-  [Likelihood ratio of a binary classifier]
+\begin{dfn}[Likelihood ratio of a binary classifier]
   Let $X = X_+ \cup X_-$ be a set of instances partitioned into two classes and
   $P(x \mid X_i)$ be the likelihood that an instance $x$ belongs to class $X_i$.
   The likelihood ratio is:
@@ -109,12 +104,12 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
   \end{equation*}
 \end{dfn}
 
-\begin{proposition}
-  [Likelihood ratio of a binary univariate GMM]
+\begin{proposition}[Likelihood ratio of a binary univariate GMM]
   \begin{align*}
     \lambda(x)
      & = \frac{P(x \mid X_+)}{P(x \mid X_-)}
-    = \frac{P(x \mid \mu_+, \sigma_+)}{P(x \mid \mu_-, \sigma_-)} \\
+    = \frac{P(x \mid \mu_+, \sigma_+)}{P(x \mid \mu_-, \sigma_-)}
+    \\
      & = \frac{\sigma_-}{\sigma_+}\exp\left(-\frac{1}{2}\left(
       \left(\frac{x - \mu_+}{\sigma_+} \right)^2 -
       \left(\frac{x - \mu_-}{\sigma_-} \right)^2
@@ -122,8 +117,7 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
   \end{align*}
 \end{proposition}
 
-\begin{dfn}
-  [Maximum-likelihood decision threshold of a binary classifier]
+\begin{dfn}[Maximum-likelihood decision threshold of a binary classifier]
   Let $X = X_+ \cup X_-$ be a set of instances partitioned into two classes.
   The maximum-likelihood decision threshold is $x : \lambda(x) = 1$.
 \end{dfn}
@@ -138,7 +132,8 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
        & = \exp\left(-\frac{1}{2}\left(
         \left(\frac{x - \mu_+}{\sigma} \right)^2 -
         \left(\frac{x - \mu_-}{\sigma} \right)^2
-      \right)\right)                                      \\[2ex]
+        \right)\right)
+      \\[2ex]
        & = \exp\left(\frac{\mu_+ - \mu_-}{\sigma^2}\left(
         x - \frac{\mu_+ + \mu_-}{2}
         \right)\right)
@@ -148,8 +143,8 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
 \end{proposition}
 
 \begin{proposition}
-  Let $\{ P(X_+ \mid \mu_+, \sigma_+), P(X_- \mid \mu_-, \sigma_-) \}, \sigma_+ \neq \sigma_-$
-  be a binary univariate GMM.
+  Let $\{ P(X_+ \mid \mu_+, \sigma_+), P(X_- \mid \mu_-, \sigma_-) \}, \sigma_+
+    \neq \sigma_-$ be a binary univariate GMM.
   There are two maximum-likelihood decision thresholds.
   \begin{proof}
     \begin{equation*}
@@ -164,7 +159,8 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
        & = \exp\left(-\frac{1}{2}\left(
         \left(\frac{x - \mu_+}{\sigma_+} \right)^2 -
         \left(\frac{x - \mu_-}{\sigma_-} \right)^2
-      \right)\right)                                    \\[2ex]
+        \right)\right)
+      \\[2ex]
       -2 \ln \frac{\sigma_+}{\sigma_-}
        & = \left(\frac{x - \mu_+}{\sigma_+} \right)^2 -
       \left(\frac{x - \mu_-}{\sigma_-} \right)^2
@@ -190,28 +186,29 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
         }
       \right)
     \end{equation*}
-    The argument of the square-root function is non-negative; hence, there are
-    two real-valued solutions for $x$.
+    The argument of the square-root function is non-negative; hence, there are two
+    real-valued solutions for $x$.
   \end{proof}
 \end{proposition}
 
-\begin{proposition}
-  [Likelihood ratio of a binary multivariate GMM]
+\begin{proposition}[Likelihood ratio of a binary multivariate GMM]
   \begin{align*}
     \lambda(\vec{x})
-     & = \frac{P(\vec{x} \mid X_+)}{P(\vec{x} \mid X_-)}                                                \\[2ex]
+     & = \frac{P(\vec{x} \mid X_+)}{P(\vec{x} \mid X_-)}
+    \\[2ex]
      & = \sqrt{\frac{\det\Sigma_+}{\det\Sigma_-}} \exp \Bigg( -\frac{1}{2} \bigg(
-    \left(\vec{x} - \vec{\mu}_+ \right)^T \Sigma_+^{-1} \left(\vec{x} - \vec{\mu}_+ \right)             \\
+      \left(\vec{x} - \vec{\mu}_+ \right)^T \Sigma_+^{-1} \left(\vec{x} - \vec{\mu}_+ \right)
+    \\
      & \qquad - \left(\vec{x} - \vec{\mu}_- \right)^T \Sigma_-^{-1} \left(\vec{x} - \vec{\mu}_- \right)
       \bigg) \Bigg)
   \end{align*}
 \end{proposition}
 
 \begin{proposition}
-  Let $\{ P(X_+ \mid \vec{\mu}_+, \matr{I}), P(X_- \mid \vec{\mu}_-, \matr{I}) \}$
-  be a binary multivariate GMM.
-  The maximum-likelihood decision boundary is
-  $\vec{x} = \frac{1}{2}(\vec{\mu}_+ + \vec{\mu}_-)$.
+  Let $\{ P(X_+ \mid \vec{\mu}_+, \matr{I}), P(X_- \mid \vec{\mu}_-, \matr{I})
+    \}$ be a binary multivariate GMM.
+  The maximum-likelihood decision boundary is $\vec{x} = \frac{1}{2}(\vec{\mu}_+
+    + \vec{\mu}_-)$.
   \begin{proof}
     \begin{equation*}
       \lambda(\vec{x}) = \exp \left(-\frac{1}{2}\left(
@@ -224,10 +221,10 @@ A probabilistic view treats learning as a procedure that reduces uncertainty.
 \end{proposition}
 
 The maximum-likelihood decision boundary of a binary multivariate GMM for
-uncorrelated features with unit variance is the same as the decision boundary of
-the basic linear classifier.
-In other words, the basic linear classifer is \textit{Bayes-optimal} under these
-conditions.
+uncorrelated features with unit variance is the same as the decision boundary
+of the basic linear classifier.
+In other words, the basic linear classifer is \textit{Bayes-optimal} under
+these conditions.
 
 \subsubsection{Distances and probabilities}
 
@@ -262,18 +259,19 @@ Effectively, it translates distances into probabilities.
 \begin{thm}
   Let $P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})$ be a multivariate normal
   distribution.
-  The maximum-likelihood estimate of $\vec{\mu}$ is the point that minimises
-  the sum of squared Mahalanobis distances to the data points
-  $X = \{ \vec{x}_i \mid i = 1 .. n \}$.
+  The maximum-likelihood estimate of $\vec{\mu}$ is the point that minimises the
+  sum of squared Mahalanobis distances to the data points $X = \{ \vec{x}_i \mid
+    i = 1 .. n \}$.
 
   \begin{proof}
     The maximum-likelihood estimate is the value of $\vec{\mu}$ that maximises
     the joint likelihood of $X$:
     \begin{equation}
-      \vec{\hat{\mu}} = \argmax_{\vec{\mu}} P(X \mid \vec{\mu}, \matr{\Sigma})
+      \vec{\hat{\mu}} = \argmax_{\vec{\mu}}
+      P(X \mid \vec{\mu}, \matr{\Sigma})
     \end{equation}
-    Assume that the data points are independently sampled from
-    $P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})$.
+    Assume that the data points
+    are independently sampled from $P(\vec{x} \mid \vec{\mu}, \matr{\Sigma})$.
     Then, the joint likelihood is the product of the likelihoods of the data
     points:
     \begin{equation}
@@ -287,10 +285,12 @@ Effectively, it translates distances into probabilities.
        & = \argmax_{\vec{\mu}}
       \prod_{i = 1}^n
       \frac{1}{E_n}
-      \exp \left( -\frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)        \\
+      \exp \left( -\frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)
+      \\
        & = \argmin_{\vec{\mu}}
       \sum_{i = 1}^n
-      \left( \ln E_d + \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)    \\
+      \left( \ln E_d + \frac{1}{2} D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2 \right)
+      \\
        & = \argmin_{\vec{\mu}} \sum_{i = 1}^n D_M (\vec{x}, \vec{\mu} \mid \matr{\Sigma})^2
     \end{align}
   \end{proof}
@@ -311,39 +311,39 @@ Effectively, it translates distances into probabilities.
 \begin{thm}
   Let $P(\vec{x} \mid \vec{\mu}, \matr{I})$ be a multivariate normal
   distribution.
-  The maximum-likelihood estimate of $\vec{\mu}$ is the point that minimises
-  the sum of squared Euclidean distances to the data points
-  $X = \{ \vec{x}_i \mid i = 1 .. n \}$.
+  The maximum-likelihood estimate of $\vec{\mu}$ is the point that minimises the
+  sum of squared Euclidean distances to the data points $X = \{ \vec{x}_i \mid i
+    = 1 .. n \}$.
 \end{thm}
 
 \subsubsection{Ordinary least-squares regression}
 
 \begin{thm}
-  Let $\hat{y}(x) = \alpha + \beta x$ be a univariate linear regression model
-  and $X = \{ x_i \mid i = 1 .. n \},\ Y = \{ y_i \mid i = 1 .. n \}$ be a set of
+  Let $\hat{y}(x) = \alpha + \beta x$ be a univariate linear regression model and
+  $X = \{ x_i \mid i = 1 .. n \},\ Y = \{ y_i \mid i = 1 .. n \}$ be a set of
   data points.
   If the noise is normally distributed, then the maximum-likelihood estimates of
   $\alpha$ and $\beta$ are equivalent to the ordinary least-squares solution.
 
   \begin{proof}
-    Assume that $y_i$ is a noisy observation of $\hat{y}(x_i)$, i.e.,
-    $y_i = \hat{y}(x_i) + \epsilon_i$.
+    Assume that $y_i$ is a noisy observation of $\hat{y}(x_i)$, i.e., $y_i =
+      \hat{y}(x_i) + \epsilon_i$.
     If the noise is normally distributed, then the likelihood of $y_i$ is:
     \begin{equation}
-      P(y_i \mid x_i, \alpha, \beta, \sigma)
-      = \frac{1}{\sqrt{2 \pi} \sigma} \exp \left(
-      - \frac{(y_i - \hat{y}(x_i))^2}{2 \sigma^2}
-      \right)
+      P(y_i \mid x_i, \alpha, \beta, \sigma) = \frac{1}{\sqrt{2 \pi} \sigma} \exp
+      \left( - \frac{(y_i - \hat{y}(x_i))^2}{2 \sigma^2} \right)
     \end{equation}
     Assume that $\epsilon_i$ and $y_i$ are independent.
     Then, the joint likelihood of $Y$ is the product of the likelihoods of
     $y_i$:
     \begin{align}
       P(Y \mid X, \alpha, \beta, \sigma)
-       & = \prod_{i = 1}^n P(y_i \mid x_i, \alpha, \beta, \sigma)    \\
+       & = \prod_{i = 1}^n P(y_i \mid x_i, \alpha, \beta, \sigma)
+      \\
        & = \prod_{i = 1}^n \frac{1}{\sqrt{2 \pi} \sigma} \exp \left(
       - \frac{(y_i - \hat{y}(x_i))^2}{2 \sigma^2}
-      \right)                                                        \\
+      \right)
+      \\
        & = \frac{1}{(2 \pi)^{n / 2}\,\sigma^n} \exp \left(
       -\frac{1}{2\sigma^2} \sum_{i = 1}^{n} (y_i - \hat{y}(x_i))^2
       \right)
@@ -383,8 +383,8 @@ Effectively, it translates distances into probabilities.
 
 In the context of classification, it is assumed that a distribution that models
 the data $X$ depends on the class $Y$.
-The greater the differences between the distributions for the different classes,
-the better the model can discriminate between them.
+The greater the differences between the distributions for the different
+classes, the better the model can discriminate between them.
 Several decision rules can be applied:
 \begin{itemize}
   \item Maximum likelihood (ML):

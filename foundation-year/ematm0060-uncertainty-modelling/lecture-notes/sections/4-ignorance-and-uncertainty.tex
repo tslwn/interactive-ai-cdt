@@ -12,8 +12,7 @@ In Dempster-Shafer theory, uncertainty is quantified by two measures:
   \item \textit{plausibility} (evidence that is consistent with a proposition).
 \end{itemize}
 
-\begin{dfn}
-  [Belief and plausibility measures]
+\begin{dfn}[Belief and plausibility measures]
   \label{def:4:BeliefPlausibility}
   Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
   A mass function $m : 2^W \to [0, 1]$ generates:
@@ -47,8 +46,7 @@ I.e., for a proposition $A \subseteq W$:
         $A$.
 \end{itemize}
 
-\begin{thm}
-  [Plausibility is greater than or equal to belief]
+\begin{thm}[Plausibility is greater than or equal to belief]
   Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
   \begin{equation}
     \label{eqn:4:PlausibilityGreaterThanBelief}
@@ -62,8 +60,7 @@ I.e., for a proposition $A \subseteq W$:
   \end{proof}
 \end{thm}
 
-\begin{thm}
-  [Dual relationship]
+\begin{thm}[Dual relationship]
   \label{thm:4:DualRelationship}
   Let $W$ be a set of possible worlds and $A \subseteq W$ be a proposition.
   \begin{equation}
@@ -76,15 +73,15 @@ I.e., for a proposition $A \subseteq W$:
     \begin{align*}
       \pl(A)
        & = \sum_{B \subseteq W : B \cap A \neq \emptyset} m(B)
-      \ =\ \sum_{B \subseteq W : B \not\subseteq A^{c}} m(B)   \\[3ex]
+      \ =\ \sum_{B \subseteq W : B \not\subseteq A^{c}} m(B)
+      \\[3ex]
        & = 1 - \sum_{B \subseteq W : B \subseteq A^{c}} m(B)
       \ =\ 1 - \bel(A^{c})
     \end{align*}
   \end{proof}
 \end{thm}
 
-\begin{thm}
-  [Relation to probability theory]
+\begin{thm}[Relation to probability theory]
   If $m : 2^W \to [0, 1]$ is a mass function such that
   $\sum_{w \in W} m(\{w\}) = 1$, then:
   \begin{equation}
@@ -97,18 +94,17 @@ identifies a single possible world.
 Generally, belief and plausibility measures do not satisfy
 definition~\ref{def:2:ProbabilityMeasure}.
 
-\begin{thm}
-  [Belief measures are super-additive]
+\begin{thm}[Belief measures are super-additive]
   \begin{equation}
     \label{eqn:4:BeliefSuperAdditive}
     \bel(A \cup B) \geq \bel(A) + \bel(B)
   \end{equation}
 
   \begin{proof}
-    Let $W$ be a set of possible worlds and $A, B \subseteq W$ be propositions
-    such that $A \cap B = \emptyset$.
-    Without loss of generality, assume that $A \neq \emptyset$ and
-    $B \neq \emptyset$.
+    Let $W$ be a set of possible worlds and $A, B \subseteq W$ be propositions such
+    that $A \cap B = \emptyset$.
+    Without loss of generality, assume that $A \neq \emptyset$ and $B \neq
+      \emptyset$.
     A proposition $C \subseteq W : C \subseteq A \cup B$ if and only if:
     \begin{enumerate}
       \item $C \subseteq A$;
@@ -123,13 +119,17 @@ definition~\ref{def:2:ProbabilityMeasure}.
     By definition~\ref{def:4:BeliefPlausibility}:
     \begin{align*}
       \bel(A \cup B)
-       & = \sum_{C \subseteq W : C \subseteq A \cup B} m(C)              \\[3ex]
+       & = \sum_{C \subseteq W : C \subseteq A \cup B} m(C)
+      \\[3ex]
        & = \sum_{C \subseteq W : C \subseteq A} m(C)
-      + \sum_{C \subseteq W : C \subseteq B} m(C)                        \\
+      + \sum_{C \subseteq W : C \subseteq B} m(C)
+      \\
        & \quad + \sum_{D \subseteq W : D \neq \emptyset, D \subseteq A}\
       \sum_{E \subseteq W : E \neq \emptyset, E \subseteq B}
-      m(D \cup E)                                                        \\[3ex]
-       & = \bel(A) + \bel(B)                                             \\
+      m(D \cup E)
+      \\[3ex]
+       & = \bel(A) + \bel(B)
+      \\
        & \quad + \sum_{D \subseteq W : D \neq \emptyset, D \subseteq A}\
       \sum_{E \subseteq W : E \neq \emptyset, E \subseteq B} m(D \cup E)
     \end{align*}
@@ -137,18 +137,17 @@ definition~\ref{def:2:ProbabilityMeasure}.
   \end{proof}
 \end{thm}
 
-\begin{thm}
-  [Plausibility measures are sub-additive]
+\begin{thm}[Plausibility measures are sub-additive]
   \begin{equation}
     \label{eqn:4:PlausibilitySubAdditive}
     \pl(A \cup B) \leq \pl(A) + \pl(B)
   \end{equation}
 
   \begin{proof}
-    Let $W$ be a set of possible worlds and $A, B \subseteq W$ be propositions
-    such that $A \cap B = \emptyset$.
-    Without loss of generality, assume that $A \neq \emptyset$ and
-    $B \neq \emptyset$.
+    Let $W$ be a set of possible worlds and $A, B \subseteq W$ be propositions such
+    that $A \cap B = \emptyset$.
+    Without loss of generality, assume that $A \neq \emptyset$ and $B \neq
+      \emptyset$.
     A proposition $C \subseteq W : C \cap (A \cup B) \neq \emptyset$ if and only
     if:
     \begin{enumerate}
@@ -159,9 +158,11 @@ definition~\ref{def:2:ProbabilityMeasure}.
     By definition~\ref{def:4:BeliefPlausibility}:
     \begin{align*}
       \pl(A \cup B)
-       & = \sum_{C \subseteq W : C \cap (A \cup B) \neq \emptyset} m(C)                    \\[3ex]
+       & = \sum_{C \subseteq W : C \cap (A \cup B) \neq \emptyset} m(C)
+      \\[3ex]
        & = \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B \neq \emptyset} m(C)
-      + \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B = \emptyset} m(C)          \\
+      + \sum_{C \subseteq W : C \cap A \neq \emptyset, C \cap B = \emptyset} m(C)
+      \\
        & \quad + \sum_{C \subseteq W : C \cap A = \emptyset, C \cap B \neq \emptyset} m(C)
     \end{align*}
     Similarly:
@@ -191,12 +192,10 @@ Given one of $m$, $\bel$ or $\pl$, the other two can be derived, i.e., they
 contain the same information (theorems~\ref{thm:4:DualRelationship} and
 \ref{thm:4:MassFunctionBelief}).
 
-\begin{thm}
-  [The mass function in terms of a belief measure]
+\begin{thm}[The mass function in terms of a belief measure]
   \label{thm:4:MassFunctionBelief}
-  Let $W$ be a set of possible worlds,
-  $\bel : 2^W \to [0, 1]$ be a belief measure, and
-  $A \subseteq W$ be a proposition.
+  Let $W$ be a set of possible worlds, $\bel : 2^W \to [0, 1]$ be a belief
+  measure, and $A \subseteq W$ be a proposition.
   The mass function $m : 2^W \to [0, 1]$ is:
   \begin{equation}
     \label{eqn:4:MassFunctionBelief}
@@ -225,11 +224,13 @@ contain the same information (theorems~\ref{thm:4:DualRelationship} and
        & =
       \bel(A) -
       \sum_{B \subset A} \sum_{C \subseteq B} (-1)^{|B - C|} \bel(C)
-      \nonumber \\[3ex]
+      \nonumber
+      \\[3ex]
        & =
       \bel(A) +
       \sum_{B \subset A} \sum_{C \subseteq B} (-1)^{|B - C| + 1} \bel(C)
-      \nonumber \\[3ex]
+      \nonumber
+      \\[3ex]
        & =
       \bel(A) +
       \sum_{C \subset A} \bel(C) \sum_{B : C \subseteq B \subseteq A} (-1)^{|B - C| + 1}
@@ -240,15 +241,17 @@ contain the same information (theorems~\ref{thm:4:DualRelationship} and
       \item $C \subseteq B \ \Rightarrow\  |B - C| + 1 = |B| - |C| + 1$; and
       \item $C \subseteq B \subset A \ \Rightarrow\  0 \leq |B| - |C| \leq |A| - |C| - 1$.
     \end{itemize}
-    A set $B : C \subseteq B \subset A$ is generated by choosing $i$
-    elements from $A \cap C^c$ and taking their union with $D$.
+    A set $B : C \subseteq B \subset A$ is generated by choosing $i$ elements from
+    $A \cap C^c$ and taking their union with $D$.
     There are $\binom{|A| - |C|}{i}$ ways to do this.
     Hence:
     \begin{align}
       \label{eqn:4:MassFunctionBelief2}
       \sum_{B : C \subseteq B \subset A} (-1)^{|B - C| + 1}
-       & = \sum_{i = 0}^{|A| - |C| - 1} \binom{|A| - |C|}{i} (-1)^{i + 1} \nonumber   \\[3ex]
-       & = - \sum_{i = 0}^{|A| - |C| - 1} \binom{|A| - |C|}{i} (-1)^{i} \nonumber     \\[3ex]
+       & = \sum_{i = 0}^{|A| - |C| - 1} \binom{|A| - |C|}{i} (-1)^{i + 1} \nonumber
+      \\[3ex]
+       & = - \sum_{i = 0}^{|A| - |C| - 1} \binom{|A| - |C|}{i} (-1)^{i} \nonumber
+      \\[3ex]
        & = (- 1)^{|A| - |C|} - \sum_{i = 0}^{|A| - |C|} \binom{|A| - |C|}{i} (-1)^{i}
     \end{align}
     By the binomial theorem $\sum_{k = 0}^{n} \binom{n}{k} r^{k} = (1 + r)^{n}$:
@@ -269,7 +272,8 @@ contain the same information (theorems~\ref{thm:4:DualRelationship} and
     equation~\ref{eqn:4:MassFunctionBelief1}:
     \begin{align*}
       m(A)
-       & = \bel(A) + \sum_{C \subset A} \bel(C) (- 1)^{|A| - |C|} \\[3ex]
+       & = \bel(A) + \sum_{C \subset A} \bel(C) (- 1)^{|A| - |C|}
+      \\[3ex]
        & = \sum_{C \subseteq A}  (- 1)^{|A| - |C|} \bel(C)
     \end{align*}
   \end{proof}
@@ -280,8 +284,7 @@ contain the same information (theorems~\ref{thm:4:DualRelationship} and
 An alternative but related approach is to represent beliefs by sets of
 probability measures (\textit{credal sets}).
 
-\begin{dfn}
-  [Lower and upper probability measures]
+\begin{dfn}[Lower and upper probability measures]
   Let $\mathbb{P}(K) \subseteq \mathbb{P}$ be a closed convex set of probability
   measures $P : 2^W \to [0, 1]$ and $A \subseteq W$ be a proposition.
   The lower ($\underline{P}$) and upper ($\overline{P}$) probability measures are:
@@ -291,13 +294,15 @@ probability measures (\textit{credal sets}).
   \end{equation}
 \end{dfn}
 
-\begin{thm}
-  [Upper probability measure of complement]
+\begin{thm}[Upper probability measure of complement]
   \begin{align}
     \overline{P}(A^{c})
-     & = \max\ \{ P(A^c) : P \in \mathbb{P}(K) \} \nonumber   \\
-     & = \max\ \{ 1 - P(A) : P \in \mathbb{P}(K) \} \nonumber \\
-     & = 1 - \min\ \{ P(A) : P \in \mathbb{P}(K) \} \nonumber \\
+     & = \max\ \{ P(A^c) : P \in \mathbb{P}(K) \} \nonumber
+    \\
+     & = \max\ \{ 1 - P(A) : P \in \mathbb{P}(K) \} \nonumber
+    \\
+     & = 1 - \min\ \{ P(A) : P \in \mathbb{P}(K) \} \nonumber
+    \\
      & = 1 - \underline{P}(A)
   \end{align}
 \end{thm}
@@ -305,8 +310,7 @@ probability measures (\textit{credal sets}).
 Belief and plausibility measures in Dempster-Shafer theory are special cases of
 lower and upper probability measures, respectively.
 
-\begin{thm}
-  [Relations to belief and plausibility measures]
+\begin{thm}[Relations to belief and plausibility measures]
   Let $W$ be a set of possible worlds, $A \subseteq W$ be a proposition,
   $\bel : 2^W \to [0, 1]$ be a belief measure, and
   $K = \{ P(A) \geq \bel(A) \mid A \subseteq W \}$.
@@ -321,8 +325,8 @@ lower and upper probability measures, respectively.
       \item $\bel(A) \leq P(A) \leq \pl(A) \ \forall\ P \in \mathbb{P}(K), A \subseteq W$
     \end{enumerate}
 
-    By the definition of $K$,
-    $P(A) \geq \bel(A)$ and $\bel(A^c) \leq P(A^c) \ \forall\ P \in \mathbb{P}(K)$.
+    By the definition of $K$, $P(A) \geq \bel(A)$ and $\bel(A^c) \leq P(A^c) \
+      \forall\ P \in \mathbb{P}(K)$.
     Hence, $1 - P(A^c) \leq 1 - \bel(A^c)$ and $P(A) \leq \pl(A)$.
 
     \begin{enumerate}
@@ -330,20 +334,21 @@ lower and upper probability measures, respectively.
       \item $\exists\ P \in \mathbb{P}(K) : P(A) = \bel(A) \ \forall\ A \subseteq W$
     \end{enumerate}
 
-    For every $B \subseteq W$, choose a possible world $w_B \in B$ such that
-    for a given $A \subseteq W$,  $B \not\subseteq A \Rightarrow w_B \in A^c$.
+    For every $B \subseteq W$, choose a possible world $w_B \in B$ such that for a
+    given $A \subseteq W$, $B \not\subseteq A \Rightarrow w_B \in A^c$.
     Define $P$ in terms of the mass function $m$ of $\bel$:
     \begin{equation*}
       P(w) = \sum_{B \subseteq W : w_B = w} m(B)
     \end{equation*}
-    $m(B)$ is non-zero only for $w_b$, so
-    $\sum_{w \in W} P(w) = \sum_{B \subseteq W} m(B) = 1$.
+    $m(B)$ is non-zero
+    only for $w_b$, so $\sum_{w \in W} P(w) = \sum_{B \subseteq W} m(B) = 1$.
 
     $P \in \mathbb{P}(K)$ because:
     \begin{align*}
       \bel(C)
        & = \sum_{B \subseteq W : B \subseteq C} m(B) \ \forall\ C \subseteq W
-      = \sum_{w \in C} \sum_{B \subseteq W : B \subseteq C, w_B = w} m(B)     \\
+      = \sum_{w \in C} \sum_{B \subseteq W : B \subseteq C, w_B = w} m(B)
+      \\
        & \leq \sum_{w \in C} \sum_{B \subseteq W : w_B = w} m(B)
       = \sum_{w \in C} P(w)
       = P(C)
@@ -352,37 +357,38 @@ lower and upper probability measures, respectively.
     \begin{align*}
       \bel(A)
        & = \sum_{B \subseteq W : B \subseteq A} m(B)
-      = \sum_{w \in A} \sum_{B \subseteq W : B \subseteq A, w_B = w} m(B) \\
+      = \sum_{w \in A} \sum_{B \subseteq W : B \subseteq A, w_B = w} m(B)
+      \\
        & = \sum_{w \in A} \sum_{B \subseteq W : w_B = w} m(B)
-      = \sum_{w \in A} P(w)
-      = P(A)
+      = \sum_{w \in A}
+      P(w) = P(A)
     \end{align*}
   \end{proof}
 \end{thm}
 
-A mass function assigns `weights' to pieces of evidence (sets of possible worlds).
+A mass
+function assigns `weights' to pieces of evidence (sets of possible worlds).
 The definition of conditional probability (\ref{def:2:ConditionalProbability})
 can be generalised to mass functions.
 
-\begin{dfn}
-  [Posterior probability given a mass function]
+\begin{dfn}[Posterior probability given a mass function]
   \label{def:4:PosteriorProbability}
-  Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions,
-  $P : 2^W \to [0, 1]$ be a prior probability distribution, and
-  $m : 2^W \to [0, 1]$ be a mass function.
+  Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions, $P :
+    2^W \to [0, 1]$ be a prior probability distribution, and $m : 2^W \to [0, 1]$
+  be a mass function.
   The posterior probability of $A$ given $m$ is:
   \begin{equation}
     P(A \mid m) = \sum_{B \subseteq W} P(A \mid B) m(B)
   \end{equation}
-  $m(B) > 0 \Rightarrow P(B) > 0$, otherwise $P(A \mid m)$ is undefined.
+  $m(B) > 0
+    \Rightarrow P(B) > 0$, otherwise $P(A \mid m)$ is undefined.
   The posterior probability of $w$ given $m$ is:
   \begin{equation}
     P(w \mid m) = P(w) \sum_{B \subseteq W : w \in B} \frac{m(B)}{P(B)}
   \end{equation}
 \end{dfn}
 
-\begin{thm}
-  [Relations to belief and plausibility measures]
+\begin{thm}[Relations to belief and plausibility measures]
   \begin{equation}
     \bel(A) \leq P(A \mid m) \leq \pl(A) \ \forall\ A \subseteq W
   \end{equation}
@@ -391,14 +397,23 @@ can be generalised to mass functions.
     $B \subseteq A \Rightarrow P(A \mid B) = 1$:
     \begin{align*}
       P(A \mid m)
-       & = \sum_{B \subseteq W} P(A \mid B) m(B)                  \\[1.5ex]
+       & = \sum_{B \subseteq W} P(A \mid B) m(B)
+      \\
+      [1.5ex]
        & = \sum_{B \subseteq W : B \subseteq A} P(A \mid B) m(B)
-      + \sum_{B \subseteq W : B \not\subseteq A} P(A \mid B) m(B) \\[1.5ex]
+      + \sum_{B \subseteq W : B \not\subseteq A} P(A \mid B) m(B)
+      \\
+      [1.5ex]
        & = \sum_{B \subseteq W : B \subseteq A} m(B)
-      + \sum_{B \subseteq W : B \not\subseteq A} P(A \mid B) m(B) \\[1.5ex]
-       & \geq \sum_{B \subseteq W : B \subseteq A} m(B) = \bel(A) \\[3ex]
+      + \sum_{B \subseteq W : B \not\subseteq A} P(A \mid B) m(B)
+      \\
+      [1.5ex]
+       & \geq \sum_{B \subseteq W : B \subseteq A} m(B) = \bel(A)
+      \\[3ex]
       P(A \mid m)
-       & = 1 - P(A^c \mid m)                                      \\[1.5ex]
+       & = 1 - P(A^c \mid m)
+      \\
+      [1.5ex]
        & \leq 1 - \bel(A^c) = \pl(A)
     \end{align*}
   \end{proof}
@@ -409,18 +424,17 @@ definition~\ref{def:4:PosteriorProbability} is:
 \begin{equation*}
   P(w \mid m) = \sum_{B \subseteq W : w \in B} \frac{m(B)}{\card{B}}
 \end{equation*}
-I.e., the posterior probability distribution redistributes the mass values
-associated with non-singleton sets uniformly to the singleton sets of their
-elements.
+I.e., the posterior probability distribution redistributes the
+mass values associated with non-singleton sets uniformly to the singleton sets
+of their elements.
 This is called the \textit{pignistic distribution} of a mass function.
 
 \subsection{Combination in Dempster-Shafer theory}
 
-There is a natural way to represent the combination of evidence from independent
-sources (mass functions) in Dempster-Shafer theory.
+There is a natural way to represent the combination of evidence from
+independent sources (mass functions) in Dempster-Shafer theory.
 
-\begin{dfn}
-  [Dempster's rule of combination]
+\begin{dfn}[Dempster's rule of combination]
   \label{dfn:4:DempstersRuleOfCombination}
   Let $W$ be a set of possible worlds, $A \subseteq W$ be a proposition, and
   $m_1, m_2 : 2^W \to [0, 1]$ be mass functions.
@@ -443,8 +457,7 @@ Belief and plausibility measures can be conditioned on $B$ by combining the
 generating mass function $m$ with $m_B$ according to
 definition~\ref{dfn:4:DempstersRuleOfCombination}.
 
-\begin{dfn}
-  [Conditional belief and plausibility]
+\begin{dfn}[Conditional belief and plausibility]
   \label{dfn:4:ConditionalBeliefPlausibility}
   Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions, and
   $\bel,\ \pl,\ m : 2^W \to [0, 1]$ be belief and plausibility measures and a
@@ -453,7 +466,8 @@ definition~\ref{dfn:4:DempstersRuleOfCombination}.
   \begin{align}
     \label{eqn:4:ConditionalBelief}
     \bel(A \mid B)
-     & = \sum_{C : C \subseteq A} m \oplus m_B(C)           \\[2ex]
+     & = \sum_{C : C \subseteq A} m \oplus m_B(C)
+    \\[2ex]
     \label{eqn:4:ConditionalPlausibility}
     \pl(A \mid B)
      & = \sum_{C : C \cap A \neq \emptyset} m \oplus m_B(C)
@@ -461,8 +475,7 @@ definition~\ref{dfn:4:DempstersRuleOfCombination}.
   where $m_B(B) = 1$, $m_B(C) = 0\ \forall\ C \neq B$, and $\pl(B) > 0$.
 \end{dfn}
 
-\begin{thm}
-  [Relation to plausibility]
+\begin{thm}[Relation to plausibility]
   \label{thm:4:RelationToPlausibility}
   Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions, and
   $\pl : 2^W \to [0, 1]$ be a plausibility measure.
@@ -488,8 +501,7 @@ definition~\ref{dfn:4:DempstersRuleOfCombination}.
   \end{proof}
 \end{thm}
 
-\begin{thm}
-  [Relation to belief]
+\begin{thm}[Relation to belief]
   Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions, and
   $\bel : 2^W \to [0, 1]$ be a belief measure.
   \begin{equation}
@@ -512,5 +524,5 @@ definition~\ref{dfn:4:DempstersRuleOfCombination}.
 \end{thm}
 
 Definition~\ref{dfn:4:DempstersRuleOfCombination} produces counterintuitive
-results if the mass functions are highly inconsistent, i.e., the denominator
-$1 - \sum_{(B, C) : B \cap C \neq \emptyset} m_1(B) m_2(C) \approx 0$.
+results if the mass functions are highly inconsistent, i.e., the denominator $1
+  - \sum_{(B, C) : B \cap C \neq \emptyset} m_1(B) m_2(C) \approx 0$.

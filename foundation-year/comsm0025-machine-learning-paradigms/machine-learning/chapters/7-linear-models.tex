@@ -1,25 +1,25 @@
 \section{Linear models}
 
 \begin{itemize}
-      \item Linear models are defined in terms of the geometry of the instance space.
-      \item Real-valued features are not generally intrinsically geometric.
-      \item However, we can use geometric concepts to structure the instance space
-            (e.g., lines and planes) and represent similarity by distance.
+  \item Linear models are defined in terms of the geometry of the instance space.
+  \item Real-valued features are not generally intrinsically geometric.
+  \item However, we can use geometric concepts to structure the instance space
+        (e.g., lines and planes) and represent similarity by distance.
 \end{itemize}
 
 Linear models are simple:
 
 \begin{itemize}
-      \item They are parametric: they have a fixed structure that is defined by
-            numeric parameters that are learned from the training data.
-            By contrast, tree and rule models are non-parametric: their structure
-            is not fixed prior to learning.
-      \item They are stable (have low variance): small variations in the training
-            data have a small effect on the learned model.
-            Tree models have high variance.
-      \item They are unlikely to overfit the training data because they have
-            relatively few parameters (have high bias).
-            However, they sometimes underfit the training data.
+  \item They are parametric: they have a fixed structure that is defined by
+        numeric parameters that are learned from the training data.
+        By contrast, tree and rule models are non-parametric: their structure is not
+        fixed prior to learning.
+  \item They are stable (have low variance): small variations in the training
+        data have a small effect on the learned model.
+        Tree models have high variance.
+  \item They are unlikely to overfit the training data because they have
+        relatively few parameters (have high bias).
+        However, they sometimes underfit the training data.
 \end{itemize}
 
 \subsection{The least-squares method}
@@ -41,22 +41,22 @@ When the sum of squared residuals is minimized, its partial derivatives with
 respect to $a$ and $b$ are zero:
 
 \begin{alignat}{2}
-      \frac{\partial}{\partial a} \sum_{i = 1}^{n} (y_i - (a + b x_i))^2
-       & = - 2 \sum_{i = 1}^{n} (y_i - (a + b x_i))
-       & = 0
-      \\
-      \frac{\partial}{\partial b} \sum_{i = 1}^{n} (y_i - (a + b x_i))^2
-       & = - 2 \sum_{i = 1}^{n} (y_i - (a + b x_i)) x_i
-       & = 0
+  \frac{\partial}{\partial a} \sum_{i = 1}^{n} (y_i - (a + b x_i))^2
+   & = - 2 \sum_{i = 1}^{n} (y_i - (a + b x_i))
+   & = 0
+  \\
+  \frac{\partial}{\partial b} \sum_{i = 1}^{n} (y_i - (a + b x_i))^2
+   & = - 2 \sum_{i = 1}^{n} (y_i - (a + b x_i)) x_i
+   & = 0
 \end{alignat}
 
 TODO
 
 \begin{itemize}
-      \item Translation does not affect the regression coefficient, only the intercept.
-            We can zero-centre the $x$-values by subtracting the mean $\bar{x}$.
-      \item If we normalize $x$ to have unit variance, then the regression
-            coefficient is the covariance between the normalized $x$ and $y$.
+  \item Translation does not affect the regression coefficient, only the intercept.
+        We can zero-centre the $x$-values by subtracting the mean $\bar{x}$.
+  \item If we normalize $x$ to have unit variance, then the regression
+        coefficient is the covariance between the normalized $x$ and $y$.
 \end{itemize}
 
 The least-squares solution is equivalent to the maximum likelihood estimate
@@ -73,8 +73,9 @@ Zero-centred matrix, scatter matrix, covariance matrix.
 
 Matrix form and homogeneous coordinates.
 Transformation to decorrelate, centre and normalize features.
-If the features are assumed to be uncorrelated, a multivariate linear regression
-problem decomposes into a set of univariate linear regression problems.
+If the features are assumed to be uncorrelated, a multivariate linear
+regression problem decomposes into a set of univariate linear regression
+problems.
 It is computationally expensive to invert the scatter (covariance) matrix.
 
 \paragraph{Regularization}
@@ -84,14 +85,14 @@ Instability demonstrates a tendency to overfit.
 Regularization helps to avoid overfitting by constraining the weight vector.
 
 \begin{itemize}
-      \item Shrinkage: makes the average magnitude of the weights small.
-            This adds a scalar parameter to the diagonal of the scatter matrix,
-            which improves the numerical stability of matrix inversion.
-            Least-squares regression with shrinkage is called ridge regression.
-      \item Lasso (least absolute shrinkage and selection operator): This adds the
-            sum of the absolute weights ($L_1$ regularization).
-            This makes the magnitude of some weights smaller but sets others to
-            zero, i.e., it favours sparse solutions.
+  \item Shrinkage: makes the average magnitude of the weights small.
+        This adds a scalar parameter to the diagonal of the scatter matrix, which
+        improves the numerical stability of matrix inversion.
+        Least-squares regression with shrinkage is called ridge regression.
+  \item Lasso (least absolute shrinkage and selection operator): This adds the
+        sum of the absolute weights ($L_1$ regularization).
+        This makes the magnitude of some weights smaller but sets others to zero, i.e.,
+        it favours sparse solutions.
 \end{itemize}
 
 \subsection{The perceptron}
@@ -100,23 +101,21 @@ Regularization helps to avoid overfitting by constraining the weight vector.
 
 \subsection{Obtaining probabilities from linear classifiers}
 
-
 \subsection{Notes}
 
 When to favour models with different characteristics?
 E.g., the quantity and quality training data.
 
-Normalization (zero-centre, unit variance)
-Write up the equivalencies between correlation coefficients etc.
+Normalization (zero-centre, unit variance) Write up the equivalencies between
+correlation coefficients etc.
 
-Regularization
-Relation to, e.g., Bayesian priors
-Technically, e.g., sparsity (Occam's razor).
+Regularization Relation to,
+e.g., Bayesian priors Technically, e.g., sparsity (Occam's razor).
 Regularization changes the optimal solution (it's included in the loss)
 
-Correlation (in the extreme case, two copies of the same feature) — your
-problem is underspecified, i.e., there are infinitely many solutions (which are
-combinations of the two).
+Correlation (in the extreme case, two copies of the same
+feature) — your problem is underspecified, i.e., there are infinitely many
+solutions (which are combinations of the two).
 `Spikiness of the fitness landscape' (high variance).
 Regularization: decreasing dependence on the data, i.e., increasing bias and
 decreasing variance.

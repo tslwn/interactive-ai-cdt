@@ -14,8 +14,7 @@ A distance-based model is generally comprised of:
 \subsection{Distance metrics}
 \label{sec:8:distance-metrics}
 
-\begin{dfn}
-  [Metric]
+\begin{dfn}[Metric]
   A metric is a function $d : M \times M \to \mathbb{R}$, where $M$ is a
   set of points, such that:
   \begin{enumerate}
@@ -30,24 +29,21 @@ A distance-based model is generally comprised of:
   \end{enumerate}
 \end{dfn}
 
-\begin{dfn}
-  [Pseudo-metric]
+\begin{dfn}[Pseudo-metric]
   A pseudo-metric is a metric where the condition of positivity is replaced by
   non-negativity, i.e., $d(x, y) \geq 0 \ \forall\ x, y \in M$.
 \end{dfn}
 
 \subsubsection{Norms}
 
-\begin{dfn}
-  [$p$-norm, $L_{p}$ norm]
+\begin{dfn}[$p$-norm, $L_{p}$ norm]
   The $p$-norm of a vector $\vec{x} \in \mathbb{R}^n$ is:
   \begin{equation}
     \norm{\vec{x}}_{p} = \left( \sum_{i = 1}^{n} |x_i|^{p} \right)^{\frac{1}{p}}
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [0-``norm", $L_{0}$ ``norm"]
+\begin{dfn}[0-``norm", $L_{0}$ ``norm"]
   The 0-``norm" of a vector $\vec{x} \in \mathbb{R}^n$ is the number of non-zero
   elements in $\vec{x}$:
   \begin{equation}
@@ -60,8 +56,7 @@ $f(ax) \neq a f(x) \ \forall\ a \in \mathbb{R}, x \in X$.
 
 \subsubsection{Distances}
 
-\begin{dfn}
-  [Minkowski distance]
+\begin{dfn}[Minkowski distance]
   The Minkowski distance of order $p \in \mathbb{N}_1$ between two vectors
   $\vec{x}, \vec{y} \in \mathbb{R}^n$ is:
   \begin{equation}
@@ -71,8 +66,7 @@ $f(ax) \neq a f(x) \ \forall\ a \in \mathbb{R}, x \in X$.
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Manhattan distance]
+\begin{dfn}[Manhattan distance]
   The Manhattan distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$
   is the Minkowski distance of order $p = 1$:
   \begin{equation}
@@ -81,8 +75,7 @@ $f(ax) \neq a f(x) \ \forall\ a \in \mathbb{R}, x \in X$.
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Euclidean distance]
+\begin{dfn}[Euclidean distance]
   \label{dfn:8:euclidean-distance}
   The Euclidean distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$
   is the Minkowski distance of order $p = 2$:
@@ -92,42 +85,40 @@ $f(ax) \neq a f(x) \ \forall\ a \in \mathbb{R}, x \in X$.
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Chebyshev distance]
+\begin{dfn}[Chebyshev distance]
   The Chebyshev distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$
   is the Minkowski distance of order $p \to \infty$:
   \begin{equation}
-    D_{\infty}(\vec{x}, \vec{y})
-    = \lim_{p \to \infty} \left( \sum_{i = 1}^{n} |x_i - y_i|^{p} \right)^{\frac{1}{p}}
-    = \max_{i = 1}^{n} |x_i - y_i|
+    D_{\infty}(\vec{x}, \vec{y}) = \lim_{p \to \infty} \left( \sum_{i = 1}^{n} |x_i
+    - y_i|^{p} \right)^{\frac{1}{p}} = \max_{i = 1}^{n} |x_i - y_i|
   \end{equation}
 \end{dfn}
 
-Minkowski distances are translationally invariant but not scale-invariant.
-Euclidean distance is the only Minkowski distance that is rotationally invariant.
+Minkowski distances are translationally invariant
+but not scale-invariant.
+Euclidean distance is the only Minkowski distance that is rotationally
+invariant.
 
-\begin{dfn}
-  [Hamming distance]
+\begin{dfn}[Hamming distance]
   The Hamming distance between two binary strings $\vec{x}, \vec{y}$ of length
   $n$ is the number of bits in which they differ:
   \begin{equation}
-    D_{0}(\vec{x}, \vec{y})
-    = \sum_{i = 1}^{n} |x_i - y_i|^{0}
-    = \sum_{i = 1}^{n} \mathbb{I}(x_i \neq y_i)
+    D_{0}(\vec{x}, \vec{y}) = \sum_{i = 1}^{n} |x_i - y_i|^{0} = \sum_{i = 1}^{n}
+    \mathbb{I}(x_i \neq y_i)
   \end{equation}
 \end{dfn}
 
-The edit or \textit{Levenshtein distance} generalises the Hamming distance to
-non-binary strings of different lengths.
+The edit
+or \textit{Levenshtein distance} generalises the Hamming distance to non-binary
+strings of different lengths.
 
-\begin{dfn}
-  [Mahalanobis distance]
+\begin{dfn}[Mahalanobis distance]
   \label{dfn:8:mahalanobis-distance}
   The Mahalanobis distance between two vectors $\vec{x}, \vec{y} \in \mathbb{R}^n$,
   where $\matr{\Sigma}$ is the covariance matrix, is:
   \begin{equation}
-    D_{M}(\vec{x}, \vec{y} \mid \matr{\Sigma})
-    = \sqrt{ (\vec{x} - \vec{y})^{T} \Sigma^{-1} (\vec{x} - \vec{y}) }
+    D_{M}(\vec{x}, \vec{y} \mid \matr{\Sigma}) = \sqrt{ (\vec{x} - \vec{y})^{T}
+      \Sigma^{-1} (\vec{x} - \vec{y}) }
   \end{equation}
 \end{dfn}
 
@@ -141,8 +132,7 @@ the identity matrix.
 Minimising the sum of squared Euclidean distances is equivalent to minimising
 the \textit{average} squared Euclidean distance.
 
-\begin{thm}
-  [Arithmetic mean minimises squared Euclidean distance]
+\begin{thm}[Arithmetic mean minimises squared Euclidean distance]
   The arithmetic mean $\vec{\mu}$ of a set of points $X \in \mathbb{R}^n$ is the
   point with the minimum sum of squared Euclidean distances to the points in $X$:
   \begin{equation}
@@ -152,7 +142,8 @@ the \textit{average} squared Euclidean distance.
     The gradient of the sum of squared Euclidean distances is:
     \begin{align*}
       \nabla_{\vec{y}} \sum_{\vec{x} \in X} \norm{\vec{x} - \vec{y}}_{2}^{2}
-       & = - 2 \sum_{\vec{x} \in X} (\vec{x} - \vec{y})          \\
+       & = - 2 \sum_{\vec{x} \in X} (\vec{x} - \vec{y})
+      \\
        & = - 2 \sum_{\vec{x} \in X} \vec{x} + 2 \card{X} \vec{y}
     \end{align*}
     If the gradient is the zero vector, then:
@@ -182,8 +173,8 @@ A binary linear classifier finds the exemplars that minimise the sum of squared
 Euclidean distances to the instances in each class.
 Its decision boundary is the perpendicular bisector of the line segment that
 connects the exemplars.
-Alternatively, it applies the \textit{decision rule} that an instance belongs to
-the class with the nearest exemplar.
+Alternatively, it applies the \textit{decision rule} that an instance belongs
+to the class with the nearest exemplar.
 
 \subsubsection{Multi-class linear classifiers}
 \label{par:8:multi-class-linear-classifiers}
@@ -220,9 +211,9 @@ High-dimensional instance spaces are sparse, i.e., the distance between any two
 instances is large.
 The effective dimensionality may be smaller: some dimensions may be irrelevant
 or the instances may lie on a lower-dimensional manifold.
-The dimensionality of the instance space can be reduced by \textit{feature selection}
-or techniques such as \textit{principal component analysis} (PCA) before
-applying a distance-based model.
+The dimensionality of the instance space can be reduced by \textit{feature
+  selection} or techniques such as \textit{principal component analysis} (PCA)
+before applying a distance-based model.
 
 \subsubsection{\textit{k}-nearest neighbours}
 
@@ -231,23 +222,24 @@ be used (where $k$ is distinct from the number of classes).
 An example of a decision rule for a $k$-nearest-neighbour classifier is to
 predict the majority class of the $k$ nearest exemplars.
 
-The model's properties depend on the choice of $k$: as it increases, the
-the refinement first increases and then decreases, the bias increases, and the
+The model's properties depend on the choice of $k$: as it increases, the the
+refinement first increases and then decreases, the bias increases, and the
 variance decreases.
 The dependence on $k$ can be lessened by applying \textit{distance weighting}
 to the exemplars.
 
 \subsubsection{Regression}
 
-Nearest-neighbour approaches are agnostic with respect to the type of the target
-variable and can be applied to regression problems.
+Nearest-neighbour approaches are agnostic with respect to the type of the
+target variable and can be applied to regression problems.
 With $k$-nearest-neighbours, the predicted value is typically the mean of the
 $k$ nearest exemplars, which may be distance-weighted.
 
 \subsection{Clustering}
 \label{sec:8:clustering}
 
-For distance-based models, unsupervised learning generally refers to clustering.
+For distance-based models, unsupervised learning generally refers to
+clustering.
 A predictive distance-based clustering method has the same elements as a
 distance-based classifier (section~\ref{sec:8:distance-based-models}).
 Instead of an explicit target variable, the distance metric is taken to
@@ -255,24 +247,24 @@ represent the learning target.
 Therefore, the aim is to find \textit{compact} clusters with respect to the
 distance metric.
 
-\begin{dfn}
-  [Within-cluster scatter matrix]
-  Let $X = \bigcup_{i = 1}^{k} X_i$ be a set of instances partitioned into $k$ classes.
+\begin{dfn}[Within-cluster scatter matrix]
+  Let $X = \bigcup_{i = 1}^{k}
+    X_i$ be a set of instances partitioned into $k$ classes.
   The within-cluster scatter matrix $\matr{S}_i$ is the scatter matrix of $X_i$.
 \end{dfn}
 
-\begin{dfn}
-  [Between-cluster scatter matrix]
-  Let $X = \bigcup_{i = 1}^{k} X_i$ be a set of instances partitioned into $k$ classes.
+\begin{dfn}[Between-cluster scatter matrix]
+  Let $X = \bigcup_{i = 1}^{k}
+    X_i$ be a set of instances partitioned into $k$ classes.
   The between-cluster scatter matrix $\matr{B}$ is the scatter matrix of $X$
   where each instance is replaced by its centroid $\vec{\mu}_i$.
 \end{dfn}
 
-\begin{thm}
-  [Relation of within- and between-cluster scatter matrices]
+\begin{thm}[Relation of within- and between-cluster scatter matrices]
   \begin{align}
     \matr{S}
-     & = \sum_{i = 1}^{k} \matr{S}_i + \matr{B} \\
+     & = \sum_{i = 1}^{k} \matr{S}_i + \matr{B}
+    \\
     \Tr \matr{S}
      & = \sum_{i = 1}^{k} \Tr \matr{S}_i +
     \sum_{i = 1}^{k} \card{X_i} \norm{\vec{\mu}_j - \vec{\mu}}^2
@@ -284,22 +276,22 @@ scatter of the centroids, weighted by the number of instances in each class.
 
 \subsubsection{K-means}
 
-The \textit{k-means} problem is to find the partition of $X$ that minimises
-the total within-cluster scatter (section~\ref{sec:8:clustering}).
+The \textit{k-means} problem is to find the partition of $X$ that minimises the
+total within-cluster scatter (section~\ref{sec:8:clustering}).
 In this context, $k$ is the number of clusters instead of a number of classes.
-The k-means problem is NP-complete, i.e., there is no efficient way to find
-the global minimum.
-The typical heuristic algorithm is called k-means or
-\textit{Lloyd's algorithm}.
+The k-means problem is NP-complete, i.e., there is no efficient way to find the
+global minimum.
+The typical heuristic algorithm is called k-means or \textit{Lloyd's
+  algorithm}.
 It iterates between partitioning the data with the nearest-centroid decision
 rule and recomputing the centroids from the partition.
 
 An iteration of the k-means algorithm cannot decrease the total within-cluster
 scatter, so it reaches a \textit{stationary point} (a local minimum).
-It converges to a stationary point in a finite number of iterations but there is
-no way to know whether it is optimal (the global minimum).
-Therefore, it is recommended to run k-means multiple times and choose the
-best solution.
+It converges to a stationary point in a finite number of iterations but there
+is no way to know whether it is optimal (the global minimum).
+Therefore, it is recommended to run k-means multiple times and choose the best
+solution.
 
 \subsubsection{K-medoids}
 
@@ -321,8 +313,7 @@ entries of the scatter matrix into account.
 
 \subsubsection{Silhouettes}
 
-\begin{dfn}
-  [Silhouette]
+\begin{dfn}[Silhouette]
   Let:
   \begin{itemize}
     \item $X = \bigcup_{i = 1}^{k} X_i \in \mathbb{X}$ be a set of instances
@@ -351,9 +342,8 @@ entries of the scatter matrix into account.
     s(\vec{x_j}) =
     \frac{b(\vec{x}_j) - a(\vec{x}_j)}{\max(a(\vec{x}_j), b(\vec{x}_j))}
   \end{equation}
-  The silhouette of $X$ is a plot of $s(\vec{x}_j)$ against
-  $\vec{x}_j$, grouped by $X_i$ and sorted in descending order of
-  $s(\vec{x}_j)$.
+  The silhouette of $X$ is a plot of $s(\vec{x}_j)$ against $\vec{x}_j$, grouped
+  by $X_i$ and sorted in descending order of $s(\vec{x}_j)$.
 \end{dfn}
 
 \subsection{Hierarchical clustering}
@@ -365,8 +355,7 @@ It is a descriptive rather than a predictive model, because it partitions the
 training set but not the entire instance space, and has high variance.
 It requires a definition of the distance between clusters.
 
-\begin{dfn}
-  [Dendrogram]
+\begin{dfn}[Dendrogram]
   Let $X$ be a set of instances.
   A dendrogram is a binary tree where each leaf is an instance in $X$, each
   branch is a subset of instances, and the level of each node is the distance
@@ -375,19 +364,17 @@ It requires a definition of the distance between clusters.
 
 \subsubsection{Linkage functions}
 
-A \textit{linkage function} translates pairwise distances between instances into
-pairwise distances between clusters.
+A \textit{linkage function} translates pairwise distances between instances
+into pairwise distances between clusters.
 
-\begin{dfn}
-  [Linkage function]
+\begin{dfn}[Linkage function]
   Let $X$ be a set of instances and $D : X \times X \to \mathbb{R}$ be
   a distance metric.
-  A linkage function $L : X \times X \to \mathbb{R}$ is the distance
-  between $X_i, X_j \subseteq X$.
+  A linkage function $L : X \times X \to \mathbb{R}$ is the distance between
+  $X_i, X_j \subseteq X$.
 \end{dfn}
 
-\begin{dfn}
-  [Single linkage]
+\begin{dfn}[Single linkage]
   The single linkage between $X_i, X_j \subseteq X$ is the minimum distance
   between any two instances in $X_i$ and $X_j$:
   \begin{equation}
@@ -396,8 +383,7 @@ pairwise distances between clusters.
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Complete linkage]
+\begin{dfn}[Complete linkage]
   The complete linkage between $X_i, X_j \subseteq X$ is the maximum distance
   between any two instances in $X_i$ and $X_j$:
   \begin{equation}
@@ -406,8 +392,7 @@ pairwise distances between clusters.
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Average linkage]
+\begin{dfn}[Average linkage]
   The average linkage between $X_i, X_j \subseteq X$ is the average distance
   between any two instances in $X_i$ and $X_j$:
   \begin{equation}
@@ -417,22 +402,20 @@ pairwise distances between clusters.
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Centroid linkage]
+\begin{dfn}[Centroid linkage]
   The centroid linkage between $X_i, X_j \subseteq X$ is the distance between
   the centroids of $X_i$ and $X_j$:
   \begin{equation}
-    L(X_i, X_j) = D\left(
-    \frac{1}{\card{X_i}} \sum_{\vec{x} \in X_i} \vec{x},\
-    \frac{1}{\card{X_j}} \sum_{\vec{y} \in X_j} \vec{y}
-    \right)
+    L(X_i, X_j) = D\left( \frac{1}{\card{X_i}} \sum_{\vec{x} \in X_i} \vec{x},\
+    \frac{1}{\card{X_j}} \sum_{\vec{y} \in X_j} \vec{y} \right)
   \end{equation}
 \end{dfn}
 
-\subsubsection{Hierarchical agglomerative clustering}
+\subsubsection{Hierarchical agglomerative
+  clustering}
 
-The algorithm to build a dendrogram is \textit{agglomerative} (it works from the
-bottom up).
+The algorithm to build a dendrogram is
+\textit{agglomerative} (it works from the bottom up).
 Generally, it produces different results for different linkage functions.
 For single linkage, it adds links until there is a path between any two
 instances.
