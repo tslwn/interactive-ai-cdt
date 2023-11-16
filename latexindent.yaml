@@ -15,37 +15,3 @@ modifyLineBreaks:
     EndFinishesWithLineBreak: 1
     DBSStartsOnOwnLine: 1
     DBSFinishesWithLineBreak: 1
-fineTuning:
-  modifyLineBreaks:
-    betterFullStop: |-
-      (?x)                  #
-      (?:                   #
-        \.\)                # .)
-        (?!\h*[a-z])        # not *followed by* a-z
-      )                     #
-      |                     # OR
-      (?:                   #
-        (?<!                # not *preceded by*
-          (?:               #
-            (?:[eE]\.[gG])  # e.g
-            |               #
-            (?:[iI]\.[eE])  # i.e
-            |               #
-            (?:etc)         # etc
-            |               #
-          \.                # .
-          )                 #
-        )                   #
-      )                     #
-      \.                    # .
-      (?!                   # not *followed by*
-        (?:                 #
-          [a-zA-Z0-9-~,]    #
-          |                 #
-          \),               # ),
-          |                 #
-          \)\.              # ).
-          |                 #
-          \.                # .
-        )                   #
-      )                     #
