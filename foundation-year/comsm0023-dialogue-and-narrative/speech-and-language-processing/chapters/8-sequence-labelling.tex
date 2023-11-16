@@ -31,8 +31,7 @@ one.
 
 \paragraph{Markov chains}
 
-\begin{dfn}
-  [Markov assumption]
+\begin{dfn}[Markov assumption]
   \label{dfn:8:markov-assumption}
   Given a sequence of states $U = u_1 \dots u_{i - 1}$, the probability of a
   state $u_i$ depends only on the previous state $u_{i - 1}$:
@@ -41,8 +40,7 @@ one.
   \end{equation}
 \end{dfn}
 
-\begin{dfn}
-  [Markov chain]
+\begin{dfn}[Markov chain]
   \label{dfn:8:markov-chain}
   A Markov chain is a tuple $(S, \matr{T}, P)$ where:
   \begin{itemize}
@@ -63,8 +61,7 @@ one.
 A HMM represents both observed and \textit{hidden} events, which are not
 observed directly (like part-of-speech tags).
 
-\begin{dfn}
-  [Hidden Markov model]
+\begin{dfn}[Hidden Markov model]
   \label{dfn:8:hidden-markov-model}
   A hidden Markov model is a Markov chain (definition~\ref{dfn:8:markov-chain})
   where additionally:
@@ -78,9 +75,9 @@ observed directly (like part-of-speech tags).
 \end{dfn}
 
 As well as the Markov assumption (definition \ref{dfn:8:markov-assumption}), a
-HMM assumes \textit{output independence}: that the probability of an observation
-depends only on the current state, i.e.,
-$P(w_i = v_j \mid u_1 u_2 \dots u_i) = P(w_i = v_j \mid u_i)$.
+HMM assumes \textit{output independence}: that the probability of an
+observation depends only on the current state, i.e., $P(w_i = v_j \mid u_1 u_2
+  \dots u_i) = P(w_i = v_j \mid u_i)$.
 
 \subsubsection{HMM tagging and decoding}
 
@@ -91,9 +88,11 @@ For part-of-speech tagging, this task is (applying Bayes' theorem):
 \begin{align}
   \hat{u}_1 \hat{u}_2 \dots \hat{u}_{n_u}
    & = \argmax_{u_1 u_2 \dots u_{n_u}}
-  P(u_1 u_2 \dots u_{n_u} \mid w_1 w_2 \dots w_{n_w})                                                           \\[3ex]
+  P(u_1 u_2 \dots u_{n_u} \mid w_1 w_2 \dots w_{n_w})
+  \\[3ex]
    & = \argmax_{u_1 u_2 \dots u_{n_u}}
-  \frac{P(w_1 w_2 \dots w_{n_w} \mid u_1 u_2 \dots u_{n_u}) P(u_1 u_2 \dots u_{n_u})}{P(w_1 w_2 \dots w_{n_w})} \\[3ex]
+  \frac{P(w_1 w_2 \dots w_{n_w} \mid u_1 u_2 \dots u_{n_u}) P(u_1 u_2 \dots u_{n_u})}{P(w_1 w_2 \dots w_{n_w})}
+  \\[3ex]
    & = \argmax_{u_1 u_2 \dots u_{n_u}}
   P(w_1 w_2 \dots w_{n_w} \mid u_1 u_2 \dots u_{n_u}) P(u_1 u_2 \dots u_{n_u})
   \label{eqn:8:hmm-tagging-1}
@@ -122,10 +121,12 @@ gives:
 \begin{equation}
   \hat{u}_1 \hat{u}_2 \dots \hat{u}_{n_u}
   = \argmax_{u_1 u_2 \dots u_{n_u}}
-  \prod_{i = 1}^{n_w} P(w_i \mid u_i) P(u_i \mid u_{i - 1})
+  \prod_{i = 1}^{n_w}
+  P(w_i \mid u_i) P(u_i \mid u_{i - 1})
 \end{equation}
-where $P(w_i \mid u_i)$ is the \textit{emission probability} and
-$P(u_i \mid u_{i - 1})$ is the \textit{transition probability} from
+where $P(w_i \mid u_i)$ is
+the \textit{emission probability} and $P(u_i \mid u_{i - 1})$ is the
+\textit{transition probability} from
 definitions~\ref{dfn:8:hidden-markov-model} and \ref{dfn:8:markov-chain},
 respectively.
 
@@ -168,6 +169,6 @@ Part-of-speech tagging is evaluated by \textit{accuracy}.
 Named-entity recognition is evaluated by \textit{recall}, \textit{precision},
 and \textit{$F_1$ measure}.
 The statistical significance of a difference between the $F_1$ measures of two
-named-entity recognition systems is evaluated by the
-\textit{paired bootstrap test} or similar.
+named-entity recognition systems is evaluated by the \textit{paired bootstrap
+  test} or similar.
 The segmentation component of named-entity recognition complicates evaluation.

@@ -8,7 +8,6 @@ modifyLineBreaks:
     sentenceIndent: ""
   textWrapOptions:
     columns: 80
-    when: after
   environments:
     BeginStartsOnOwnLine: 1
     BodyStartsOnOwnLine: 1

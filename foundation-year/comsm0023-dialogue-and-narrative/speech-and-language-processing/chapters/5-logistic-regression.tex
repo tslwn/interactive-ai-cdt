@@ -36,7 +36,8 @@ It is differentiable and squashes outliers towards 0 or 1.
 For binary classification, we require that $P(y = 0) + P(y = 1) = 1$:
 \begin{align}
   \label{eqnSigmoidP}
-  P(y = 1 \mid \vec{x}) & = \sigma(\vec{w} \cdot \vec{x} + b)                                          \\
+  P(y = 1 \mid \vec{x}) & = \sigma(\vec{w} \cdot \vec{x} + b)
+  \\
   P(y = 0 \mid \vec{x}) & = 1 - \sigma(\vec{w} \cdot \vec{x} + b) = \sigma(-\vec{w} \cdot \vec{x} - b)
 \end{align}
 
@@ -46,21 +47,25 @@ For binary classification, we call 0.5 the \textit{decision boundary} of $P(y \m
 \begin{equation}
   \text{decision}(\vec{x}) =
   \begin{cases}
-    1 & \text{if } P(y = 1 \mid \vec{x}) > 0.5 \\
+    1 & \text{if }
+    P(y = 1 \mid \vec{x}) > 0.5
+    \\
     0 & \text{otherwise}
   \end{cases}
 \end{equation}
 
-\setcounter{subsubsection}{1}
-\subsubsection{Other classification tasks and features}
+\setcounter{subsubsection}{1} \subsubsection{Other
+  classification tasks and features}
 
-For some tasks, it helps to design combinations of features or \textit{feature interactions}.
+For some tasks, it helps
+to design combinations of features or \textit{feature interactions}.
 These can be created automatically from \textit{feature templates}.
 \textit{Representation learning} tries to learn features automatically.
 
 \paragraph{Scaling input features}
 
-It is common to \textit{standardize} features to have zero mean and unit variance.
+It is common to \textit{standardize} features to have zero mean and unit
+variance.
 This transformation is called the \textit{z-score}.
 \begin{equation}
   \label{eqnZScore}
@@ -77,7 +82,8 @@ Alternatively, we can \textit{normalize} features by $f : \mathbb{R} \to [0, 1]$
 
 \subsubsection{Processing many examples at once}
 
-Let $\{ \vec{x}_j \mid j \in 1 .. N \}$ be a set of input feature vectors and $\matr{X} = (x_{ij})$ a matrix where row $i$ is the feature vector $\vec{x}_i$.
+Let $\{ \vec{x}_j \mid j \in 1 .. N \}$ be a set of input feature vectors and
+$\matr{X} = (x_{ij})$ a matrix where row $i$ is the feature vector $\vec{x}_i$.
 Then the output vector is:
 \begin{equation}
   \vec{y} = \matr{X} \vec{w} + b \vec{1}
@@ -85,15 +91,20 @@ Then the output vector is:
 
 \subsubsection{Choosing a classifier}
 
-Naive Bayes assumes conditional independence, i.e., treats correlated features as independent.
-Logistic regression properly handles correlated features, so it generally works better on large datasets or documents.
-However, naive Bayes is easy to implement and fast to train, because it has no optimization step.
+Naive Bayes assumes conditional independence, i.e., treats correlated features
+as independent.
+Logistic regression properly handles correlated features, so it generally works
+better on large datasets or documents.
+However, naive Bayes is easy to implement and fast to train, because it has no
+optimization step.
 
 \subsection{Multinomial logistic regression}
 
 \textit{Multinomial} ($k > 2$) logistic regression is sometimes called softmax regression.
-It is an example of \textit{hard} classification, i.e., it assigns a single class to each instance.
-A \textit{one-hot vector} $\vec{y}$ has $y_i = 1$ and $y_j = 0\ \forall\ i \neq j$.
+It is an example of \textit{hard} classification, i.e., it assigns a single
+class to each instance.
+A \textit{one-hot vector} $\vec{y}$ has $y_i = 1$ and $y_j = 0\ \forall\ i \neq
+  j$.
 
 \subsubsection{Softmax}
 
@@ -122,21 +133,29 @@ The vector of output probabilities for the $k$ classes is:
 
 \subsubsection{Features in multinomial logistic regression}
 
-In multinomial logistic regression, there is a weight vector and bias for each of the $k$ classes.
-The weight vector $\vec{w}$ depends on the input feature vector and the output class, so it is sometimes written $f(x, y)$.
+In multinomial logistic regression, there is a weight vector and bias for each
+of the $k$ classes.
+The weight vector $\vec{w}$ depends on the input feature vector and the output
+class, so it is sometimes written $f(x, y)$.
 
 \subsection{Learning in logistic regression}
 
-The learning task to learn the weight vector $\vec{w}$ and bias $b$ that make the vector of output probabilities $\vec{\hat{y}}$ most similar to the true output $\vec{y}$ for the training data.
-Typically, the \textit{distance} between them is measured, which is called the \textit{loss} or cost function.
-The \textit{cross-entropy} loss is commonly used for logistic regression and neural networks.
+The learning task to learn the weight vector $\vec{w}$ and bias $b$ that make
+the vector of output probabilities $\vec{\hat{y}}$ most similar to the true
+output $\vec{y}$ for the training data.
+Typically, the \textit{distance} between them is measured, which is called the
+\textit{loss} or cost function.
+The \textit{cross-entropy} loss is commonly used for logistic regression and
+neural networks.
 The loss function is minimised by an optimisation algorithm.
 \textit{Gradient descent}, e.g., stochastic gradient descent, is commonly used.
 
 \subsection{The cross-entropy loss function}
 
-A loss function that prefers that the true outputs are more likely is an example of \textit{conditional maximum likelihood estimation}.
-It maximises the log probability of the true outputs given the input feature vectors.
+A loss function that prefers that the true outputs are more likely is an
+example of \textit{conditional maximum likelihood estimation}.
+It maximises the log probability of the true outputs given the input feature
+vectors.
 
 The cross-entropy loss is:
 \begin{equation}
@@ -151,7 +170,8 @@ For $k = 2$ classes, the probability that the output label is correct $P(y \mid 
   \label{eqnDerivation1}
   P(y \mid x) = \hat{y}^y (1 - \hat{y})^{1 - y}
 \end{equation}
-The logarithm is a monotonic function.
+The logarithm is a
+monotonic function.
 Therefore, instead of maximising the probability, we can maximise the log probability (or minimise the negative log probability):
 \begin{equation}
   \label{eqnDerivation2}
@@ -161,17 +181,22 @@ This is equivalent to \ref{eqnCrossEntropyLoss} for $k = 2$.
 
 \subsection{Gradient descent}
 
-An optimisation algorithm finds the weights $\theta$ that minimise the loss function.
+An optimisation algorithm finds the weights $\theta$ that minimise the loss
+function.
 In logistic regression, $\theta = (\vec{w}, b)$.
 For $n$ instances, the weights that minimise the average loss are:
 \begin{equation}
   \label{eqnWeightsOptimal}
-  \vec{\hat{\theta}} = \argmin_{\vec{\theta}} \frac{1}{n} \sum_{i = 1}^{n} L(f(\vec{x}^{(i)}, \vec{\theta}), \vec{y}^{(i)})
+  \vec{\hat{\theta}} = \argmin_{\vec{\theta}} \frac{1}{n} \sum_{i = 1}^{n}
+  L(f(\vec{x}^{(i)}, \vec{\theta}), \vec{y}^{(i)})
 \end{equation}
 
-Gradient descent finds the minimum of a function by incrementing its parameters in the opposite direction in parameter space to the direction with the largest gradient.
+Gradient descent finds the minimum of a function by
+incrementing its parameters in the opposite direction in parameter space to the
+direction with the largest gradient.
 The increment is weighted by a \textit{learning rate} $\eta$.
-In logistic regression, the loss function is convex (has at most one minimum) and gradient descent is guaranteed to find the global minimum.
+In logistic regression, the loss function is convex (has at most one minimum)
+and gradient descent is guaranteed to find the global minimum.
 
 The equation to update the weights is:
 \begin{equation}
@@ -192,8 +217,10 @@ For binary logistic regression, the cross-entropy loss function is:
 Its derivative with respect to $w_i$ is:
 \begin{align}
   \frac{\partial \mathcal{L}}{\partial w_j}
-   & = - y \frac{\partial \log \hat{y}}{\partial w_j} - (1 - y) \frac{\partial \log (1 - \hat{y})}{\partial w_j}                         \\
-   & = - \frac{y}{\hat{y}} \frac{\partial \hat{y}}{\partial w_j} - \frac{1 - y}{1 - \hat{y}} \frac{\partial (1 - \hat{y})}{\partial w_j} \\
+   & = - y \frac{\partial \log \hat{y}}{\partial w_j} - (1 - y) \frac{\partial \log (1 - \hat{y})}{\partial w_j}
+  \\
+   & = - \frac{y}{\hat{y}} \frac{\partial \hat{y}}{\partial w_j} - \frac{1 - y}{1 - \hat{y}} \frac{\partial (1 - \hat{y})}{\partial w_j}
+  \\
    & = - \biggl( \frac{y}{\hat{y}} - \frac{1 - y}{1 - \hat{y}} \biggr) \frac{\partial \hat{y}}{\partial w_j}
 \end{align}
 The derivative of the sigmoid function is:
@@ -204,10 +231,12 @@ The derivative of the sigmoid function is:
 Therefore:
 \begin{align}
   \frac{\partial \mathcal{L}}{\partial w_j}
-   & =  - (y - \hat{y}) \frac{\partial (\vec{w} \cdot \vec{x} + b)}{\partial w_j} \\
+   & =  - (y - \hat{y}) \frac{\partial (\vec{w} \cdot \vec{x} + b)}{\partial w_j}
+  \\
    & = (\hat{y} - y) x_j
 \end{align}
-I.e., the gradient with respect to a weight $w_j$ is the difference between the true $y$ and the estimated $\hat{y}$ multiplied by the input feature $x_j$.
+I.e., the gradient with respect to a weight $w_j$ is the difference between the
+true $y$ and the estimated $\hat{y}$ multiplied by the input feature $x_j$.
 
 \subsubsection{The stochastic gradient descent algorithm}
 
