@@ -1,0 +1,158 @@
+% !TEX root=week-9-model-ensembles.tex
+
+\documentclass[10pt]{beamer}
+\usepackage{../../../../latex/packages/tslwn-preamble}
+\usepackage{../../../../latex/packages/tslwn-slides}
+
+\title{Model ensembles}
+\author{Tim Lawson}
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Model ensembles}
+  \begin{itemize}
+    \item Learn multiple models from versions of the data
+    \item[]
+          \begin{itemize}
+            \item Resample, e.g., bagging, subspace sampling
+            \item Reweight, e.g., boosting
+          \end{itemize}
+    \item Combine the outputs of the models
+    \item[]
+          \begin{itemize}
+            \item Average scores or probabilities
+            \item Majority vote
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boosting}{Definition}
+  \begin{itemize}
+    \item $\vec{x}_i \in \mathbb{R}^n$ is an instance
+    \item $\vec{y}_i \in \{0,1\}^k$ is a label (one-hot vector)
+    \item $f^{(j)} : \mathbb{R}^n \to \{0,1\}^k$ is a model
+    \item $\vec{\hat{y}}_i^{(j)} = f^{(j)}(\vec{x}_i) \in \{0,1\}^k$ is a prediction (one-hot vector)
+    \item $w_i^{(j)} \in \mathbb{R}, w_i^{(0)} = \frac{1}{n}, \sum_{i = 1}^{n}w^{(j)}_i = 1$ is an instance weight
+    \item $\epsilon^{(j)} = \sum_{i : \vec{\hat{y}}_i^{(j)} \neq \vec{y}_i} w^{(j)}_i \in \mathbb{R}$ is the weighted error of model $f^{(j)}$
+    \item $\alpha^{(j)} = f_\alpha(\epsilon^{(j)}) \in \mathbb{R}$ is the weight of model $f^{(j)}$
+    \item $w^{(j+1)}_i = f_w(w^{(j)}_i, \vec{y}_i,\,\vec{\hat{y}}_i^{(j)}, \epsilon^{(j)})$ is the updated instance weight
+    \item $\vec{\hat{y}}_i = \sum_{j = 1}^{J}\alpha^{(j)}f^{(j)}(x_i) \in \{0,1\}^k$ is the ensemble model prediction
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boosting}{Questions}
+  \begin{itemize}
+    \item What should the weights of the models $f_\alpha$ be?
+    \item What should the weight updates $f_w$ be?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boosting}{Model weights derivation}
+  Assume that the weight updates $f_w$ are:
+  \begin{equation*}
+    w^{(j+1)}_i
+    =
+    \frac{w^{(j)}_i}{Z^{(j)}}
+    \times
+    \begin{cases}
+      e^{-\alpha^{(j)}} & \text{if } \vec{\hat{y}}_i^{(j)} = \vec{y}_i
+      \\
+      e^{\alpha^{(j)}}  & \text{otherwise}
+    \end{cases}
+  \end{equation*}
+  This can be simplified with:
+  \begin{equation*}
+    \delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)})
+    =
+    \begin{cases}
+      1  & \text{if } \vec{\hat{y}}_i^{(j)} = \vec{y}_i
+      \\
+      -1 & \text{otherwise}
+    \end{cases}
+  \end{equation*}
+  \begin{equation*}
+    w^{(j+1)}_i
+    =
+    w^{(j)}_i\frac{\exp(-\alpha^{(j)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{Z^{(j)}}
+  \end{equation*}
+\end{frame}
+
+\begin{frame}{Boosting}{Model weights derivation}
+  Each update is multiplicative:
+  \begin{equation*}
+    w^{(J)}_i
+    =
+    w^{(0)}_i
+    \prod_{j=1}^{J}
+    \frac{\exp(-\alpha^{(j)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{Z^{(j)}}
+    =
+    \frac{1}{n}
+    \frac{\exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{\prod_{j=1}^{J}Z^{(j)}}
+  \end{equation*}
+  Each set of instance weights sums to 1:
+  \begin{equation*}
+    1
+    =
+    \sum_{i = 1}^{n}w^{(j)}_i
+    =
+    \sum_{i = 1}^{n}
+    \frac{1}{n}
+    \frac{\exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{\prod_{j=1}^{J}Z^{(j)}}
+  \end{equation*}
+  \begin{equation*}
+    \prod_{j=1}^{J}
+    Z^{(j)} = \frac{1}{n}\sum_{i = 1}^{n}
+    \exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))
+  \end{equation*}
+  $\exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)})) \geq 1$ if $x_i$ is
+  misclassified by the ensemble, so $\prod_{j=1}^{J} Z^{(j)}$ is an upper bound
+  on the ensemble error.
+\end{frame}
+
+\begin{frame}{Boosting}{Model weights derivation}
+  $\prod_{j=1}^{J} Z^{(j)}$ could be minimized by minimizing the model error $(n)$$Z^{(j)}$:
+    \begin{equation*}
+      n Z^{(j)}
+      =
+      \sum_{i = 1}^{n} w^{(j)}_i \exp(-\alpha^{(j)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))
+    \end{equation*}
+    By the definitions of $\epsilon^{(j)}$ and $\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)})$:
+  \begin{equation*}
+    n Z^{(j)}
+    =
+    \epsilon^{(j)} \exp(\alpha^{(j)})
+    +
+    (1 - \epsilon^{(j)}) \exp(-\alpha^{(j)})
+  \end{equation*}
+\end{frame}
+
+\begin{frame}{Boosting}{Model weights derivation}
+  Therefore, $Z^{(j)}$ is minimized when:
+  \begin{equation*}
+    \frac{\partial Z^{(j)}}{\partial \alpha^{(j)}}
+    =
+    \epsilon^{(j)} \exp(\alpha^{(j)})
+    -
+    (1 - \epsilon^{(j)}) \exp(-\alpha^{(j)})
+    =
+    0
+  \end{equation*}
+  \begin{equation*}
+    \exp(2\alpha^{(j)})
+    =
+    \frac{1 - \epsilon^{(j)}}{\epsilon^{(j)}}
+  \end{equation*}
+  That is:
+  \begin{equation*}
+    \alpha^{(j)}
+    =
+    \frac{1}{2}\ln\left(\frac{1 - \epsilon^{(j)}}{\epsilon^{(j)}}\right)
+    ,\
+    Z^{(j)}
+    =
+    2\sqrt{\epsilon^{(j)}(1 - \epsilon^{(j)})}
+  \end{equation*}
+\end{frame}
+
+\end{document}
