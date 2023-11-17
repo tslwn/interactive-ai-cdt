@@ -41,10 +41,17 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Boosting}{Code}
+  \lstinputlisting[
+    language=Python,
+    linerange={43-47,48-55}
+  ]{src/examples/binary_classifier_ensemble_todo.py}
+\end{frame}
+
 \begin{frame}{Boosting}{Questions}
   \begin{itemize}
-    \item What should the weights of the models $f_\alpha$ be?
-    \item What should the weight updates $f_w$ be?
+    \item What should the weights of the models $f_\alpha$/\lstinline[language=Python]{get_model_weights} be?
+    \item What should the weight updates $f_w$/\lstinline[language=Python]{update_weight} be?
   \end{itemize}
 \end{frame}
 
