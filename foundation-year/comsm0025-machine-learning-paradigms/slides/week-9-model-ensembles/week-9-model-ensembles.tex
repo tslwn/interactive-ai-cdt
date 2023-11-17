@@ -12,7 +12,7 @@
 
 \begin{frame}{Model ensembles}
   \begin{itemize}
-    \item Learn multiple models from versions of the data
+    \item Learn multiple models from different versions of the data
     \item[]
           \begin{itemize}
             \item Resample, e.g., bagging, subspace sampling
@@ -22,7 +22,36 @@
     \item[]
           \begin{itemize}
             \item Average scores or probabilities
-            \item Majority vote
+            \item Take a vote
+          \end{itemize}
+    \item Or learn multiple types of model
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bagging}
+  \begin{itemize}
+    \item Take random samples (with replacement) from the training data
+    \item Train a model on each sample
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bias and variance}
+  A classification error may occur when:
+  \\~\
+  \begin{itemize}
+    \item Feature vectors/per-class distributions \emph{overlap}
+    \item The model has \emph{high bias} (is not expressive enough), e.g.:
+    \item[]
+          \begin{itemize}
+            \item a linear model for data that is not linearly separable
+          \end{itemize}
+    \item The model has \emph{high variance}, e.g.:
+    \item[]
+          \begin{itemize}
+            \item a $1$-nearest-neighbour classifier, whose decision boundaries
+                  depend on single instances
+            \item a decision tree, whose structure depends on the impurities of
+                  feature-wise splits
           \end{itemize}
   \end{itemize}
 \end{frame}
