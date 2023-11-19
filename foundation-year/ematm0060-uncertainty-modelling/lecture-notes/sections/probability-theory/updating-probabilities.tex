@@ -1,0 +1,114 @@
+\subsection{Updating probabilities and Bayesian reasoning}
+
+If an agent learns that a proposition $A$ is true, then it should update its
+probability distribution to reflect that $w^* \in A$.
+If an agent learns that a proposition $A$ is false, then it cannot update its
+probability distribution.
+
+\begin{dfn}[Conditional probability]
+  \label{def:2:ConditionalProbability}
+
+  Let $P$ be a probability measure such that $P(B)>0$.
+  The conditional probability of $A$ given $B$ is:
+  \begin{equation}
+    \label{eqn:2:ConditionalProbability}
+    P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+  \end{equation}
+\end{dfn}
+
+Let $H = \{H_i \mid i \in 1 .. k\}\subseteq W$ be a set of
+hypotheses.
+$H$ are:
+\begin{itemize}
+  \item \textit{mutually exclusive} if $H_i \cap H_j = \emptyset\ \forall\ i \neq j$; and
+  \item \textit{exhaustive} if $\bigcup_{i = 1}^{k}
+          H_i = W$.
+\end{itemize}
+In the context of Bayes' theorem:
+\begin{itemize}
+  \item $P(H_i \mid E)$ are the \textit{posterior} probabilities;
+  \item $P(H_i)$ are the \textit{prior} probabilities; and
+  \item $P(E \mid H_i)$ are the \textit{likelihoods}.
+\end{itemize}
+
+It is generally impractical to evaluate the posterior probabilities.
+But it is more practical to estimate the prior probabilities and the
+likelihoods.
+Bayes' theorem can be used to estimate the posterior probabilities.
+
+\begin{thm}[Bayes' theorem]
+  \label{thm:2:BayesTheorem}
+
+  Let $\{H_i \mid i \in 1 .. k\}\subseteq W$ such that $H_i \cap H_j = \emptyset\
+    \forall\ i \neq j$ and $\bigcup_{i = 1}^{k} H_i = W$.
+  Then, for $E \subseteq W$ such that $P(E) > 0$:
+  \begin{equation}
+    \label{eqn:2:BayesTheorem}
+    P(H_i \mid E)
+    = \frac{P(E \mid H_i)P(H_i)}{\sum_{j = 1}^{k} P(E \mid H_j) P(H_j)}\
+    \forall\ i \in 1 .. k
+  \end{equation}
+  \begin{proof}
+    By definition \ref{def:2:ConditionalProbability}:
+    \begin{equation}
+      \label{eqn:2:BayesTheorem1}
+      P(E \mid H_i) = \frac{P(H_i \cap E)}{P(H_i)}\ ,\
+      P(H_i \mid E) = \frac{P(E \cap H_i)}{P(E)}
+    \end{equation}
+    Therefore:
+    \begin{equation}
+      \label{eqn:2:BayesTheorem2}
+      P(H_i \mid E) = \frac{P(E \mid H_i) P(H_i)}{P(E)}
+    \end{equation}
+    $\{H_i\mid i\in 1 .. k\}$ is a partition of $W$, hence:
+    \begin{equation}
+      \label{eqn:2:BayesTheorem3}
+      \sum_{i = 1}^{k}P(H_i \mid E) = 1
+    \end{equation}
+    Substituting \ref{eqn:2:BayesTheorem3} into \ref{eqn:2:BayesTheorem2} gives:
+    \begin{equation}
+      \label{eqn:2:BayesTheorem5}
+      1 = \sum_{i = 1}^{k}\frac{P(E \mid H_i)P(H_i)}{P(E)}
+      = \frac{\sum_{i = 1}^{k}
+        P(E \mid H_i) P(H_i)}{P(E)}
+    \end{equation}
+    Substituting
+    \ref{eqn:2:BayesTheorem5} into \ref{eqn:2:BayesTheorem3} gives
+    \ref{eqn:2:BayesTheorem}.
+  \end{proof}
+\end{thm}
+
+Conditional inference applies a general rule to a specific instance:
+\begin{itemize}
+  \item $P(A \mid B)$ is a conditional probability defined on a set of instances; and
+  \item $P(B)$ is a probability defined on a specific instance.
+\end{itemize}
+
+In Bayes' theorem, proposition $E$ is certainly true, i.e., $w^* \in E$.
+Theorem~\ref{thm:2:JeffreysRule} is a generalisation of Bayes' theorem where
+$P(E) \in [0, 1]$.
+Its result is a new probability measure $P^\prime$.
+
+\begin{thm}[Jeffrey's rule]
+  \label{thm:2:JeffreysRule}
+  \begin{equation}
+    \label{eqn:2:JeffreysRule}
+    P^\prime(H) = P(H \mid E) P^\prime(E) + P(H \mid E^\prime) (1 - P^\prime(E))
+  \end{equation}
+\end{thm}
+
+Bayesian reasoning strongly
+depends on the prior probabilities.
+Any posterior probability can be obtained by selecting an appropriate prior
+probability.
+I.e., the likelihoods alone do not determine the posterior probabilities.
+
+\begin{dfn}[Bayes factor]
+  \label{def:2:BayesFactor}
+
+  Given evidence $E$ and a hypothesis $H$, the Bayes factor is:
+  \begin{equation}
+    \label{eqn:2:BayesFactor}
+    F = \frac{P(E \mid H)}{P(E \mid H^c)}
+  \end{equation}
+\end{dfn}

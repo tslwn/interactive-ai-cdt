@@ -1,0 +1,92 @@
+\subsection{Probabilistic knowledge-bases}
+
+One approach to probabilistic reasoning is to identify the set of probability
+distributions $\mathbb{P}(K)$ that are consistent with a knowledge-base $K$,
+then select a probability distribution based on some principle.
+
+\begin{dfn}[Probabilistic knowledge-base]
+  A probabilistic knowledge-base $K$ is a set of linear equations on $P$:
+  \begin{equation}
+    K = \left\{ \sum_{i = 1}^{n_j}a_{ij} P(A_{ij}) = b_j \ :\ j = 1 .. m \ \land \
+    A_{ij}\subseteq W \ \land \ a_{ij},b_k \in\mathbb{R} \right\}
+  \end{equation}
+\end{dfn}
+
+One principle is to select the distribution that
+has minimal information.
+Entropy is a measure of the information content of a probability distribution.
+
+\begin{dfn}[Entropy]
+  Let $W = \{w_i \mid i \in 1 .. n\}$ and $P(w_i) = p_i : i \in 1 .. n$.
+  Entropy is:
+  \begin{equation}
+    H(\{p_i \mid i \in 1 .. n\}) = \sum_{i = 1}^{n} - p_i \log_2(p_i)
+  \end{equation}
+\end{dfn}
+
+If the knowledge-base is linear,
+then there is a single probability distribution with maximum entropy
+(theorem~\ref{thm:3:MaximumEntropyDistribution}).
+
+\begin{thm}[Maximum entropy distribution]
+  \label{thm:3:MaximumEntropyDistribution}
+  Let $W=\{w_i \mid i \in 1 .. n\}$.
+  The maximum entropy distribution in $\mathbb{P}$ is $P(w_i) = \frac{1}{n}$.
+  \begin{proof}
+    Let $P(w_i) = p_i : i\in 1 .. n$.
+    Without loss of generality, let $p_n = 1 - \sum_{i = 1}^{n - 1} p_i$ such that
+    $H$ is a function of $\{p_i \mid i \in 1 .. n - 1\}$.
+
+    $H$ is maximal when $\frac{\partial H}{\partial p_i} = 0 : i \in 1 .. n - 1$.
+    By the product and chain rules:
+    \begin{align}
+      \frac{\partial H}{\partial p_i}
+       & = \frac{\partial}{\partial p_i}(- p_i \log_2(p_i))
+      - \frac{\partial}{\partial p_i}(- p_n \log_2(p_n))
+      \label{eqn:3:MaximumEntropyDistribution1}
+      \\
+       & = -\log_2(p_i) \frac{\partial p_i}{\partial p_i}
+      - p_i \frac{\partial \log_2(p_i)}{\partial p_i}
+      + \log_2(p_n) \frac{\partial p_n}{\partial p_i}
+      + p_n \frac{\partial \log_2(p_n)}{\partial p_i}
+      \label{eqn:3:MaximumEntropyDistribution2}
+    \end{align}
+    By the properties of logarithms:
+    \begin{align}
+      \frac{\partial \log_2(p_i)}{\partial p_i}
+       & = \frac{1}{\ln 2} \frac{\partial \ln p_i}{\partial p_i}
+      = \frac{1}{p_i \ln 2}
+      \label{eqn:3:MaximumEntropyDistribution3}
+      \\
+      \frac{\partial \log_2(p_n)}{\partial p_i}
+       & = \frac{1}{\ln 2} \frac{\partial \ln p_n}{\partial p_i}
+      = \frac{1}{\ln 2} \frac{\partial p_n}{\partial p_i} \frac{\partial \ln p_n}{p_n}
+      = - \frac{1}{p_n \ln 2}
+      \label{eqn:3:MaximumEntropyDistribution4}
+    \end{align}
+    Substituting equations~\ref{eqn:3:MaximumEntropyDistribution3} and
+    \ref{eqn:3:MaximumEntropyDistribution4} into
+    equation~\ref{eqn:3:MaximumEntropyDistribution2} yields:
+    \begin{equation}
+      \frac{\partial H}{\partial p_i} = - \log_2(p_i) - \log_2(p_n) = 0
+    \end{equation}
+    That is, $\log_2(p_i) = \log_2(p_n)$ and $p_i = p_n : i \in \{ 1 .. n - 1 \}$.
+    Since $\sum_{i = 1}^{n} p_i = 1$ and $p_n = 1 - \sum_{i = 1}^{n - 1} p_i$, $p_i
+      = \frac{1}{n}$.
+  \end{proof}
+\end{thm}
+
+Another principle is to define a uniform distribution over the set of
+probability distributions, then select the expected value of that distribution,
+i.e., its \textit{centre of mass} (definition~\ref{def:3:CentreOfMass}).
+
+\begin{dfn}[Centre of mass]
+  \label{def:3:CentreOfMass}
+  Let $\mathbb{P}(K)$ be a set of probability distributions that are consistent
+  with a knowledge-base $K$.
+  The centre of mass is:
+  \begin{equation}
+    P(w_i) = \frac{\int_{\mathbb{P}(K)} p_i \, d \mathbb{P}(K)
+    }{\int_{\mathbb{P}(K)} d \mathbb{P}(K)}
+  \end{equation}
+\end{dfn}

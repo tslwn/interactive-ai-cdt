@@ -1,12 +1,25 @@
 % !TEX root=lecture-notes.tex
 
 \documentclass[a4paper]{extarticle}
-\usepackage{../../../latex/packages/tslwn-preamble}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{csquotes}
+\usepackage{dsfont}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage{microtype}
+\usepackage{thmtools}
 
-\cleartheorem{thm}
+\numberwithin{equation}{section}
+\theoremstyle{plain}
 \newtheorem{thm}{Theorem}[subsection]
-\cleartheorem{dfn}
 \newtheorem{dfn}[thm]{Definition}
+
+\DeclareMathOperator*{\bel}{bel}
+\DeclareMathOperator*{\pl}{pl}
+\newcommand{\card}[1]{|#1|}
 
 \title{Uncertainty Modelling for Intelligent Systems}
 \author{Tim Lawson}
@@ -17,7 +30,7 @@
 
 These notes are based on the lecture notes for the unit
 \href{https://www.bris.ac.uk/unit-programme-catalogue/UnitDetails.jsa?
-ayrCode=23%2F24&unitCode=EMATM1120}
+  ayrCode=23\%2F24&unitCode=EMATM1120}
 {Uncertainty Modelling for Intelligent Systems in 2023/24} at the University of
 Bristol.
 
@@ -26,9 +39,9 @@ Bristol.
 \newpage
 \listoftheorems[numwidth=3em,title=Theorems]
 
-\include{sections/1-possible-worlds}
-\include{sections/2-probability-theory}
-\include{sections/3-probabilistic-reasoning}
-\include{sections/4-ignorance-and-uncertainty}
+\import{sections/}{possible-worlds.tex}
+\import{sections/}{probability-theory.tex}
+\import{sections/}{probabilistic-reasoning.tex}
+\import{sections/}{ignorance-uncertainty.tex}
 
 \end{document}

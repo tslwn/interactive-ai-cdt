@@ -1,0 +1,107 @@
+
+\subsection{Probability logic}
+
+Probability theory is not truth-functional.
+Knowledge of $P(A)$ and $P(B)$ does not imply knowledge of, e.g., $P(A \cap
+  B)$, but it does imply upper and lower bounds
+(theorems~\ref{thm:3:BoundsIntersection} and \ref{thm:3:BoundsUnion}).
+
+\begin{thm}[Intersection bounds]
+  \label{thm:3:BoundsIntersection}
+  Let $A, B \subseteq W$.
+  \begin{equation}
+    \label{eqn:3:BoundsIntersection}
+    \max(0, P(A) + P(B) - 1) \leq P(A \cap B) \leq \min(P(A), P(B))
+  \end{equation}
+  \begin{proof}
+    By definition~\ref{def:2:ProbabilityMeasure}:
+    \begin{align}
+      P(A) & = P(A \cap B) + P(A \cap B^c) \label{eqn:3:BoundsIntersection1}
+      \\
+      P(B) & = P(A \cap B) + P(A^c \cap B) \label{eqn:3:BoundsIntersection2}
+    \end{align}
+    Since $P(A \cap B^c) \geq 0$ and $P(A^c \cap B) \geq 0$:
+    \begin{equation}
+      P(A \cap B) \leq \min(P(A), P(B)) \label{eqn:3:BoundsIntersection3}
+    \end{equation}
+    By theorem~\ref{thm:2:GeneralAdditivity}:
+    \begin{equation}
+      P(A \cap B) = P(A) + P(B) - P(A \cup B) \label{eqn:3:BoundsIntersection4}
+    \end{equation}
+    Since $P(A \cup B) \leq 1$ and $P(A \cap B) \geq 0$:
+    \begin{equation}
+      P(A \cap B) \geq \max(0, P(A) + P(B) - 1) \label{eqn:3:BoundsIntersection5}
+    \end{equation}
+  \end{proof}
+\end{thm}
+
+\begin{thm}[Union bounds]
+  \label{thm:3:BoundsUnion}
+  Let $A, B \subseteq W$.
+  \begin{equation}
+    \max(P(A), P(B)) \leq P(A \cup B) \leq \min(P(A) + P(B), 1)
+  \end{equation}
+  \begin{proof}
+    By theorems~\ref{thm:2:GeneralAdditivity} and \ref{thm:3:BoundsIntersection}:
+    \begin{equation}
+      P(A \cup B) \geq P(A) + P(B) - \min(P(A), P(B)) = \max(P(A), P(B))
+      \label{eqn:3:BoundsUnion1}
+    \end{equation}
+    By theorem~\ref{thm:3:BoundsIntersection}:
+    \begin{align}
+      P(A \cup B) & \leq P(A) + P(B) - \max(0, P(A) + P(B) - 1)
+      \\
+                  & \leq \min(P(A) +
+      P(B), 1) \label{eqn:3:BoundsUnion3}
+    \end{align}
+  \end{proof}
+\end{thm}
+
+Theorems~\ref{thm:2:Complement},
+\ref{thm:3:BoundsIntersection}, and \ref{thm:3:BoundsUnion} define a
+truth-functional logic for probability intervals.
+For a proposition $A \subseteq W$, it can be used to infer upper and lower
+bounds on $P(A)$, i.e., $P(A) \in [L(A),\ U(A)]$.
+
+\begin{thm}[Complement rule]
+  \begin{equation}
+    P(A^c) \in [1 - U(A),\ 1 - L(A)]
+  \end{equation}
+\end{thm}
+
+\begin{thm}[Intersection rule]
+  \begin{equation}
+    P(A \cap B) \in [\max(0, L(A) + L(B) - 1),\ \min(U(A), U(B))]
+  \end{equation}
+\end{thm}
+
+\begin{thm}[Union rule]
+  \begin{equation}
+    P(A \cup B) \in [\max(L(A), L(B)),\ \min(U(A) + U(B),\ 1)]
+  \end{equation}
+\end{thm}
+
+\begin{thm}[Conditional rule]
+  \begin{equation}
+    P(A) \in [L(A \mid B) L(B),\ (U(A \mid B) - 1) U(B) + 1]
+  \end{equation}
+  \begin{proof}
+    By theorem~\ref{thm:2:TotalProbability} and
+    definition~\ref{def:2:ProbabilityMeasure}, i.e., $P(A \mid B^c) \in [0, 1]$:
+    \begin{itemize}
+      \item If $P(A \mid B^c) = 0$, then $P(A) = P(A \mid B) P(B)$ (lower bound).
+      \item If $P(A \mid B^c) = 1$, then $P(A) = (P(A \mid B) - 1) P(B) + 1$ (upper bound).
+    \end{itemize}
+  \end{proof}
+\end{thm}
+
+\begin{thm}[Jeffrey's rule]
+  \begin{equation}
+    P^\prime(A) \in [L(A \mid B) L(B),\ (U(A \mid B) - 1) U(B) + 1]
+  \end{equation}
+\end{thm}
+
+The upper and lower bounds of this logic are
+wider than probability theory constrains them to be.
+This is because the logic does not account for logical dependencies between
+propositions and their relations to definition~\ref{def:2:ProbabilityMeasure}.
