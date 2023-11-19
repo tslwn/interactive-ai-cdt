@@ -1,0 +1,128 @@
+\subsection{Possibility theory}
+
+Dempster-Shafer theory can be computationally expensive.
+For $n$ possible worlds, the mass function has $2^n - 2$ values and, in the
+worst case, Dempster's rule of combination requires $O(2^{2n})$ operations.
+
+\emph{Possibility theory} is a special case of Dempster-Shafer theory that is
+more computationally efficient but still differentiates between ignorance and
+uncertainty.
+Possibility and necessity measures are maxitive and minimal uncertainty
+measures.
+
+\begin{dfn}[Possibility and necessity measures]
+  \label{def:4:PossibilityNecessity}
+  A possibility measure is a function $P : 2^W \to [0, 1]$ such that:
+  \begin{itemize}
+    \item $\poss(W) = 1$ and $\poss(\emptyset) = 0$
+    \item $\poss(A \cup B) = \max(\poss(A), \poss(B))$
+  \end{itemize}
+  A necessity measure is the dual measure $\necs(A) = 1 - \poss(A^c)$ where:
+  \begin{itemize}
+    \item $\necs(W) = 1$ and $\necs(\emptyset) = 0$
+    \item $\necs(A \cup B) = \min(\necs(A), \necs(B))$
+  \end{itemize}
+\end{dfn}
+
+The definitions of possibility and necessity measures have notable consequences
+for a proposition $A \subseteq W$.
+\begin{itemize}
+  \item Either $A$ or its negation is absolutely possible:
+        \begin{equation}
+          \poss(W) = 1 = \poss(A \cup A^c) = \max(\poss(A), \poss(A^c))
+        \end{equation}
+  \item Either $A$ or its negation is absolutely not necessary:
+        \begin{equation}
+          \necs(\emptyset) = 0 = \necs(A \cap A^c) = \min(\necs(A), \necs(A^c))
+        \end{equation}
+  \item If $A$ is somewhat not necessary, then $A$ is absolutely not possible:
+        \begin{equation}
+          \necs(A) > 0 \implies \poss(A) = 0
+        \end{equation}
+  \item If $A$ is somewhat not possible, then $A$ is absolutely not necessary:
+        \begin{equation}
+          \poss(A) < 1 \implies \necs(A) = 0
+        \end{equation}
+  \item The `ignorance' associated with $A$ is equal to its possibility or the
+        possibility of its complement:
+        \begin{equation}
+          \poss(A) - \necs(A) =
+          \begin{cases}
+            \poss(A)   & \text{if } \poss(A) < 1
+            \\
+            \poss(A^c) & \text{if } \necs(A) > 0
+          \end{cases}
+        \end{equation}
+  \item The possibility measure $\poss(A)$ is uniquely determined by the
+        possibility values of singleton sets (the \emph{possibility distribution}):
+        \begin{equation}
+          \poss(A) = \max_{w \in A} \poss(\{w\}) \ \forall\ A \subseteq W
+        \end{equation}
+        i.e., the number of values in the possibility distribution grows
+        linearly with the number of possible worlds.
+  \item At least one possible world must be maximally possible:
+        \begin{equation}
+          \max_{w \in W} \poss(\{w\}) = 1
+        \end{equation}
+\end{itemize}
+
+\subsubsection{Relation to Dempster-Shafer theory}
+
+Necessity and possibility measures are Dempster-Shafer belief and plausibility
+measures for a particular form of the mass function.
+
+\begin{thm}
+  \label{thm:4:RelationToDempsterShafer}
+  Let $m$ be a mass function on $2^W$ such that $\sum_{i = 1}^k m(F_i) = 1$ where
+  $F_i \subseteq F_{i + 1} : i = 1 .. k - 1$.
+  The belief and plausibility measures of $m$ are necessity and possibility
+  measures respectively.
+  \begin{proof}
+    By definitions~\ref{def:4:BeliefPlausibility} and
+    \ref{def:4:PossibilityNecessity}, if $\pl$ is a possibility measure, then
+    $\bel$ is a necessity measure.
+    Also, because $\pl(\emptyset) = 0$ and $\pl(W) = 1$, if $\pl(A \cup B) =
+      \max(\pl(A), \pl(B))$, then theorem~\ref{thm:4:RelationToDempsterShafer} is
+    true.
+
+    Let $F_t$ be the smallest set in $F_1 \ldots F_k$ such that $A \cap F_t \neq
+      \emptyset$.
+    Then:
+    \begin{equation*}
+      \pl(A) = \sum_{C : C \cap A \neq \emptyset} m(C) = \sum_{i = t}^k m(F_i)
+    \end{equation*}
+    Likewise, let $F_s$ be the smallest set in $F_1 \ldots F_k$ such that $B \cap
+      F_s \neq \emptyset$.
+    Then:
+    \begin{equation*}
+      \pl(B) = \sum_{i = s}^k m(F_i)
+    \end{equation*}
+    and $F_{\min(s, t)}$ is the smallest set in $F_1 \ldots F_k$
+    such that $A \cup B \neq \emptyset$.
+    Hence:
+    \begin{align*}
+      \pl(A \cup B)
+       & = \sum_{i = \min(s, t)}^k m(F_i)
+      = \max(\sum_{i = t}^k m(F_i), \sum_{i = s}^k m(F_i))
+      \\[2ex]
+       & = \max(\pl(A), \pl(B))
+    \end{align*}
+  \end{proof}
+\end{thm}
+
+Given a possibility distribution $\poss$, a unique mass function $m$ can be
+found such that $\poss(A) = \pl(A)$ for its associated plausibility measure.
+Order the possible worlds $w_1 \ldots w_n$ such that $\poss(\{w_i\}) \geq
+  \poss(\{w_{i + 1}\})$.
+Then:
+\begin{equation*}
+  m(\{w_j \mid 1 .. i \}) :=
+  \begin{cases}
+    \poss(\{w_i\}) - \poss(\{w_{i + 1}\}) & \text{if } i < n
+    \\
+    \poss(\{w_n\})                        & \text{if } i = n
+  \end{cases}
+\end{equation*}
+I.e., necessity and possibility measures are Dempster-Shafer belief and
+plausibility measures whose mass function is non-zero only on a nested sequence
+of sets.
