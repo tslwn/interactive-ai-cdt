@@ -4,190 +4,268 @@
 \usepackage{../../../../latex/packages/tslwn-preamble}
 \usepackage{../../../../latex/packages/tslwn-slides}
 
-\title{Model ensembles}
+\setbeamertemplate{frametitle continuation}{}
+
+\AtEveryBibitem{%
+  \clearfield{url}%
+}
+
+\title{Ensembles}
 \author{Tim Lawson}
 
 \begin{document}
 \maketitle
-
-\begin{frame}{Model ensembles}
-  \begin{itemize}
-    \item Learn multiple models from different versions of the data
-    \item[]
-          \begin{itemize}
-            \item Resample, e.g., bagging, subspace sampling
-            \item Reweight, e.g., boosting
-          \end{itemize}
-    \item Combine the outputs of the models
-    \item[]
-          \begin{itemize}
-            \item Average scores or probabilities
-            \item Take a vote
-          \end{itemize}
-    \item Or learn multiple types of model
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Bagging}
-  \begin{itemize}
-    \item Take random samples (with replacement) from the training data
-    \item Train a model on each sample
-  \end{itemize}
-\end{frame}
 
 \begin{frame}{Bias and variance}
   A classification error may occur when:
   \\~\
   \begin{itemize}
     \item Feature vectors/per-class distributions \emph{overlap}
-    \item The model has \emph{high bias} (is not expressive enough), e.g.:
-    \item[]
-          \begin{itemize}
-            \item a linear model for data that is not linearly separable
-          \end{itemize}
-    \item The model has \emph{high variance}, e.g.:
-    \item[]
-          \begin{itemize}
-            \item a $1$-nearest-neighbour classifier, whose decision boundaries
-                  depend on single instances
-            \item a decision tree, whose structure depends on the impurities of
-                  feature-wise splits
-          \end{itemize}
+    \item The model has \emph{high bias} (is not expressive enough)
+    \item The model has \emph{high variance}
+          \\
+          ~\
   \end{itemize}
+  \parencite[][p. 338–9]{Flach2012}
 \end{frame}
 
-\begin{frame}{Boosting}{Definition}
+\begin{frame}{Ensembles}
   \begin{itemize}
-    \item $\vec{x}_i \in \mathbb{R}^n$ is an instance
-    \item $\vec{y}_i \in \{0,1\}^k$ is a label (one-hot vector)
-    \item $f^{(j)} : \mathbb{R}^n \to \{0,1\}^k$ is a model
-    \item $\vec{\hat{y}}_i^{(j)} = f^{(j)}(\vec{x}_i) \in \{0,1\}^k$ is a prediction (one-hot vector)
-    \item $w_i^{(j)} \in \mathbb{R}, w_i^{(0)} = \frac{1}{n}, \sum_{i = 1}^{n}w^{(j)}_i = 1$ is an instance weight
-    \item $\epsilon^{(j)} = \sum_{i : \vec{\hat{y}}_i^{(j)} \neq \vec{y}_i} w^{(j)}_i \in \mathbb{R}$ is the weighted error of model $f^{(j)}$
-    \item $\alpha^{(j)} = f_\alpha(\epsilon^{(j)}) \in \mathbb{R}$ is the weight of model $f^{(j)}$
-    \item $w^{(j+1)}_i = f_w(w^{(j)}_i, \vec{y}_i,\,\vec{\hat{y}}_i^{(j)}, \epsilon^{(j)})$ is the updated instance weight
-    \item $\vec{\hat{y}}_i = \sum_{j = 1}^{J}\alpha^{(j)}f^{(j)}(x_i) \in \{0,1\}^k$ is the ensemble model prediction
+    \item Learn multiple models from different versions of the data
+    \item[]
+          \begin{itemize}
+            \item Resample the instances and/or features
+            \item Reweight the instances
+          \end{itemize}
+    \item Aggregate the models' predictions
+    \item[]
+          \begin{itemize}
+            \item Average the scores or probabilities
+            \item Choose the majority prediction
+          \end{itemize}
+    \item Or, learn multiple types of model
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Boosting}{Code}
+\begin{frame}{Bagging methods}
+  A bagging method learns multiple instances of a model from random subsets of
+  the data and aggregates the instances' predictions.
+  \\~\
+  \begin{itemize}
+    \item \emph{Pasting}: random subsets of the instances are sampled without replacement
+          \parencite{Breiman1999}
+    \item \emph{Bagging}: random subsets of the instances are sampled with replacement
+          \parencite{Breiman1996}
+    \item \emph{Random subspaces}: random subsets of the features are sampled
+          \\ \parencite{Ho1998}
+    \item \emph{Random patches}: random subsets of the instances and features
+          are sampled \parencite{Louppe2012}
+          \\~\
+  \end{itemize}
+  \parencite[][sec. 1.11.3]{zotero-3054}
+\end{frame}
+
+\begin{frame}{Boosting methods}
+  A boosting method learns multiple instances of a model from weighted versions
+  of the data and aggregates the instances' predictions.
+  \\~\
+  \begin{itemize}
+    \item \emph{AdaBoost}: weights are updated based on the error of the
+          previous model \parencite{Freund1997}
+    \item \emph{Gradient-boosted trees}: weights are updated based on the
+          gradient of the loss function, e.g., LightGBM \parencite{Ke2017},
+          XGBoost \parencite{Chen2016} \\~\
+  \end{itemize}
+  \parencite[][sec. 1.11.1]{zotero-3054}
+  \\~\
+
+  See also, e.g., \emph{arcing} (``adaptively resample and combine'') and random
+  forests \parencite{Breiman1998,Breiman2001}.
+\end{frame}
+
+\begin{frame}{Boosting methods}{Code}
   \lstinputlisting[
     language=Python,
     linerange={43-47,48-55}
   ]{src/examples/binary_classifier_ensemble_todo.py}
 \end{frame}
 
-\begin{frame}{Boosting}{Questions}
+\begin{frame}{Multiple types of model}
+  The predictions of different types of models can be aggregated by:
+  \\~\
   \begin{itemize}
-    \item What should the weights of the models $f_\alpha$/\lstinline[language=Python]{get_model_weights} be?
-    \item What should the weight updates $f_w$/\lstinline[language=Python]{update_weight} be?
+    \item \emph{Voting} or \emph{averaging} (soft voting)
+    \item \emph{Stacked generalization} (stacking): using the predictions as
+          the feature of a meta-model
+    \item \emph{Meta-learning}: learn a model that predicts whether a model
+          will perform well on a given task and data
+          \\~\
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Boosting}{Model weights derivation}
+\begin{frame}[allowframebreaks]{References}
+  \renewcommand*{\bibfont}{\footnotesize}
+  \printbibliography
+\end{frame}
+
+\begin{frame}{Boosting}{Definition}
+  \begin{itemize}
+    \item $\{x_i \mid i \in 1 .. n\},\ \vec{x}_i \in \mathbb{R}^{n_x}$ are
+          instances
+    \item $\vec{y}_i \in \{0,1\}^{n_y}$ is a label (one-hot vector)
+    \item $f^{(t)} : \mathbb{R}^{n_x} \to \{0,1\}^{n_y}$ is a model
+    \item $\vec{\hat{y}}_i^{(t)} = f^{(t)}(\vec{x}_i) \in \{0,1\}^{n_y}$ is a
+          prediction (one-hot vector)
+    \item $w_i^{(t)} \in \mathbb{R},\ w_i^{(0)} = \frac{1}{n},\
+            \sum_{i = 1}^{n}w^{(t)}_i = 1$ is an instance weight
+    \item $\epsilon^{(t)} = \sum_{i : \vec{\hat{y}}_i^{(t)} \neq \vec{y}_i}
+            w^{(t)}_i \in \mathbb{R}$ is the weighted error of model $f^{(t)}$
+    \item $\alpha^{(t)} = f_\alpha(\epsilon^{(t)}) \in \mathbb{R}$ is the weight
+          of model $f^{(t)}$
+    \item $w^{(t+1)}_i = f_w(w^{(t)}_i,\ \vec{y}_i,\ \vec{\hat{y}}_i^{(t)},\
+            \epsilon^{(t)})$ is the updated instance weight
+    \item $\vec{\hat{y}}_i = \sum_{t = 1}^{T}\alpha^{(t)}f^{(t)}(x_i)
+            \in \{0,1\}^{n_y}$ is the ensemble model prediction
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boosting}{Derivation}
+  \begin{itemize}
+    \item What should the weights of the models
+          $f_\alpha$/\lstinline[language=Python]{get_model_weights} be?
+    \item What should the weight updates
+          $f_w$/\lstinline[language=Python]{update_weight} be?
+          \\~\
+  \end{itemize}
   Assume that the weight updates $f_w$ are:
   \begin{equation*}
-    w^{(j+1)}_i
+    w^{(t+1)}_i
     =
-    \frac{w^{(j)}_i}{Z^{(j)}}
+    \frac{w^{(t)}_i}{Z^{(t)}}
     \times
     \begin{cases}
-      e^{-\alpha^{(j)}} & \text{if } \vec{\hat{y}}_i^{(j)} = \vec{y}_i
+      e^{-\alpha^{(t)}} & \text{if } \vec{\hat{y}}_i^{(t)} = \vec{y}_i
       \\
-      e^{\alpha^{(j)}}  & \text{otherwise}
+      e^{\alpha^{(t)}}  & \text{otherwise}
     \end{cases}
   \end{equation*}
   This can be simplified with:
   \begin{equation*}
-    \delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)})
+    \delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)})
     =
     \begin{cases}
-      1  & \text{if } \vec{\hat{y}}_i^{(j)} = \vec{y}_i
+      1  & \text{if } \vec{\hat{y}}_i^{(t)} = \vec{y}_i
       \\
       -1 & \text{otherwise}
     \end{cases}
   \end{equation*}
-  \begin{equation*}
-    w^{(j+1)}_i
-    =
-    w^{(j)}_i\frac{\exp(-\alpha^{(j)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{Z^{(j)}}
-  \end{equation*}
 \end{frame}
 
-\begin{frame}{Boosting}{Model weights derivation}
+\begin{frame}{Boosting}{Derivation}
+  The weight updates are:
+  \begin{equation*}
+    w^{(t+1)}_i
+    =
+    w^{(t)}_i
+    \frac{
+    \exp(-\alpha^{(t)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)}))
+    }{
+    Z^{(t)}
+    }
+  \end{equation*}
   Each update is multiplicative:
   \begin{equation*}
-    w^{(J)}_i
+    w^{(T)}_i
     =
     w^{(0)}_i
-    \prod_{j=1}^{J}
-    \frac{\exp(-\alpha^{(j)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{Z^{(j)}}
+    \prod_{t=1}^{T}
+    \frac{
+    \exp(-\alpha^{(t)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)}))
+    }{
+    Z^{(t)}
+    }
     =
     \frac{1}{n}
-    \frac{\exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{\prod_{j=1}^{J}Z^{(j)}}
+    \frac{
+    \exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)}))
+    }{
+    \prod_{t=1}^{T}Z^{(t)}
+    }
   \end{equation*}
   Each set of instance weights sums to 1:
   \begin{equation*}
     1
     =
-    \sum_{i = 1}^{n}w^{(j)}_i
+    \sum_{i = 1}^{n}w^{(t)}_i
     =
     \sum_{i = 1}^{n}
     \frac{1}{n}
-    \frac{\exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))}{\prod_{j=1}^{J}Z^{(j)}}
+    \frac{
+    \exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)}))
+    }{
+    \prod_{t=1}^{T}Z^{(t)}
+    }
   \end{equation*}
   \begin{equation*}
-    \prod_{j=1}^{J}
-    Z^{(j)} = \frac{1}{n}\sum_{i = 1}^{n}
-    \exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))
+    \prod_{t=1}^{T} Z^{(t)}
+    =
+    \frac{1}{n}
+    \sum_{i = 1}^{n}
+    \exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)}))
   \end{equation*}
-  $\exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)})) \geq 1$ if $x_i$ is
-  misclassified by the ensemble, so $\prod_{j=1}^{J} Z^{(j)}$ is an upper bound
-  on the ensemble error.
 \end{frame}
 
-\begin{frame}{Boosting}{Model weights derivation}
-  $\prod_{j=1}^{J} Z^{(j)}$ could be minimized by minimizing the model error $(n)$$Z^{(j)}$:
+\begin{frame}{Boosting}{Derivation}
+  $\exp(-\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)})) \geq 1$ if $x_i$ is
+  misclassified by the ensemble, so $\prod_{t=1}^{T}
+    Z^{(t)}$ is an upper bound on the ensemble error.
+  \\~\
+
+  $\prod_{t=1}^{T} Z^{(t)}$ could be minimized by minimizing the model error
+  $(n)$$Z^{(t)}$:
     \begin{equation*}
-      n Z^{(j)}
+      n Z^{(t)}
       =
-      \sum_{i = 1}^{n} w^{(j)}_i \exp(-\alpha^{(j)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)}))
+      \sum_{i = 1}^{n}
+      w^{(t)}_i
+      \exp(-\alpha^{(t)}\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)}))
     \end{equation*}
-    By the definitions of $\epsilon^{(j)}$ and $\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(j)})$:
+    By the definitions of $\epsilon^{(t)}$ and
+  $\delta(\vec{y}_i,\,\vec{\hat{y}}_i^{(t)})$:
   \begin{equation*}
-    n Z^{(j)}
+    n Z^{(t)}
     =
-    \epsilon^{(j)} \exp(\alpha^{(j)})
+    \epsilon^{(t)} \exp(\alpha^{(t)})
     +
-    (1 - \epsilon^{(j)}) \exp(-\alpha^{(j)})
+    (1 - \epsilon^{(t)}) \exp(-\alpha^{(t)})
   \end{equation*}
 \end{frame}
 
-\begin{frame}{Boosting}{Model weights derivation}
-  Therefore, $Z^{(j)}$ is minimized when:
+\begin{frame}{Boosting}{Derivation}
+  Therefore, $Z^{(t)}$ is minimized when:
   \begin{equation*}
-    \frac{\partial Z^{(j)}}{\partial \alpha^{(j)}}
+    \frac{\partial Z^{(t)}}{\partial \alpha^{(t)}}
     =
-    \epsilon^{(j)} \exp(\alpha^{(j)})
+    \epsilon^{(t)} \exp(\alpha^{(t)})
     -
-    (1 - \epsilon^{(j)}) \exp(-\alpha^{(j)})
+    (1 - \epsilon^{(t)}) \exp(-\alpha^{(t)})
     =
     0
   \end{equation*}
   \begin{equation*}
-    \exp(2\alpha^{(j)})
+    \exp(2\alpha^{(t)})
     =
-    \frac{1 - \epsilon^{(j)}}{\epsilon^{(j)}}
+    \frac{1 - \epsilon^{(t)}}{\epsilon^{(t)}}
   \end{equation*}
   That is:
   \begin{equation*}
-    \alpha^{(j)}
+    \alpha^{(t)}
     =
-    \frac{1}{2}\ln\left(\frac{1 - \epsilon^{(j)}}{\epsilon^{(j)}}\right)
+    \frac{1}{2}\ln\left(\frac{1 - \epsilon^{(t)}}{\epsilon^{(t)}}\right)
     ,\
-    Z^{(j)}
+    Z^{(t)}
     =
-    2\sqrt{\epsilon^{(j)}(1 - \epsilon^{(j)})}
+    2\sqrt{\epsilon^{(t)}(1 - \epsilon^{(t)})}
   \end{equation*}
 \end{frame}
 
