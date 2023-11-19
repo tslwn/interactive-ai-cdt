@@ -1,16 +1,25 @@
 % !TEX root=lecture-notes.tex
 
 \documentclass[a4paper]{extarticle}
-\usepackage{../../../latex/packages/tslwn-preamble}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{csquotes}
+\usepackage{dsfont}
+\usepackage{enumerate}
+\usepackage{hyperref}
 \usepackage{import}
+\usepackage{microtype}
+\usepackage{thmtools}
 
-\cleartheorem{thm}
+\numberwithin{equation}{section}
+\theoremstyle{plain}
 \newtheorem{thm}{Theorem}[subsection]
-\cleartheorem{dfn}
 \newtheorem{dfn}[thm]{Definition}
 
 \DeclareMathOperator*{\bel}{bel}
 \DeclareMathOperator*{\pl}{pl}
+\newcommand{\card}[1]{|#1|}
 
 \title{Uncertainty Modelling for Intelligent Systems}
 \author{Tim Lawson}
