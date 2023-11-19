@@ -1,0 +1,97 @@
+\subsection{Introduction}
+
+Probability theory is the best-known theory of uncertainty.
+Definition~\ref{def:2:ProbabilityMeasure} states that probability measures are
+additive uncertainty measures.
+
+\begin{dfn}[Probability measure]
+  \label{def:2:ProbabilityMeasure}
+
+  A probability measure is a function $P : 2^W \to [0, 1]$ such that:
+  \begin{enumerate}
+    \item[P1] $P(W) = 1$ and $P(\emptyset) = 0$
+    \item[P2] $A \cap B = \emptyset \Rightarrow P(A \cup B) = P(A) + P(B)$
+  \end{enumerate}
+\end{dfn}
+
+Additive uncertainty measures are monotonic.
+
+\begin{thm}[Monotonicity]
+  \begin{equation}
+    \label{eqn:2:Monotonicity}
+    A \subseteq B \Rightarrow P(A) \leq P(B)
+  \end{equation}
+  \begin{proof}
+    Let $A, B \subseteq W$ such that $A \subseteq B$.
+    By definition, $B = A \cup(B \cap A^c)$ and $A \cap(B \cap A^c) = \emptyset$.
+    From definition~\ref{def:2:ProbabilityMeasure}, $P(B) = P(A) + P(B \cap A^c)$
+    and $P(B \cap A^c) \in [0, 1]$, hence $P(B) \geq P(A)$.
+  \end{proof}
+\end{thm}
+
+\begin{thm}[Complement]
+  \label{thm:2:Complement}
+  \begin{equation}
+    \label{eqn:2:Complement}
+    P(A^c) = 1 - P(A)
+  \end{equation}
+  \begin{proof}
+    By definition, $A \cup A^c = W$ and $A\cap A^c = \emptyset$.
+    From definition~\ref{def:2:ProbabilityMeasure}, $P(A \cup A^c) = P(A) + P(A^c)
+      = 1$, hence \ref{eqn:2:Complement}.
+  \end{proof}
+\end{thm}
+
+\begin{thm}[General additivity]
+  \label{thm:2:GeneralAdditivity}
+  \begin{equation}
+    \label{eqn:2:GeneralAdditivity}
+    P(A \cup B) = P(A) + P(B) - P(A \cap B)
+  \end{equation}
+  \begin{proof}
+    By definition, $A = (A \cap B) \cup (A \cap B^c)$, $B = (B \cap A) \cup (B \cap
+      A^c)$ and $A \cup B = (A \cap B) \cup (A \cap B^c) \cup (B \cap A^c)$.
+    $A \cap B$, $A \cap B^c$, and $B \cap A^c$ do not overlap.
+    Hence, from definition~\ref{def:2:ProbabilityMeasure}:
+    \begin{align}
+      P(A)        & = P(A \cap B) + P(A \cap B^c) \label{eqn:2:GeneralAdditivity1}
+      \\
+      P(B)        &
+      = P(B \cap A) + P(B \cap A^c) \label{eqn:2:GeneralAdditivity2}
+      \\
+      P(A \cup B) &
+      = P(A \cap B) + P(A \cap B^c) + P(B \cap A^c) \label{eqn:2:GeneralAdditivity3}
+    \end{align}
+    Substituting \ref{eqn:2:GeneralAdditivity1} and
+    \ref{eqn:2:GeneralAdditivity2} into \ref{eqn:2:GeneralAdditivity3} gives
+    \ref{eqn:2:GeneralAdditivity}.
+  \end{proof}
+\end{thm}
+
+\begin{thm}[Theorem of total probability]
+  \label{thm:2:TotalProbability}
+  \begin{equation}
+    \label{eqn:2:TotalProbability}
+    P(A) = P(A \mid B) P(B) + P(A \mid B^c) P(B^c)
+  \end{equation}
+\end{thm}
+
+\begin{dfn}[Probability distribution]
+  \label{def:2:ProbabilityDistribution}
+  A probability distribution is a function $P(\{w\})$ or $P(w) : w \in W$.
+\end{dfn}
+
+A probability measure is completely determined by its associated probability
+distribution.
+Let $A \subseteq W$ be a proposition.
+By definition~\ref{def:2:ProbabilityMeasure}:
+
+\begin{equation}
+  \label{eqn:2:ProbabilityDistribution}
+  P(A) = P( \bigcup_{w \in A} \{w\}) = \sum_{w \in A} P(w)
+\end{equation}
+
+It is more practical to work with probability measures than
+general uncertainty measures.
+For $n = |W| - 1$, a general uncertainty measure is defined by $2^n - 2$
+values, whereas a probability measure is defined by $n - 1$ values.

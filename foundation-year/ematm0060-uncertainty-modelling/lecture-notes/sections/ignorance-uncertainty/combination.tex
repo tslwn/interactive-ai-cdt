@@ -1,0 +1,98 @@
+\subsection{Combination in Dempster-Shafer theory}
+
+There is a natural way to represent the combination of evidence from
+independent sources (mass functions) in Dempster-Shafer theory.
+
+\begin{dfn}[Dempster's rule of combination]
+  \label{dfn:4:DempstersRuleOfCombination}
+  Let $W$ be a set of possible worlds, $A \subseteq W$ be a proposition, and
+  $m_1, m_2 : 2^W \to [0, 1]$ be mass functions.
+  The combination of $m_1$ and $m_2$ is:
+  \begin{equation}
+    \label{eqn:4:DempstersRuleOfCombination}
+    m_1 \oplus m_2 (A)
+    = \frac{
+      \sum_{(B, C) : B \cap C = A} m_1(B) m_2(C)
+    }{
+      1 - \sum_{(B, C) : B \cap C \neq \emptyset} m_1(B) m_2(C)
+    }
+  \end{equation}
+\end{dfn}
+
+Shafer proposed a definition of conditional belief and plausibility using
+definition~\ref{dfn:4:DempstersRuleOfCombination}: a proposition $B$ can be
+interpreted as evidence (represented by a mass function $m_B$).
+Belief and plausibility measures can be conditioned on $B$ by combining the
+generating mass function $m$ with $m_B$ according to
+definition~\ref{dfn:4:DempstersRuleOfCombination}.
+
+\begin{dfn}[Conditional belief and plausibility]
+  \label{dfn:4:ConditionalBeliefPlausibility}
+  Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions, and
+  $\bel,\ \pl,\ m : 2^W \to [0, 1]$ be belief and plausibility measures and a
+  mass function.
+  The conditional belief and plausibility of $A$ given $B$ are:
+  \begin{align}
+    \label{eqn:4:ConditionalBelief}
+    \bel(A \mid B)
+     & = \sum_{C : C \subseteq A} m \oplus m_B(C)
+    \\[2ex]
+    \label{eqn:4:ConditionalPlausibility}
+    \pl(A \mid B)
+     & = \sum_{C : C \cap A \neq \emptyset} m \oplus m_B(C)
+  \end{align}
+  where $m_B(B) = 1$, $m_B(C) = 0\ \forall\ C \neq B$, and $\pl(B) > 0$.
+\end{dfn}
+
+\begin{thm}[Relation to plausibility]
+  \label{thm:4:RelationToPlausibility}
+  Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions, and
+  $\pl : 2^W \to [0, 1]$ be a plausibility measure.
+  \begin{equation}
+    \label{eqn:4:RelationToPlausibility}
+    \pl(A \mid B) = \frac{\pl(A \cap B)}{\pl(B)}
+  \end{equation}
+  \begin{proof}
+    By definitions~\ref{dfn:4:ConditionalBeliefPlausibility} and
+    \ref{dfn:4:DempstersRuleOfCombination} and $\sum_D m(D) = 1$:
+    \begin{align*}
+      \pl(A \mid B)
+       & = \sum_{C : C \cap A \neq \emptyset} m \oplus m_B(C)
+      = \sum_{C : C \cap A \neq \emptyset} \frac{\sum_{D : D \cap B = C} m(D)}{1 - \sum_{D : D \cap B = \emptyset} m(D)}
+      \\[3ex]
+       & = \frac{\sum_{C : C \cap A \neq \emptyset} \sum_{D : D \cap B = C} m(D)}{1 - \sum_{D : D \cap B = \emptyset} m(D)}
+      =  \frac{\sum_{C : C \cap A \neq \emptyset} \sum_{D : D \cap B = C} m(D)}{\sum_{D : D \cap B \neq \emptyset} m(D)}
+      \\[3ex]
+       & = \frac{\sum_{D : (D \cap B) \cap A \neq \emptyset} m(D)}{\sum_{D : D \cap B \neq \emptyset} m(D)}
+      = \frac{\sum_{D : D \cap (B \cap A) \neq \emptyset} m(D)}{\sum_{D : D \cap B \neq \emptyset} m(D)}
+      = \frac{\pl(A \cap B)}{\pl(B)}
+    \end{align*}
+  \end{proof}
+\end{thm}
+
+\begin{thm}[Relation to belief]
+  Let $W$ be a set of possible worlds, $A, B \subseteq W$ be propositions, and
+  $\bel : 2^W \to [0, 1]$ be a belief measure.
+  \begin{equation}
+    \label{eqn:4:RelationToBelief}
+    \bel(A \mid B) = \frac{\bel(A \cup B^c) - \bel(B^c)}{1 - \bel(B^c)}
+  \end{equation}
+  \begin{proof}
+    By theorems~\ref{thm:4:DualRelationship} and
+    \ref{thm:4:RelationToPlausibility}:
+    \begin{align*}
+      \bel(A \mid B)
+       & = 1 - \pl(A^c \mid B)
+      = 1 - \frac{\pl(A^c \cap B)}{\pl(B)}
+      = \frac{\pl(B) - \pl(A^c \cap B)}{\pl(B)}
+      \\[3ex]
+       & = \frac{1 - \bel(B^c) - (1 - \bel((A^c \cap B)^c))}{1 - \bel(B^c)}
+      = \frac{\bel(A \cup B^c) - \bel(B^c)}{1 - \bel(B^c)}
+    \end{align*}
+  \end{proof}
+\end{thm}
+
+Definition~\ref{dfn:4:DempstersRuleOfCombination} produces counterintuitive
+results if the mass functions are highly inconsistent, i.e., the denominator $1
+  - \sum_{(B, C) : B \cap C \neq \emptyset} m_1(B) m_2(C) \approx 0$.
+Alternative combination rules have been proposed to address this problem.
