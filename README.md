@@ -20,6 +20,7 @@ University of Bristol.
   on Flach's [Machine Learning: The Art and Science of Algorithms that Make Sense of Data](http://people.cs.bris.ac.uk/~flach/mlbook/)
 - [Notes on linear algebra notation](./foundation-year/comsm0025-machine-learning-paradigms/linear-algebra/linear-algebra.pdf)
 - [Slides on binary classification](./foundation-year/comsm0025-machine-learning-paradigms/slides/week-2-binary-classification/week-2-binary-classification.pdf)
+- [Slides on model ensembles](./foundation-year/comsm0025-machine-learning-paradigms/slides/week-9-model-ensembles/week-9-model-ensembles.pdf)
 
 [Uncertainty Modelling for Intelligent Systems](https://www.bris.ac.uk/unit-programme-catalogue/UnitDetails.jsa?ayrCode=23%2F24&unitCode=EMATM1120)
 
