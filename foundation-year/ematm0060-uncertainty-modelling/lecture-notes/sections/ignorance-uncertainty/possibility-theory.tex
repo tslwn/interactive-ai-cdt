@@ -7,8 +7,8 @@ worst case, Dempster's rule of combination requires $O(2^{2n})$ operations.
 \emph{Possibility theory} is a special case of Dempster-Shafer theory that is
 more computationally efficient but still differentiates between ignorance and
 uncertainty.
-Possibility and necessity measures are maxitive and minimal uncertainty
-measures.
+Specifically, possibility and necessity measures are maxitive and minimal
+uncertainty measures.
 
 \begin{dfn}[Possibility and necessity measures]
   \label{def:4:PossibilityNecessity}
@@ -24,54 +24,70 @@ measures.
   \end{itemize}
 \end{dfn}
 
-The definitions of possibility and necessity measures have notable consequences
-for a proposition $A \subseteq W$.
-\begin{itemize}
-  \item Either $A$ or its negation is absolutely possible:
-        \begin{equation}
-          \poss(W) = 1 = \poss(A \cup A^c) = \max(\poss(A), \poss(A^c))
-        \end{equation}
-  \item Either $A$ or its negation is absolutely not necessary:
-        \begin{equation}
-          \necs(\emptyset) = 0 = \necs(A \cap A^c) = \min(\necs(A), \necs(A^c))
-        \end{equation}
-  \item If $A$ is somewhat not necessary, then $A$ is absolutely not possible:
-        \begin{equation}
-          \necs(A) > 0 \implies \poss(A) = 0
-        \end{equation}
-  \item If $A$ is somewhat not possible, then $A$ is absolutely not necessary:
-        \begin{equation}
-          \poss(A) < 1 \implies \necs(A) = 0
-        \end{equation}
-  \item The `ignorance' associated with $A$ is equal to its possibility or the
-        possibility of its complement:
-        \begin{equation}
-          \poss(A) - \necs(A) =
-          \begin{cases}
-            \poss(A)   & \text{if } \poss(A) < 1
-            \\
-            \poss(A^c) & \text{if } \necs(A) > 0
-          \end{cases}
-        \end{equation}
-  \item The possibility measure $\poss(A)$ is uniquely determined by the
-        possibility values of singleton sets (the \emph{possibility distribution}):
-        \begin{equation}
-          \poss(A) = \max_{w \in A} \poss(\{w\}) \ \forall\ A \subseteq W
-        \end{equation}
-        i.e., the number of values in the possibility distribution grows
-        linearly with the number of possible worlds.
-  \item At least one possible world must be maximally possible:
-        \begin{equation}
-          \max_{w \in W} \poss(\{w\}) = 1
-        \end{equation}
-\end{itemize}
+\begin{proposition}[Possibility of $A$ and $A^c$]
+  Either $A$ or its negation $A^c$ is absolutely possible:
+  \begin{equation}
+    \poss(W) = 1 = \poss(A \cup A^c) = \max(\poss(A), \poss(A^c))
+  \end{equation}
+\end{proposition}
 
-\subsubsection{Relation to Dempster-Shafer theory}
+\begin{proposition}[Necessity of $A$ and $A^c$]
+  Either $A$ or its negation is absolutely not necessary:
+  \begin{equation}
+    \necs(\emptyset) = 0 = \necs(A \cap A^c) = \min(\necs(A), \necs(A^c))
+  \end{equation}
+\end{proposition}
+
+\begin{proposition}[Necessity of $A$ and possibility of $A^c$]
+  If $A$ is somewhat not necessary, then $A$ is absolutely not possible:
+  \begin{equation}
+    \necs(A) > 0 \implies \poss(A) = 0
+  \end{equation}
+\end{proposition}
+
+\begin{proposition}[Possibility of $A$ and necessity of $A^c$]
+  If $A$ is somewhat not possible, then $A$ is absolutely not necessary:
+  \begin{equation}
+    \poss(A) < 1 \implies \necs(A) = 0
+  \end{equation}
+\end{proposition}
+
+\begin{proposition}[`Ignorance' of $A$]
+  The `ignorance' associated with $A$ is equal to its possibility or the
+  possibility of its complement:
+  \begin{equation}
+    \poss(A) - \necs(A) =
+    \begin{cases}
+      \poss(A)   & \text{if } \poss(A) < 1
+      \\
+      \poss(A^c) & \text{if } \necs(A) > 0
+    \end{cases}
+  \end{equation}
+\end{proposition}
+
+\begin{proposition}[Possibility distribution]
+  The possibility measure $\poss(A)$ is uniquely determined by the
+  possibility values of singleton sets (the \emph{possibility distribution}):
+  \begin{equation}
+    \poss(A) = \max_{w \in A} \poss(\{w\}) \ \forall\ A \subseteq W
+  \end{equation}
+\end{proposition}
+I.e., the number of values in the possibility distribution grows linearly with
+the number of possible worlds.
+
+\begin{proposition}[Maximally possible world]
+  At least one possible world must be maximally possible:
+  \begin{equation}
+    \max_{w \in W} \poss(\{w\}) = 1
+  \end{equation}
+\end{proposition}
 
 Necessity and possibility measures are Dempster-Shafer belief and plausibility
-measures for a particular form of the mass function.
+measures whose mass function is non-zero only on a nested sequence of sets $F_1
+  \subseteq F_2\subseteq\dots\subseteq F_k$, which are called the \emph{focal
+  sets} of $m$.
 
-\begin{thm}
+\begin{thm}[Relation to Dempster-Shafer theory]
   \label{thm:4:RelationToDempsterShafer}
   Let $m$ be a mass function on $2^W$ such that $\sum_{i = 1}^k m(F_i) = 1$ where
   $F_i \subseteq F_{i + 1} : i = 1 .. k - 1$.
@@ -82,8 +98,7 @@ measures for a particular form of the mass function.
     \ref{def:4:PossibilityNecessity}, if $\pl$ is a possibility measure, then
     $\bel$ is a necessity measure.
     Also, because $\pl(\emptyset) = 0$ and $\pl(W) = 1$, if $\pl(A \cup B) =
-      \max(\pl(A), \pl(B))$, then theorem~\ref{thm:4:RelationToDempsterShafer} is
-    true.
+      \max(\pl(A), \pl(B))$, then $\pl$ is a possibility measure.
 
     Let $F_t$ be the smallest set in $F_1 \ldots F_k$ such that $A \cap F_t \neq
       \emptyset$.
@@ -103,7 +118,7 @@ measures for a particular form of the mass function.
     \begin{align*}
       \pl(A \cup B)
        & = \sum_{i = \min(s, t)}^k m(F_i)
-      = \max(\sum_{i = t}^k m(F_i), \sum_{i = s}^k m(F_i))
+      = \max\left(\sum_{i = t}^k m(F_i), \sum_{i = s}^k m(F_i)\right)
       \\[2ex]
        & = \max(\pl(A), \pl(B))
     \end{align*}
@@ -116,13 +131,10 @@ Order the possible worlds $w_1 \ldots w_n$ such that $\poss(\{w_i\}) \geq
   \poss(\{w_{i + 1}\})$.
 Then:
 \begin{equation*}
-  m(\{w_j \mid 1 .. i \}) :=
+  m(\{w_j \mid j \in 1 .. i \}) :=
   \begin{cases}
-    \poss(\{w_i\}) - \poss(\{w_{i + 1}\}) & \text{if } i < n
-    \\
     \poss(\{w_n\})                        & \text{if } i = n
+    \\
+    \poss(\{w_i\}) - \poss(\{w_{i + 1}\}) & \text{if } i < n
   \end{cases}
 \end{equation*}
-I.e., necessity and possibility measures are Dempster-Shafer belief and
-plausibility measures whose mass function is non-zero only on a nested sequence
-of sets.
