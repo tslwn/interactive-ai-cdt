@@ -1,0 +1,204 @@
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\ihbar}{\frac{i}{\hbar}}
+
+\newcommand{\xcl}{x_{\text{cl}}}
+\newcommand{\xd}{\delta{x}}
+\newcommand{\dxd}[1]{\text{d}\xd_{#1}}
+
+\newcommand{\tp}{t^\prime}
+\newcommand{\dtp}{\text{d}\tp}
+
+\newcommand{\del}[2][]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\delsq}[2][]{\frac{\partial^2{#1}}{\partial{#2}^2}}
+
+\newcommand{\func}[2]{#1\left[{#2}\right]}
+\newcommand{\propagator}{K(x_f, x_0, t)}
+
+\subsection{Propagator for a free particle}
+
+Evaluate the path integral for the propagator of a particle moving freely in
+one dimension without potential, i.e., a particle with the Lagrangian $L =
+  \half m \dot{x}^2$.
+
+The action is:
+\begin{equation}
+  \label{2.3-action}
+  \func{S}{x} = \int_{0}^{t} \half m \dot{x}(\tp)^2 \dtp
+\end{equation}
+Split $x(\tp)$ into the classical solution $\xcl(\tp)$ and deviation $\xd(\tp)$:
+\begin{equation}
+  \label{2.3-decomposition}
+  x(\tp) = \xcl(\tp) + \xd(\tp),\
+  x(0) = x_0,\
+  x(t) = x_f,\
+  \xd(0) = \xd(t) = 0
+\end{equation}
+Substitute equation~\ref{2.3-decomposition} into equation~\ref{2.3-action}.
+The Taylor expansion is around a stationary point of the action, so the linear
+term vanishes:
+\begin{align}
+  \label{2.3-taylor}
+  \func{S}{x}
+   & =
+  \int_{0}^{t} \half m \dot{\xcl}(\tp)^2 \dtp +
+  \int_{0}^{t} m \dot{\xcl}(\tp)\dot{\xd}(\tp) \dtp +
+  \int_{0}^{t} \half m \dot{\xd}(\tp)^2 \dtp
+  \nonumber
+  \\[2ex]
+   & =
+  \int_{0}^{t} \half m \dot{\xcl}(\tp)^2 \dtp +
+  \int_{0}^{t} \half m \dot{\xd}(\tp)^2 \dtp
+  \nonumber
+  \\[3ex]
+   & =
+  \func{S}{\xcl} + \func{S}{\xd}
+\end{align}
+Substitute equation~\ref{2.3-taylor} into the path integral for the propagator and
+replace the functional integral over $x$ by a functional integral over $\xd$:
+\begin{align}
+  \propagator
+   & = \int \func{D}{x} e^{\frac{i}{\hbar} \func{S}{x}} \nonumber
+  \\
+   & = \int \func{D}{x} e^{\frac{i}{\hbar} (\func{S}{\xcl} + \func{S}{\xd})} \nonumber
+  \\
+  \label{2.3-propagator}
+   & = e^{\frac{i}{\hbar} \func{S}{\xcl}} \int \func{D}{\xd} e^{\frac{i}{\hbar} \func{S}{\xd}}
+\end{align}
+First, evaluate the action for the deviation:
+\begin{equation*}
+  \func{S}{\xd} = \int_{0}^{t} \half m \dot{\xd}(\tp)^2 \dtp
+\end{equation*}
+Discretise the integral and define $\xd_i = \xd(\tp_i) = \xd(i\tau)$:
+\begin{align*}
+  \func{S}{\xd}
+   & =
+  \lim_{N \to \infty} \sum_{i=0}^{N-1} \half m \left(\frac{\xd_{i+1} - \xd_i}{\tau}\right)^2 \tau
+  ,\quad
+  \tau = \frac{t}{N}
+  \\[2ex]
+   & =
+  \lim_{N \to \infty} \frac{m}{2\tau} \sum_{i=0}^{N-1} (\xd_{i+1}-\xd_i)^2
+\end{align*}
+The boundary conditions $\xd(0) = \xd(t) = 0$ imply $\xd_0 = \xd_N = 0$.
+Rearrange the sum:
+\begin{align*}
+  \sum_{i=0}^{N-1} (\xd_{i+1}-\xd_i)^2
+   & =
+  \sum_{i=0}^{N-1} \xd_{i+1}^2 -
+  2\sum_{i=0}^{N-1} \xd_{i+1}\xd_i +
+  \sum_{i=0}^{N-1} \xd_{i}^2
+  \\[2ex]
+   & =
+  \sum_{i=0}^{N-2} \xd_{i+1}^2 -
+  2\sum_{i=1}^{N-2} \xd_{i+1}\xd_i +
+  \sum_{i=0}^{N-2} \xd_{i}^2
+  \\[2ex]
+   & =
+  2\sum_{i=1}^{N-1} \xd_{i}^2 -
+  2\sum_{i=1}^{N-2} \xd_{i+1}\xd_i
+\end{align*}
+This can be written as a matrix product:
+\begin{equation*}
+  \sum_{i=0}^{N-1} (\xd_{i+1}-\xd_i)^2 = \vec{\xd}\cdot\matr{B}_{N-1}\vec{\xd}
+\end{equation*}
+\begin{equation*}
+  \vec{\xd} =
+  \begin{bmatrix}
+    \xd_1
+    \\
+    \xd_2
+    \\
+    \cdots
+    \\
+    \xd_{N-1}
+  \end{bmatrix}
+  \in \R^{N-1}
+  ,\quad
+  \matr{B}_{N-1} =
+  \begin{bmatrix}
+    2      & - 1    & 0      & \cdots & 0
+    \\
+    -1     & 2      & -1     & \cdots & 0
+    \\
+    0      & -1     & 2      & \cdots & 0
+    \\
+    \vdots & \vdots & \vdots & \ddots & -1
+    \\
+    0      & 0      & 0      & -1     & 2
+  \end{bmatrix}
+  \in \Z^{(N-1)\times(N-1)}
+\end{equation*}
+Hence:
+\begin{multline}
+  \label{2.3-deviation-action}
+  \int \func{D}{\xd} e^{\frac{i}{\hbar} \func{S}{\xd}}
+  \\
+  =
+  \lim_{N \to \infty}
+  \left(\frac{mN}{2\pi i\hbar t}\right)^{N/2}
+  \int\dxd{1}\int\dxd{2}\cdots\int\dxd{N-1}
+  \exp\left(i \frac{mN}{2\hbar t} \vec{\xd}\cdot\matr{B}_{N-1}\vec{\xd}\right)
+\end{multline}
+We have that:
+\begin{equation}
+  \label{2.3-integral}
+  \int\dxd{1}\int\dxd{2}\cdots\int\dxd{\nu-1}
+  \exp\left(i\vec{\xd}\cdot\matr{A}\vec{\xd}\right)
+  =
+  \left(\frac{(i\pi)^\nu}{\det\matr{A}}\right)^{1/2}
+\end{equation}
+For equation~\ref{2.3-deviation-action}:
+\begin{align*}
+  \matr{A} = \frac{mN}{2\hbar t} \matr{B}_{N-1},\
+  \nu = N-1
+\end{align*}
+Hence:
+\begin{equation*}
+  \int \func{D}{\xd} e^{\frac{i}{\hbar} \func{S}{\xd}}
+  =
+  \lim_{N \to \infty}
+  \left(\frac{mN}{2\pi i\hbar t}\right)^{N/2}
+  \left(\frac{(i\pi)^{N-1}}{\det\left(\frac{mN}{2\hbar t}\matr{B}_{N-1}\right)}\right)^{1/2}
+\end{equation*}
+For a $n\times n$ matrix $A$, $\det k\matr{A} = k^n \det\matr{A}$.
+Hence:
+\begin{align}
+  \int \func{D}{\xd} e^{\frac{i}{\hbar} \func{S}{\xd}}
+   & =
+  \lim_{N \to \infty}
+  \left(\frac{mN}{2\pi i\hbar t}\right)^{N/2}
+  \left(\frac{(i\pi)^{N-1}}{\left(\frac{mN}{2\hbar t}\right)^{N-1}\det\matr{B}_{N-1}}\right)^{1/2}
+  \nonumber
+  \\[2ex]
+   & =
+  \lim_{N \to \infty}
+  \left(\frac{mN}{2\pi i\hbar t}\right)^{N/2}
+  \left(\frac{2\pi i\hbar t}{mN}\right)^{(N-1)/2}
+  \nonumber
+  \\[2ex]
+  \label{2.3-action-deviation}
+   & =
+  \sqrt{\frac{m}{2\pi i\hbar t}}
+\end{align}
+Next, evaluate the action for the classical solution.
+The classical solution $\xcl(\tp)$ is the solution of Lagrange's equation:
+\begin{equation*}
+  \del[L]{x} = \ddt\del[L]{\dot{x}}
+  \implies
+  \ddot{\xcl}(\tp) = 0,\
+  \dot{\xcl}(\tp) = \frac{x_f - x_0}{t}
+\end{equation*}
+The action for the classical solution is:
+\begin{equation}
+  \label{2.3-action-classical}
+  \func{S}{\xcl} = \int_{0}^{t} \half m \dot{\xcl}(\tp)^2 \dtp
+  = \half m \frac{\left(x_f - x_0\right)^2}{t}
+\end{equation}
+Substitute equations~\ref{2.3-action-deviation} and~\ref{2.3-action-classical}
+into equation~\ref{2.3-propagator}:
+\begin{equation}
+  \label{2.3-result}
+  \propagator = \sqrt{\frac{m}{2\pi i\hbar t}}\exp\left(\ihbar\frac{m}{2t}(x_f - x_0)^2\right)
+\end{equation}
