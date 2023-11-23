@@ -9,14 +9,16 @@
 
 % Linear algebra
 \newcommand{\matr}[1]{{#1}}
+\newcommand{\norm}[1]{\lVert{#1}\rVert}
 
 % Variables
 \newcommand{\tp}{t^\prime}
 
 % Integration measures
-\newcommand{\dt}{\text{d}t}
-\newcommand{\dtp}{\text{d}\tp}
-\newcommand{\dx}{\text{d}x}
+\renewcommand{\d}[1][]{\text{d}{#1}}
+\newcommand{\dt}{\d{t}}
+\newcommand{\dtp}{\d{\tp}}
+\newcommand{\dx}{\d{x}}
 \newcommand{\dnr}[2]{\text{d}^{#1}r_{#2}}
 \newcommand{\dnp}[2]{\text{d}^{#1}p_{#2}}
 
@@ -24,9 +26,9 @@
 \newcommand{\intfty}{\int_{-\infty}^{\infty}}
 
 % Derivatives
-\newcommand{\dd}[2][]{\frac{\text{d}^{#1}}{\text{d}{#2}^{#1}}}
-\newcommand{\ddt}{\frac{\text{d}}{\text{d}t}}
-\newcommand{\ddx}{\frac{\text{d}}{\text{d}x}}
+\newcommand{\dd}[2]{\frac{\d{#1}}{\d{#2}}}
+\newcommand{\ddt}[1][]{\dd{#1}{t}}
+\newcommand{\ddx}[1][]{\dd{#1}{x}}
 
 % Partial derivatives
 \newcommand{\del}[2][]{\frac{\partial{#1}}{\partial{#2}}}
@@ -43,3 +45,6 @@
 % Propagators
 \newcommand{\propone}{K(x_f, x_0, t)}
 \newcommand{\propn}{K(\vec{r}_f, \vec{r}_0, t)}
+
+% Theorem environments
+\numberwithin{equation}{subsection}

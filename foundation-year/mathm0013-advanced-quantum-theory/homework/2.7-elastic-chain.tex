@@ -1,0 +1,102 @@
+\newcommand{\pos}{{\Phi}}
+\newcommand{\bp}{{\beta^\prime}}
+
+\subsection{Elastic chain}
+
+\begin{enumerate}[(a)]
+  \item Write the propagator of the system as a path integral.
+\end{enumerate}
+
+The Lagrangian is:
+\begin{equation}
+  L(\pos,\dot{\pos})
+  =
+  \sum_{i=1}^{N-1} \sum_{j=1}^{2} \half m\dot{\pos}_{ij}^2 -
+  \sum_{i=0}^{N-1} \sum_{j=1}^{2} \half k(\pos_{i+1,j} - \pos_{ij})^2 -
+  \sum_{i=1}^{N-1} mg\pos_{i2}
+\end{equation}
+As previously, the propagator is:
+\begin{equation}
+  \label{propagator}
+  K(\pos_f,\pos_0,t) = \int_{\pos(0)=\pos_0,\pos(t)=\pos_f}\func{D}{\pos}
+  e^{\frac{i}{\hbar} \func{S}{\pos}} ,\quad \func{S}{\pos} = \int_{0}^{t}\dtp\
+  L(\pos(\tp), \dot{\pos}(\tp))
+\end{equation}
+\todo[color={red!
+      100!green!33},inline,size=small]{I think there is more to do here but I don't know what.}
+
+\begin{enumerate}[(a)]
+  \setcounter{enumi}{1}
+  \item Take the limit $N\to\infty$ and replace the index $i$ in $\pos_{i1}$ by
+        a continuous parameter $x$.
+\end{enumerate}
+
+Define $\vec{\pos}_i(\tp) =
+  \begin{bmatrix}
+    \pos_{i1}(\tp)
+     &
+    \pos_{i2}(\tp)
+  \end{bmatrix}
+  ^\top$.
+Hence:
+\begin{equation*}
+  L(\pos,\dot{\pos})
+  =
+  \sum_{i=1}^{N-1} \half m\norm{\ddt\vec{\pos}_i(\tp)}^2 -
+  \sum_{i=0}^{N-1} \half k\norm{\vec{\pos}_{i+1}(\tp) - \vec{\pos}_i(\tp)}^2 -
+  \sum_{i=1}^{N-1} mg\pos_{i2}
+\end{equation*}
+Replace $\vec{\pos}_i(\tp)$ with $\vec{\pos}(ia,\tp) =
+  \begin{bmatrix}
+    \pos_{1}(ia,\tp)
+     &
+    \pos_{2}(ia,\tp)
+  \end{bmatrix}
+  ^\top$ in the summand:
+\begin{equation*}
+  \half m\norm{\ddt\vec{\pos}(ia,\tp)}^2
+  -
+  \half k\norm{\vec{\pos}((i+1)a,\tp) - \vec{\pos}(ia,\tp)}^2
+  -
+  mg\pos_{2}(x,\tp)
+\end{equation*}
+By a Taylor expansion, the second term $\approx\half k a^2
+  \norm{\ddx{\vec{\pos}}(a,\tp)}^2$ and the summand is:
+\begin{equation*}
+  \approx \int_{ia}^{(i+1)a}\dx\ \left(
+  \half \frac{m}{a}\norm{\ddt{\vec{\pos}}(x,\tp)}^2-
+  \half ka\norm{\ddx{\vec{\pos}}(x,\tp)}^2 -
+  mg\pos_{2}(x,\tp)
+  \right)
+\end{equation*}
+Combine the summands:
+\begin{equation*}
+  L(\pos, \dot{\pos}) \approx \int_{0}^{C}\dx\ \left( \half
+  \frac{m}{a}\norm{\ddt{\vec{\pos}}(x,\tp)}^2- \half
+  ka\norm{\ddx{\vec{\pos}}(x,\tp)}^2 - mg\pos_{2}(x,\tp) \right)
+\end{equation*}
+The propagator is given by equation~\ref{propagator}.
+\\~\
+\todo[color={red!100!green!33},inline,size=small]{I think there is also more to do where but I don't know what.}
+
+\begin{enumerate}[(a)]
+  \setcounter{enumi}{2}
+  \item Write down a path integral analogous to (b) for the matrix elements of
+        $e^{-\beta\hat{H}}$.
+\end{enumerate}
+
+The path integral for $\bra{\vec{r}_f}e^{-\beta\hat{H}}\ket{\vec{r}_0}$ is:
+\begin{equation*}
+  \bra{\vec{r}_f}e^{-\beta\hat{H}}\ket{\vec{r}_0}
+  =
+  \int\func{D}{\vec{r}}
+  \exp\left(
+  -\int_{0}^{\beta} \d{\bp} \left(
+  \half m\left(\frac{1}{\hbar}\dd{\vec{r}}{\bp}\right)^2
+  + U(\vec{r}(\bp))
+  \right)
+  \right)
+\end{equation*}
+\todo[color={red!100!green!33},inline,size=small]{This is from p. 17 of the notes.
+  There must be more to do!
+}
