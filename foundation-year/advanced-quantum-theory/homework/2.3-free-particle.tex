@@ -70,17 +70,15 @@ First, evaluate the action for the deviation:
 \begin{equation*}
   \func{S}{\xd} = \int_{0}^{t} \half m \dot{\xd}(\tp)^2 \dtp
 \end{equation*}
-Discretise the integral and define $\xd_i = \xd(\tp_i) = \xd(i\tau)$:
-\begin{align*}
+Discretise the integral and define $\tau = \frac{t}{N}$,
+$\xd_i = \xd(\tp_i) = \xd(i\tau)$:
+\begin{equation*}
   \func{S}{\xd}
-   & =
+  =
   \lim_{N \to \infty} \sum_{i=0}^{N-1} \half m \left(\frac{\xd_{i+1} - \xd_i}{\tau}\right)^2 \tau
-  ,\quad
-  \tau = \frac{t}{N}
-  \\[2ex]
-   & =
+  =
   \lim_{N \to \infty} \frac{m}{2\tau} \sum_{i=0}^{N-1} (\xd_{i+1}-\xd_i)^2
-\end{align*}
+\end{equation*}
 The boundary conditions $\xd(0) = \xd(t) = 0$ imply $\xd_0 = \xd_N = 0$.
 Rearrange the sum:
 \begin{align*}
@@ -99,23 +97,21 @@ Rearrange the sum:
   2\sum_{i=1}^{N-1} \xd_{i}^2 -
   2\sum_{i=1}^{N-2} \xd_{i+1}\xd_i
 \end{align*}
-This can be written as a matrix product:
+In terms of the vector
+$\vec{\xd} = \left[\xd_1\ \xd_2\ \dots\ \xd_{N-1}\right]^\top$
+and Kronecker delta $\delta_{ij}$:
+\begin{align*}
+  \sum_{i=0}^{N-1} (\xd_{i+1}-\xd_i)^2
+   & =
+  \sum_{i=1}^{N-1} \sum_{j=1}^{N-1}
+  \left(2\delta_{ij} - (\delta_{i+1,j}+\delta_{i,j+1})\right)
+  (\vec{\xd})_{i}(\vec{\xd})_{j}
+\end{align*}
 \begin{equation*}
-  \sum_{i=0}^{N-1} (\xd_{i+1}-\xd_i)^2 = \vec{\xd}\cdot\matr{B}_{N-1}\vec{\xd}
-\end{equation*}
-\begin{equation*}
-  \vec{\xd} =
-  \begin{bmatrix}
-    \xd_1
-    \\
-    \xd_2
-    \\
-    \cdots
-    \\
-    \xd_{N-1}
-  \end{bmatrix}
-  \in \R^{N-1}
-  ,\quad
+  \func{S}{\xd}
+  =
+  \lim_{N\to\infty}\frac{mN}{2t}\vec{\xd}\cdot\matr{B}_{N-1}\vec{\xd}
+  \,,\quad
   \matr{B}_{N-1} =
   \begin{bmatrix}
     2      & - 1    & 0      & \cdots & 0
@@ -128,17 +124,17 @@ This can be written as a matrix product:
     \\
     0      & 0      & 0      & -1     & 2
   \end{bmatrix}
-  \in \Z^{(N-1)\times(N-1)}
 \end{equation*}
-Hence:
+The functional integral in equation~\ref{2.3-propagator} becomes:
 \begin{multline}
   \label{2.3-deviation-action}
   \int \func{D}{\xd} e^{\frac{i}{\hbar} \func{S}{\xd}}
-  \\
   =
   \lim_{N \to \infty}
   \left(\frac{mN}{2\pi i\hbar t}\right)^{N/2}
-  \int\dxd{1}\int\dxd{2}\cdots\int\dxd{N-1}
+  \int\dxd{1}\int\dxd{2}\cdots
+  \\
+  \cdots\int\dxd{N-1}
   \exp\left(i \frac{mN}{2\hbar t} \vec{\xd}\cdot\matr{B}_{N-1}\vec{\xd}\right)
 \end{multline}
 We have that:
@@ -149,12 +145,7 @@ We have that:
   =
   \left(\frac{(i\pi)^\nu}{\det\matr{A}}\right)^{1/2}
 \end{equation}
-For equation~\ref{2.3-deviation-action}:
-\begin{align*}
-  \matr{A} = \frac{mN}{2\hbar t} \matr{B}_{N-1},\
-  \nu = N-1
-\end{align*}
-Hence:
+With $\nu = N-1$, $\matr{A} = \frac{mN}{2\hbar t} \matr{B}_{N-1}$:
 \begin{equation*}
   \int \func{D}{\xd} e^{\frac{i}{\hbar} \func{S}{\xd}}
   =
@@ -162,7 +153,8 @@ Hence:
   \left(\frac{mN}{2\pi i\hbar t}\right)^{N/2}
   \left(\frac{(i\pi)^{N-1}}{\det\left(\frac{mN}{2\hbar t}\matr{B}_{N-1}\right)}\right)^{1/2}
 \end{equation*}
-For a $n\times n$ matrix $A$, $\det k\matr{A} = k^n \det\matr{A}$.
+For a scalar $k$ and $n\times n$ matrix $A$, $\det k\matr{A} = k^n
+  \det\matr{A}$.
 Hence:
 \begin{align}
   \int \func{D}{\xd} e^{\frac{i}{\hbar} \func{S}{\xd}}
