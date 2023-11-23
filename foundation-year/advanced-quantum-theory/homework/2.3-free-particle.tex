@@ -1,20 +1,6 @@
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\half}{\frac{1}{2}}
-\newcommand{\ihbar}{\frac{i}{\hbar}}
-
 \newcommand{\xcl}{x_{\text{cl}}}
 \newcommand{\xd}{\delta{x}}
 \newcommand{\dxd}[1]{\text{d}\xd_{#1}}
-
-\newcommand{\tp}{t^\prime}
-\newcommand{\dtp}{\text{d}\tp}
-
-\newcommand{\del}[2][]{\frac{\partial{#1}}{\partial{#2}}}
-\newcommand{\delsq}[2][]{\frac{\partial^2{#1}}{\partial{#2}^2}}
-
-\newcommand{\func}[2]{#1\left[{#2}\right]}
-\newcommand{\propagator}{K(x_f, x_0, t)}
 
 \subsection{Propagator for a free particle}
 
@@ -58,7 +44,7 @@ term vanishes:
 Substitute equation~\ref{2.3-taylor} into the path integral for the propagator and
 replace the functional integral over $x$ by a functional integral over $\xd$:
 \begin{align}
-  \propagator
+  \propone
    & = \int \func{D}{x} e^{\frac{i}{\hbar} \func{S}{x}} \nonumber
   \\
    & = \int \func{D}{x} e^{\frac{i}{\hbar} (\func{S}{\xcl} + \func{S}{\xd})} \nonumber
@@ -192,5 +178,5 @@ Substitute equations~\ref{2.3-action-deviation} and~\ref{2.3-action-classical}
 into equation~\ref{2.3-propagator}:
 \begin{equation}
   \label{2.3-result}
-  \propagator = \sqrt{\frac{m}{2\pi i\hbar t}}\exp\left(\ihbar\frac{m}{2t}(x_f - x_0)^2\right)
+  \propone = \sqrt{\frac{m}{2\pi i\hbar t}}\exp\left(\ihbar\frac{m}{2t}(x_f - x_0)^2\right)
 \end{equation}

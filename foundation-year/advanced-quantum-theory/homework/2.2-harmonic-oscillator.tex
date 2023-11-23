@@ -1,18 +1,8 @@
-\newcommand{\half}{\frac{1}{2}}
-\newcommand{\ihbar}{\frac{i}{\hbar}}
-
-\newcommand{\func}[2]{\mathcal{#1}\left[\,{#2}\,\right]}
-
 \newcommand{\w}{\omega}
 \newcommand{\sinwt}[1][]{\sin^{#1}\omega t}
 \newcommand{\coswt}[1][]{\cos^{#1}\omega t}
 \newcommand{\cotwt}[1][]{\cot^{#1}\omega t}
 \newcommand{\cscwt}[1][]{\csc^{#1}\omega t}
-
-\newcommand{\del}[2][]{\frac{\partial{#1}}{\partial{#2}}}
-\newcommand{\delsq}[2][]{\frac{\partial^2{#1}}{\partial{#2}^2}}
-
-\newcommand{\propagator}{K(x_f, x_0, t)}
 
 \subsection{Propagator for the harmonic oscillator}
 
@@ -20,15 +10,15 @@ Show that the propagator for the harmonic oscillator satisfies the
 Schr\"{o}dinger equation:
 \begin{equation}
   \label{schrodinger}
-  \left(-\frac{\hbar^2}{2m}\delsq{x_f} + \half m\w ^2 x_f^2\right) \propagator
+  \left(-\frac{\hbar^2}{2m}\delsq{x_f} + \half m\w ^2 x_f^2\right) \propone
   =
-  i\hbar\del{t}\propagator
+  i\hbar\del{t}\propone
 \end{equation}
 
 The propagator for the harmonic oscillator is:
 \begin{equation}
   \label{propagator}
-  \propagator
+  \propone
   =
   \sqrt{\frac{m\w }{2\pi i\hbar\sinwt}}
   \exp\left(
@@ -66,7 +56,7 @@ Hence:
 The left-hand side is:
 \begin{align}
    & \left(-\frac{\hbar^2}{2m}\delsq{x_f} +
-  \half m\w ^2 x_f^2\right) \propagator
+  \half m\w ^2 x_f^2\right) \propone
   \nonumber
   \\[2ex]
    & \qquad =
@@ -77,7 +67,7 @@ The left-hand side is:
     \right) +
   \half m\w ^2 x_f^2
   \right)
-  \propagator
+  \propone
   \nonumber
   \\[2ex]
   \label{lhs}
@@ -87,13 +77,13 @@ The left-hand side is:
   \half m\w^2\frac{(x_f \coswt - x_0)^2}{\sinwt[2]} +
   \half m\w ^2 x_f^2
   \right)
-  \propagator
+  \propone
 \end{align}
 
 Next, evaluate the right-hand side of equation~\ref{schrodinger}.
 Define $g(t)$:
 \begin{align*}
-  \propagator
+  \propone
    & =
   \sqrt{\frac{m\w}{2\pi\hbar}} e^{-i\frac{\pi}{4}} \frac{1}{\sqrt{\sinwt}} e^{\,g(t)}
   \\[2ex]
@@ -106,7 +96,7 @@ Define $g(t)$:
 \end{align*}
 By the product and chain rules:
 \begin{align*}
-  \del{t}\propagator
+  \del{t}\propone
    & =
   \sqrt{\frac{m\w}{2\pi\hbar}} e^{-i\frac{\pi}{4}}
   \left(
@@ -134,7 +124,7 @@ Evaluate the derivatives:
 \end{align*}
 Hence:
 \begin{align*}
-   & \del{t}\propagator
+   & \del{t}\propone
   \\[2ex]
    & \quad =
   \sqrt{\frac{m\w}{2\pi\hbar}}
@@ -166,11 +156,11 @@ Hence:
   \ihbar\frac{m\w^2}{\sinwt}\left(2x_0 x_f\coswt - (x_0^2 + x_f^2)\right) -
   \w\coswt
   \right)
-  \propagator
+  \propone
 \end{align*}
 The right-hand side is:
 \begin{multline}
-  i\hbar\del{t}\propagator
+  i\hbar\del{t}\propone
   \\
   \label{rhs}
   \quad =
@@ -179,7 +169,7 @@ The right-hand side is:
   -\frac{m\w^2}{\sinwt}\left(2x_0 x_f\coswt - (x_0^2 + x_f^2)\right) -
   i\hbar\w\coswt
   \right)
-  \propagator
+  \propone
 \end{multline}
 \newpage
 Taking equations~\ref{lhs} and \ref{rhs}, it remains to show that:

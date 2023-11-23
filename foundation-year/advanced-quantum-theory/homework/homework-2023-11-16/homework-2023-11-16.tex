@@ -1,16 +1,13 @@
 
 \documentclass[a4paper]{extarticle}
-\usepackage{../../../../latex/packages/tslwn-preamble}
 \usepackage[margin=1.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{dsfont}
+\usepackage{import}
 \usepackage{microtype}
-
-\newcommand{\tp}{t^\prime}
-\newcommand{\dtp}{\text{d}\tp}
-\newcommand{\dnp}[2]{\text{d}^{#1}p_{#2}}
-\newcommand{\dnr}[2]{\text{d}^{#1}r_{#2}}
-\newcommand{\func}[2]{\mathcal{#1}\left[\,#2\,\right]}
-\newcommand{\ihbar}{\frac{i}{\hbar}}
-\newcommand{\propagator}{K(\vec{r}_f, \vec{r}_0, t)}
+\usepackage{thmtools}
 
 \title{Advanced Quantum Theory\\
 \large Homework 1}
@@ -21,152 +18,6 @@
 \maketitle
 
 \setcounter{section}{2}
-\subsection{Path integral in phase space}
-
-Show that the propagator of a quantum system can be written as:
-\begin{equation}
-  \label{result}
-  \propagator = \int\func{D}{\vec{r}}\func{D}{\vec{p}}\exp\left(
-  \ihbar\int_{0}^{t}\left(
-  \vec{p}(\tp) \cdot \dot{\vec{r}}(\tp) - H(\vec{r}(\tp), \vec{p}(\tp))
-  \right)\dtp
-  \right)
-\end{equation}
-
-We have that:
-\begin{equation}
-  \label{start}
-  \propagator = \int\dnr{n}{0}\ldots\int\dnr{n}{N - 1}
-  \prod_{j = 0}^{N - 1} \bra{\vec{r}_{j + 1}} e^{-\ihbar \hat{H}\tau} \ket{\vec{r}_j}
-\end{equation}
-Assume that the Hamiltonian has the form $\hat{H} = \hat{T}(\vec{p}) +
-  \hat{U}(\vec{r})$.
-Replace the exponential by the first-order Taylor polynomial and vice versa:
-\begin{align*}
-  \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar\hat{H}\tau}
-  \ket{\vec{r}_j}
-   & \approx
-  \bra{\vec{r}_{j + 1}}
-  \left(1 - \ihbar\hat{H}\tau\right)
-  \ket{\vec{r}_j}
-  \\
-   & \approx
-  \bra{\vec{r}_{j + 1}}
-  \left(1 - \ihbar\hat{T}\tau\right)
-  \left(1 - \ihbar\hat{U}\tau\right)
-  \ket{\vec{r}_j}
-  \\
-  [1.5ex]
-   & \approx
-  \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar \hat{T}\tau} e^{-\ihbar \hat{U}\tau}
-  \ket{\vec{r}_j}
-\end{align*}
-Apply $\hat{U}$ to the position eigenstate $\ket{\vec{r}_j}$:
-\begin{equation*}
-  \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar\hat{H}\tau}
-  \ket{\vec{r}_j}
-  \approx \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar \hat{T}\tau}
-  \ket{\vec{r}_j}
-  e^{-\ihbar U(\vec{r}_j)\tau}
-\end{equation*}
-Insert a resolution of the identity in terms of momentum eigenfunctions:
-\begin{align*}
-  \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar \hat{H}\tau}
-  \ket{\vec{r}_j}
-   & =
-  \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar \hat{T}\tau}
-  \int\dnp{n}{j}
-  \ket{\vec{p}_j}
-  \braket{\vec{p}_j}{\vec{r}_j}
-  e^{-\ihbar U(\vec{r}_j)\tau}
-  \\
-   & =
-  \int\dnp{n}{j}
-  e^{-\ihbar U(\vec{r}_j)\tau}
-  \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar \hat{T}\tau}
-  \ket{\vec{p}_j}
-  \braket{\vec{p}_j}{\vec{r}_j}
-\end{align*}
-Apply $\hat{T}$ to the momentum eigenstate $\ket{\vec{p}_j}$ and substitute:
-\begin{align*}
-  \bra{\vec{r}_{j + 1}}
-  e^{-\ihbar\hat{H}\tau}
-  \ket{\vec{r}_j}
-   & =
-  \int\dnp{n}{j}
-  \exp\left(-\ihbar\left(T(\vec{p}_j) + U(\vec{r}_j)\right)\tau\right)
-  \braket{\vec{r}_{j + 1}}{\vec{p}_j}
-  \braket{\vec{p}_j}{\vec{r}_j}
-  \\
-   & =
-  \int\dnp{n}{j}
-  \exp\left(-\ihbar H(\vec{r}_j, \vec{p}_j)\tau\right)
-  \braket{\vec{r}_{j + 1}}{\vec{p}_j}
-  \braket{\vec{p}_j}{\vec{r}_j}
-  \\
-   & =
-  \int\dnp{n}{j}
-  \exp\left(-\ihbar H(\vec{r}_j, \vec{p}_j)\tau\right)
-  \frac{1}{(2\pi\hbar)^{n/2}} e^{\ihbar\vec{p}_j \cdot \vec{r}_{j + 1}}
-  \frac{1}{(2\pi\hbar)^{n/2}} e^{-\ihbar\vec{p}_j \cdot \vec{r}_{j}}
-  \\
-  [1.5ex]
-   & =
-  \frac{1}{(2\pi\hbar)^{n}}
-  \int\dnp{n}{j}
-  \exp\left(\ihbar\left(
-  \vec{p}_j\cdot\frac{\vec{r}_{j + 1}-\vec{r}_j}{\tau} - H(\vec{r}_j, \vec{p}_j)
-  \right)\tau\right)
-\end{align*}
-The product in equation~\ref{start} is then:
-\begin{align*}
-   & \prod_{j = 0}^{N - 1}
-  \frac{1}{(2\pi\hbar)^{n}}
-  \int\dnp{n}{j}
-  \exp\left(\ihbar\left(
-  \vec{p}_j \cdot \frac{\vec{r}_{j + 1}-\vec{r}_j}{\tau} - H(\vec{r}_j, \vec{p}_j)
-  \right)\tau\right)
-  \\
-   & \quad =
-  \frac{1}{(2\pi\hbar)^{N n}}
-  \int\dnp{n}{0}\ldots\int\dnp{n}{N - 1}
-  \exp\left(\ihbar\sum_{j = 0}^{N - 1}\left(
-  \vec{p}_j \cdot \frac{\vec{r}_{j + 1}-\vec{r}_j}{\tau} - H(\vec{r}_j, \vec{p}_j)
-  \right)\tau\right)
-\end{align*}
-Equation~\ref{start} becomes:
-\begin{multline*}
-  \propagator =
-  \frac{1}{(2\pi\hbar)^{N n}}
-  \int\dnr{n}{0}\ldots\int\dnr{n}{N - 1}\int\dnp{n}{0}\ldots\int\dnp{n}{N - 1}
-  \\
-  \exp\left(\ihbar\sum_{j = 0}^{N - 1}\left(
-  \vec{p}_j \cdot \frac{\vec{r}_{j + 1}-\vec{r}_j}{\tau} - H(\vec{r}_j, \vec{p}_j)
-  \right)\tau\right)
-\end{multline*}
-Replace the sum by an integral in the limit $N \to \infty$, $\tau \to 0$ to obtain:
-\begin{equation*}
-  \propagator = \int\func{D}{\vec{r}}\func{D}{\vec{p}}\exp\left(
-  \ihbar\int_{0}^{t}\left(
-  \vec{p}(\tp) \cdot \dot{\vec{r}}(\tp) - H(\vec{r}(\tp), \vec{p}(\tp))
-  \right)\dtp
-  \right)
-\end{equation*}
-where
-\begin{equation*}
-  \int\func{D}{\vec{r}}\func{D}{\vec{p}}\ldots
-  = \lim_{N \to \infty}
-  \frac{1}{(2\pi\hbar)^{N n}}
-  \int\dnr{n}{0}\ldots\int\dnr{n}{N - 1}
-  \int\dnp{n}{0}\ldots\int\dnp{n}{N - 1}
-  \ldots
-\end{equation*}
+\import{../}{2.1-phase-space.tex}
 
 \end{document}
