@@ -1,4 +1,11 @@
 {
   "black-formatter.args": ["--line-length", "60"],
-  "editor.rulers": [80]
+  "editor.rulers": [80],
+  "latex-workshop.latexindent.args": [
+    "-c",
+    "%DIR%/",
+    "%TMPFILE%",
+    "-l=%WORKSPACE_FOLDER%/latexindent.yaml",
+    "-m"
+  ]
 }
