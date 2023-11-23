@@ -25,3 +25,8 @@ University of Bristol.
 [Uncertainty Modelling for Intelligent Systems](https://www.bris.ac.uk/unit-programme-catalogue/UnitDetails.jsa?ayrCode=23%2F24&unitCode=EMATM1120)
 
 - [Lecture notes](./foundation-year/ematm0060-uncertainty-modelling/lecture-notes/lecture-notes.pdf)
+
+[Advanced Quantum Theory](https://www.bris.ac.uk/unit-programme-catalogue/UnitDetails.jsa?ayrCode=23%2F24&unitCode=MATHM0013)
+
+- [Homework 1 (17/11/2023)](./foundation-year/mathm0013-advanced-quantum-theory/homework/homework-2023-11-17/homework-2023-11-17.pdf)
+- [Homework 2 (24/11/2023)](./foundation-year/mathm0013-advanced-quantum-theory/homework/homework-2023-11-24/homework-2023-11-24.pdf)
