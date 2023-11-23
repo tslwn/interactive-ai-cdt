@@ -14,7 +14,7 @@ Show that the propagator of a quantum system can be written as:
 We have that:
 \begin{equation}
   \label{start}
-  \propn = \int\dnr{n}{0}\ldots\int\dnr{n}{N - 1}
+  \propn = \int\dnr{n}{1}\ldots\int\dnr{n}{N - 1}
   \prod_{j = 0}^{N - 1} \bra{\vec{r}_{j + 1}} e^{-\ihbar \hat{H}\tau} \ket{\vec{r}_j}
 \end{equation}
 Assume that the Hamiltonian has the form $\hat{H} = \hat{T}(\vec{p}) +
@@ -123,7 +123,7 @@ Equation~\ref{start} becomes:
 \begin{multline*}
   \propn =
   \frac{1}{(2\pi\hbar)^{N n}}
-  \int\dnr{n}{0}\ldots\int\dnr{n}{N - 1}\int\dnp{n}{0}\ldots\int\dnp{n}{N - 1}
+  \int\dnr{n}{1}\ldots\int\dnr{n}{N - 1}\int\dnp{n}{0}\ldots\int\dnp{n}{N - 1}
   \\
   \exp\left(\ihbar\sum_{j = 0}^{N - 1}\left(
   \vec{p}_j \cdot \frac{\vec{r}_{j + 1}-\vec{r}_j}{\tau} - H(\vec{r}_j, \vec{p}_j)
@@ -142,7 +142,7 @@ where
   \int\func{D}{\vec{r}}\func{D}{\vec{p}}\ldots
   = \lim_{N \to \infty}
   \frac{1}{(2\pi\hbar)^{N n}}
-  \int\dnr{n}{0}\ldots\int\dnr{n}{N - 1}
+  \int\dnr{n}{1}\ldots\int\dnr{n}{N - 1}
   \int\dnp{n}{0}\ldots\int\dnp{n}{N - 1}
   \ldots
 \end{equation*}
