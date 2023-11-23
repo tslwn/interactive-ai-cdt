@@ -1,4 +1,4 @@
-This repository holds the notes, slides, and other materials written in the
+This repository holds the notes, slides, code, and other materials written in the
 course of my PhD in the [UKRI Centre for Doctoral Training in Interactive
 Artificial Intelligence](https://www.bristol.ac.uk/cdt/interactive-ai/) at the
 University of Bristol.
