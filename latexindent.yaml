@@ -14,4 +14,3 @@ modifyLineBreaks:
     EndStartsOnOwnLine: 1
     EndFinishesWithLineBreak: 1
     DBSStartsOnOwnLine: 1
-    DBSFinishesWithLineBreak: 1
