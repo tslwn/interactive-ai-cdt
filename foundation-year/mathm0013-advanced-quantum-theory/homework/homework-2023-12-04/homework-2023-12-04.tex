@@ -5,10 +5,24 @@
 \usepackage{amsthm}
 \usepackage{dsfont}
 \usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage{import}
 \usepackage{microtype}
 \usepackage{thmtools}
 \usepackage{todonotes}
+
+\usepackage[compat=1.1.0]{tikz-feynman}
+
+\import{../../}{aqt-commands.tex}
+
+\newcommand{\avg}[1]{\left\langle{#1}\right\rangle}
+
+\newcommand{\fact}{{!}}
+\newcommand{\doublefact}{{!!}}
+
+\newcommand{\kp}{{k^\prime}}
+\newcommand{\kpp}{{k^{\prime\prime}}}
+\newcommand{\pp}{{p^{\prime}}}
 
 \title{Advanced Quantum Theory\\
 \large Homework 3}
@@ -19,5 +33,6 @@
 \maketitle
 
 \import{.}{homework-3.1.tex}
+\import{.}{homework-3.2.tex}
 
 \end{document}
