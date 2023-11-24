@@ -1,0 +1,45 @@
+\import{../../}{aqt-commands.tex}
+\newcommand{\pp}{{p^\prime}}
+
+\begin{enumerate}
+  \item Derive an approximation for $\bra{p} e^{-\ihbar \hat{H} t} \ket{x}$
+        up to $O(t)$ where $\hat{H} = \half \hat{p}^2 + U(\hat{x})$.
+\end{enumerate}
+
+The Taylor expansion of $e^{-\ihbar \hat{H} t}$ is:
+\begin{equation*}
+  e^{-\ihbar \hat{H}t}
+  = \sum_{n=0}^{\infty} \frac{1}{n!} \left( -\ihbar \hat{H} t \right)^n
+  = 1 - \ihbar\hat{H}t + O(t^2)
+\end{equation*}
+Hereafter $=\cdots + O(t^2)$ will be written as $\approx\cdots$.
+Hence $e^{-\ihbar \hat{H}t}$ is:
+\begin{equation*}
+  e^{-\ihbar \hat{H}t}
+  \approx 1 - \ihbar \left( \half \hat{p}^2 t + U(\hat{x}) t \right)
+  \approx \left(1 - \ihbar \half \hat{p}^2 t \right)\left(1 - \ihbar U(\hat{x}) t\right)
+  \approx e^{-\ihbar \half \hat{p}^2 t}e^{-\ihbar U(\hat{x}) t}
+\end{equation*}
+And $\bra{p}e^{-\ihbar \hat{H}t}\ket{x}$ is:
+\begin{equation*}
+  \bra{p}e^{-\ihbar \hat{H}t}\ket{x}
+  \approx \bra{p} e^{-\ihbar \half \hat{p}^2 t} e^{-\ihbar U(\hat{x}) t} \ket{x}
+  \approx e^{-\ihbar U(x) t} \bra{p} e^{-\ihbar \half \hat{p}^2 t} \ket{x}
+\end{equation*}
+Insert a resolution of the identity in terms of momentum eigenfunctions:
+\begin{align*}
+  \bra{p}e^{-\ihbar \hat{H}t}\ket{x}
+   & \approx e^{-\ihbar U(x) t}\int\d[\pp] \bra{p} e^{-\ihbar \half \hat{p}^2 t} \ket{\pp} \braket{\pp}{x}
+  \\[2ex]
+   & \approx e^{-\ihbar U(x) t}\int\d[\pp] e^{-\ihbar \half \pp^2 t} \braket{p}{\pp} \braket{\pp}{x}
+\end{align*}
+We have that $\braket{p}{\pp} = \delta(\pp-p)$ and $\braket{\pp}{x} = \frac{1}{\sqrt{2 \pi \hbar}}e^{-\ihbar \pp x}$, so:
+\begin{align*}
+  \bra{p}e^{-\ihbar \hat{H}t}\ket{x}
+   & \approx e^{-\ihbar U(x) t}\int\d[\pp] e^{-\ihbar \half \pp^2 t} \delta(\pp-p) \frac{1}{\sqrt{2 \pi \hbar}}e^{-\ihbar \pp x}
+  \\[2ex]
+   & \approx e^{-\ihbar U(x) t} \frac{1}{\sqrt{2 \pi \hbar}} e^{-\ihbar \half p^2 t} e^{-\ihbar p x}
+  \\[2ex]
+   & \approx \frac{1}{\sqrt{2 \pi \hbar}} \exp\left( -\ihbar \left( \half p^2 t + U(x) t + p x \right) \right)
+\end{align*}
+This is the desired approximation for $\bra{p}e^{-\ihbar \hat{H}t}\ket{x}$.
