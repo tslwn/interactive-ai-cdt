@@ -1,0 +1,92 @@
+\begin{enumerate}[leftmargin=0cm]
+  \setcounter{enumi}{1}
+  \item
+        \begin{enumerate}
+          \item Determine the Feynman diagrams to evaluate
+                $I = \avg{x_k^2 e^{- \epsilon \sum_\kp x_\kp^6 }}$
+                up to $O(\epsilon)$, their multiplicities, and their contributions to $I$.
+        \end{enumerate}
+\end{enumerate}
+
+The Taylor expansion of $e^{-\epsilon \sum_\kp x_\kp^6}$ is:
+\begin{equation*}
+  e^{-\epsilon \sum_\kp x_\kp^6}
+  = \sum_{n=0}^{\infty} \frac{1}{n\fact} \left( -\epsilon \sum_\kp x_\kp^6 \right)^n
+  = 1 - \epsilon \sum_\kp x_\kp^6 + O(\epsilon^2)
+\end{equation*}
+Hereafter $=\cdots + O(\epsilon^2)$ will be written as $\approx\cdots$.
+Hence $I$ is:
+\begin{equation*}
+  I \approx \avg{x_k^2 \left(1 - \epsilon \sum_\kp x_\kp^6 \right)} \approx
+  \avg{x_k^2} - \epsilon \avg{x_k^2 \sum_\kp x_\kp^6} \approx \avg{x_k^2} -
+  \epsilon \sum_\kp \avg{x_k^2 x_\kp^6}
+\end{equation*}
+We have that, for an average $\avg{x_k^p x_\kp^\pp}$, a Feynman diagram with $m$
+connections between $k$ and $\kp$ has multiplicity:
+\begin{equation}{}
+  \label{eq:2a-multiplicity}
+  {p \choose m} {\pp \choose m} m\fact (p - m - 1)\doublefact (\pp - m - 1)\doublefact
+\end{equation}
+There are two Feynman diagrams for $\avg{x_k^2 x_\kp^6}$ (figures~\ref{fig:2a1}
+and \ref{fig:2a2}).
+By equation~\ref{eq:2a-multiplicity}, the multiplicities of the two diagrams are
+respectively:
+\begin{align*}{}
+  {2 \choose 0} {6 \choose 0} 0\fact (2 - 0 - 1)\doublefact (6 - 0 - 1)\doublefact & = 15
+  \\[2ex]
+  {2 \choose 2} {6 \choose 2} 2\fact (2 - 2 - 1)\doublefact (6 - 2 - 1)\doublefact & = 90
+\end{align*}
+The sum of the multiplicities is $7\doublefact = 105$, as expected.
+Hence $I$ is:
+\begin{equation*}
+  I \approx
+  \matr{A}^{-1}_{kk} - \epsilon \left(
+  15 \left(\matr{A}^{-1}_{kk}\right) \left(\matr{A}^{-1}_{\kp\kp}\right)^3 +
+  90 \left(\matr{A}^{-1}_{k\kp}\right)^2 \left(\matr{A}^{-1}_{\kp\kp}\right)^2
+  \right)
+\end{equation*}
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \begin{feynman}
+      \vertex (k);
+      \vertex [right=1in of k] (kp);
+      \diagram* {
+      (k)  --[loop, out=045, in=135, min distance=1.5cm] k,
+      (kp) --[loop, out=000, in=060, min distance=1.5cm] kp,
+      (kp) --[loop, out=120, in=180, min distance=1.5cm] kp,
+      (kp) --[loop, out=240, in=300, min distance=1.5cm] kp,
+      };
+      \node[circle, fill=black, inner sep=1pt] at (k);
+      \node[circle, fill=black, inner sep=1pt] at (kp);
+      \node[below] at (k) {$k$};
+      \node[below right=0cm and 0.5cm] at (kp) {$\kp$};
+    \end{feynman}
+  \end{tikzpicture}
+  \caption{Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution
+    $15 \left(\matr{A}^{-1}_{kk}\right) \left(\matr{A}^{-1}_{\kp\kp}\right)^3$.}
+  \label{fig:2a1}
+\end{figure}
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \begin{feynman}
+      \vertex (k);
+      \vertex [right=1in of k] (kp);
+      \diagram* {
+      (k)  --[quarter left] (kp),
+      (k)  --[quarter right] (kp),
+      (kp) --[loop, out=015, in=075, min distance=1.5cm] kp,
+      (kp) --[loop, out=285, in=345, min distance=1.5cm] kp,
+      };
+      \node[circle, fill=black, inner sep=1pt] at (k);
+      \node[circle, fill=black, inner sep=1pt] at (kp);
+      \node[left=0cm] at (k) {$k$};
+      \node[right=0.5cm] at (kp) {$\kp$};
+    \end{feynman}
+  \end{tikzpicture}
+  \caption{Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution
+    $90 \left(\matr{A}^{-1}_{k\kp}\right)^2 \left(\matr{A}^{-1}_{\kp\kp}\right)^2$.}
+  \label{fig:2a2}
+\end{figure}
