@@ -2,9 +2,10 @@
   \setcounter{enumi}{1}
   \item
         \begin{enumerate}
-          \item Determine the Feynman diagrams to evaluate
-                $I = \avg{x_k^2 e^{- \epsilon \sum_\kp x_\kp^6 }}$
-                up to $O(\epsilon)$, their multiplicities, and their contributions to $I$.
+          \item \label{2a}
+                Determine the Feynman diagrams to evaluate $I = \avg{x_k^2 e^{- \epsilon
+                        \sum_\kp x_\kp^6 }}$ up to $O(\epsilon)$, their multiplicities, and their
+                contributions to $I$.
         \end{enumerate}
 \end{enumerate}
 
@@ -22,7 +23,7 @@ Hence $I$ is:
   \epsilon \sum_\kp \avg{x_k^2 x_\kp^6}
 \end{equation*}
 We have that, for an average $\avg{x_k^p x_\kp^\pp}$, a Feynman diagram with $m$
-connections between $k$ and $\kp$ has multiplicity:
+connections between $p$ $k$ and $\pp$ $\kp$ vertices has multiplicity:
 \begin{equation}{}
   \label{eq:2a-multiplicity}
   {p \choose m} {\pp \choose m} m\fact (p - m - 1)\doublefact (\pp - m - 1)\doublefact
@@ -46,17 +47,17 @@ Hence $I$ is:
   \right)
 \end{equation*}
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
       \vertex (k);
       \vertex [right=1in of k] (kp);
       \diagram* {
-      (k)  --[loop, out=045, in=135, min distance=1.5cm] k,
-      (kp) --[loop, out=000, in=060, min distance=1.5cm] kp,
-      (kp) --[loop, out=120, in=180, min distance=1.5cm] kp,
-      (kp) --[loop, out=240, in=300, min distance=1.5cm] kp,
+      (k)  --[loop, out=045, in=135, min distance=1cm] k,
+      (kp) --[loop, out=000, in=060, min distance=1cm] kp,
+      (kp) --[loop, out=120, in=180, min distance=1cm] kp,
+      (kp) --[loop, out=240, in=300, min distance=1cm] kp,
       };
       \node[circle, fill=black, inner sep=1pt] at (k);
       \node[circle, fill=black, inner sep=1pt] at (kp);
@@ -64,11 +65,13 @@ Hence $I$ is:
       \node[below right=0cm and 0.5cm] at (kp) {$\kp$};
     \end{feynman}
   \end{tikzpicture}
-  \caption{Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution
-    $15 \left(\matr{A}^{-1}_{kk}\right) \left(\matr{A}^{-1}_{\kp\kp}\right)^3$.}
+  \caption{\ref{2a}.
+    Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution $15
+      \left(\matr{A}^{-1}_{kk}\right) \left(\matr{A}^{-1}_{\kp\kp}\right)^3$.
+  }
   \label{fig:2a1}
 \end{figure}
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
@@ -77,8 +80,8 @@ Hence $I$ is:
       \diagram* {
       (k)  --[quarter left] (kp),
       (k)  --[quarter right] (kp),
-      (kp) --[loop, out=015, in=075, min distance=1.5cm] kp,
-      (kp) --[loop, out=285, in=345, min distance=1.5cm] kp,
+      (kp) --[loop, out=015, in=075, min distance=1cm] kp,
+      (kp) --[loop, out=285, in=345, min distance=1cm] kp,
       };
       \node[circle, fill=black, inner sep=1pt] at (k);
       \node[circle, fill=black, inner sep=1pt] at (kp);
@@ -86,7 +89,173 @@ Hence $I$ is:
       \node[right=0.5cm] at (kp) {$\kp$};
     \end{feynman}
   \end{tikzpicture}
-  \caption{Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution
-    $90 \left(\matr{A}^{-1}_{k\kp}\right)^2 \left(\matr{A}^{-1}_{\kp\kp}\right)^2$.}
+  \caption{\ref{2a}.
+    Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution $90
+      \left(\matr{A}^{-1}_{k\kp}\right)^2 \left(\matr{A}^{-1}_{\kp\kp}\right)^2$.
+  }
   \label{fig:2a2}
 \end{figure}
+
+\begin{enumerate}[leftmargin=0cm]
+  \setcounter{enumi}{1}
+  \item
+        \begin{enumerate}
+          \setcounter{enumii}{1}
+          \item \label{2b}
+                Given the average $J = \avg{x_k^2 x_\kp^2 e^{- \epsilon \sum_\kpp x_\kpp^6 }}$,
+                determine the multiplicities of the Feynman diagrams in figures~\ref{fig:2b1},
+                \ref{fig:2b2} and \ref{fig:2b3}.
+        \end{enumerate}
+\end{enumerate}
+
+For $m = p = \pp$, equation~\ref{eq:2a-multiplicity} reduces to $m\fact$;
+hence, the diagram in figure~\ref{fig:2b1} has multiplicity $2\fact = 2$.
+There are $(6 - 1)\doublefact = 15$ ways to choose pairs of the $6$ $\kpp$
+vertices; hence, the diagram in figure~\ref{fig:2b2} has multiplicity $2 \times
+  15 = 30$.
+In the diagram in figure~\ref{fig:2b3}, there are ${6 \choose 2}$ ways to
+choose pairs of the $2$ $k$ and $6$ $\kpp$ vertices, ${4 \choose 2}$ ways to
+choose pairs of the $2$ $\kp$ and remaining $4$ $\kpp$ vertices, and
+$2\doublefact$ ways to choose pairs of the remaining $2$ $\kpp$ vertices.
+Hence, it has multiplicity ${6 \choose 2} {4 \choose 2} 2\doublefact = 180$.
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \begin{feynman}
+      \vertex (k);
+      \vertex [right=1in of k] (kp);
+      \diagram* {
+      (k)  --[quarter left] (kp),
+      (k)  --[quarter right] (kp),
+      };
+      \node[circle, fill=black, inner sep=1pt] at (k);
+      \node[circle, fill=black, inner sep=1pt] at (kp);
+      \node[left=0cm] at (k) {$k$};
+      \node[right=0cm] at (kp) {$\kp$};
+    \end{feynman}
+  \end{tikzpicture}
+  \caption{\ref{2b}.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2}$ with multiplicity $2$.
+  }
+  \label{fig:2b1}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \begin{feynman}
+      \vertex (k);
+      \vertex [right=0.75in of k] (kp);
+      \vertex [right=0.75in of kp] (kpp);
+      \diagram* {
+      (k)  --[quarter left] (kp),
+      (k)  --[quarter right] (kp),
+      (kpp) --[loop, out=000, in=060, min distance=1cm] kpp,
+      (kpp) --[loop, out=120, in=180, min distance=1cm] kpp,
+      (kpp) --[loop, out=240, in=300, min distance=1cm] kpp,
+      };
+      \node[circle, fill=black, inner sep=1pt] at (k);
+      \node[circle, fill=black, inner sep=1pt] at (kp);
+      \node[circle, fill=black, inner sep=1pt] at (kpp);
+      \node[left=0cm] at (k) {$k$};
+      \node[right=0cm] at (kp) {$\kp$};
+      \node[below right=0cm and 0.5cm] at (kpp) {$\kpp$};
+    \end{feynman}
+  \end{tikzpicture}
+  \caption{\ref{2b}.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ with multiplicity $15$.
+  }
+  \label{fig:2b2}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \begin{feynman}
+      \vertex (k);
+      \vertex [below right=0.25in and 0.25in of k] (kpp);
+      \vertex [below left=0.25in and 0.25in of kpp] (kp);
+      \diagram* {
+      (k)  --[quarter left] (kpp),
+      (k)  --[quarter right] (kpp),
+      (kp) --[quarter left] (kpp),
+      (kp) --[quarter right] (kpp),
+      (kpp) --[loop, out=-30, in=030, min distance=1cm] kpp,
+      };
+      \node[circle, fill=black, inner sep=1pt] at (k);
+      \node[circle, fill=black, inner sep=1pt] at (kp);
+      \node[circle, fill=black, inner sep=1pt] at (kpp);
+      \node[above left] at (k) {$k$};
+      \node[below left] at (kp) {$\kp$};
+      \node[below right=0.25cm and 0.25cm] at (kpp) {$\kpp$};
+    \end{feynman}
+  \end{tikzpicture}
+  \caption{\ref{2b}.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ with multiplicity $90$.
+  }
+  \label{fig:2b3}
+\end{figure}
+
+\begin{enumerate}[leftmargin=0cm]
+  \setcounter{enumi}{1}
+  \item
+        \begin{enumerate}
+          \setcounter{enumii}{2}
+          \item \label{2c}
+                Find a Feynman diagram other than those in figures~\ref{fig:2b1},
+                \ref{fig:2b2}, and \ref{fig:2b3} for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ in which
+                the two legs of $\kp$ are not connected to each other.
+        \end{enumerate}
+\end{enumerate}
+
+See figure~\ref{fig:2c}.
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \begin{feynman}
+      \vertex (k);
+      \vertex [below right=0.25in and 0.25in of k] (kpp);
+      \vertex [below left=0.25in and 0.25in of kpp] (kp);
+      \diagram* {
+      (k)  -- (kpp),
+      (kp) -- (kpp),
+      (kpp) --[loop, out=285, in=345, min distance=1cm] kpp,
+      (kpp) --[loop, out=015, in=075, min distance=1cm] kpp,
+      };
+      \node[circle, fill=black, inner sep=1pt] at (k);
+      \node[circle, fill=black, inner sep=1pt] at (kp);
+      \node[circle, fill=black, inner sep=1pt] at (kpp);
+      \node[above left] at (k) {$k$};
+      \node[below left] at (kp) {$\kp$};
+      \node[right=0.5cm] at (kpp) {$\kpp$};
+    \end{feynman}
+  \end{tikzpicture}
+  \caption{\ref{2c}.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$.
+  }
+  \label{fig:2c}
+\end{figure}
+
+\begin{enumerate}[leftmargin=0cm]
+  \setcounter{enumi}{1}
+  \item
+        \begin{enumerate}
+          \setcounter{enumii}{3}
+          \item \label{2d}
+                Given the average $\tilde{J} = \avg{x_k^2 x_\kp^2 e^{- \epsilon \sum_\kpp
+                        x_\kpp^m }}$, determine the multiplicities of the Feynman diagrams analogous to
+                those in figures~\ref{fig:2b1}, \ref{fig:2b2} and \ref{fig:2b3}.
+        \end{enumerate}
+\end{enumerate}
+
+The diagram in figure~\ref{fig:2b1} does not change and has multiplicity $2$.
+There are $(m - 1)\doublefact$ ways to choose pairs of $m$ $\kpp$ vertices;
+hence, the diagram analogous to figure~\ref{fig:2b2} has multiplicity $2 (m -
+  1)\doublefact$.
+In the diagram analogous to figure~\ref{fig:2b3}, there are ${m \choose 2}$
+ways to choose pairs of the $2$ $k$ and $m$ $\kpp$ vertices, ${m - 2 \choose
+      2}$ ways to choose pairs of the $2$ $\kp$ and remaining $m - 2$ $\kpp$
+vertices, and $(m - 4)\doublefact$ ways to choose pairs of the remaining $m -
+  4$ $\kpp$ vertices.
+Hence, it has multiplicity ${m \choose 2} {m - 2 \choose 2} (m -
+  4)\doublefact$.
