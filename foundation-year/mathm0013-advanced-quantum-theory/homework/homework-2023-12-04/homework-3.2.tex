@@ -26,28 +26,28 @@ We have that, for an average $\avg{x_k^p x_\kp^\pp}$, a Feynman diagram with $m$
 connections between $p$ $k$ and $\pp$ $\kp$ vertices has multiplicity:
 \begin{equation}{}
   \label{eq:2a-multiplicity}
-  {p \choose m} {\pp \choose m} m\fact (p - m - 1)\doublefact (\pp - m - 1)\doublefact
+  \binom{p}{m} \binom{\pp}{m} m\fact (p - m - 1)\doublefact (\pp - m - 1)\doublefact
 \end{equation}
 There are two Feynman diagrams for $\avg{x_k^2 x_\kp^6}$ (figures~\ref{fig:2a1}
 and \ref{fig:2a2}).
 By equation~\ref{eq:2a-multiplicity}, the multiplicities of the two diagrams are
 respectively:
 \begin{align*}{}
-  {2 \choose 0} {6 \choose 0} 0\fact (2 - 0 - 1)\doublefact (6 - 0 - 1)\doublefact & = 15
+  \binom{2}{0} \binom{6}{0} 0\fact (2 - 0 - 1)\doublefact (6 - 0 - 1)\doublefact & = 15
   \\[2ex]
-  {2 \choose 2} {6 \choose 2} 2\fact (2 - 2 - 1)\doublefact (6 - 2 - 1)\doublefact & = 90
+  \binom{2}{2} \binom{6}{2} 2\fact (2 - 2 - 1)\doublefact (6 - 2 - 1)\doublefact & = 90
 \end{align*}
 The sum of the multiplicities is $7\doublefact = 105$, as expected.
 Hence $I$ is:
 \begin{equation*}
   I \approx
-  \matr{A}^{-1}_{kk} - \epsilon \left(
-  15 \left(\matr{A}^{-1}_{kk}\right) \left(\matr{A}^{-1}_{\kp\kp}\right)^3 +
-  90 \left(\matr{A}^{-1}_{k\kp}\right)^2 \left(\matr{A}^{-1}_{\kp\kp}\right)^2
+  (\matr{A}^{-1})_{kk} - \epsilon \left(
+  15 (\matr{A}^{-1})_{kk} \left((\matr{A}^{-1})_{\kp\kp}\right)^3 +
+  90 \left((\matr{A}^{-1})_{k\kp}\right)^2 \left((\matr{A}^{-1})_{\kp\kp}\right)^2
   \right)
 \end{equation*}
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
@@ -66,12 +66,12 @@ Hence $I$ is:
     \end{feynman}
   \end{tikzpicture}
   \caption{\ref{2a}.
-    Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution $15
-      \left(\matr{A}^{-1}_{kk}\right) \left(\matr{A}^{-1}_{\kp\kp}\right)^3$.
+    Feynman diagram for $\avg{x_k^2 x_\kp^6}$ of contribution $15
+      (\matr{A}^{-1})_{kk} \left((\matr{A}^{-1})_{\kp\kp}\right)^3$.
   }
   \label{fig:2a1}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
@@ -90,8 +90,8 @@ Hence $I$ is:
     \end{feynman}
   \end{tikzpicture}
   \caption{\ref{2a}.
-    Feynman diagram for $\avg{x_k^2 x_\kp^6}$ with contribution $90
-      \left(\matr{A}^{-1}_{k\kp}\right)^2 \left(\matr{A}^{-1}_{\kp\kp}\right)^2$.
+    Feynman diagram for $\avg{x_k^2 x_\kp^6}$ of contribution $90
+      \left((\matr{A}^{-1})_{k\kp}\right)^2 \left((\matr{A}^{-1})_{\kp\kp}\right)^2$.
   }
   \label{fig:2a2}
 \end{figure}
@@ -113,13 +113,13 @@ hence, the diagram in figure~\ref{fig:2b1} has multiplicity $2\fact = 2$.
 There are $(6 - 1)\doublefact = 15$ ways to choose pairs of the $6$ $\kpp$
 vertices; hence, the diagram in figure~\ref{fig:2b2} has multiplicity $2 \times
   15 = 30$.
-In the diagram in figure~\ref{fig:2b3}, there are ${6 \choose 2}$ ways to
-choose pairs of the $2$ $k$ and $6$ $\kpp$ vertices, ${4 \choose 2}$ ways to
-choose pairs of the $2$ $\kp$ and remaining $4$ $\kpp$ vertices, and
-$2\doublefact$ ways to choose pairs of the remaining $2$ $\kpp$ vertices.
-Hence, it has multiplicity ${6 \choose 2} {4 \choose 2} 2\doublefact = 180$.
+In the diagram in figure~\ref{fig:2b3}, there are $\binom{6}{2}$ ways to choose
+pairs of the $2$ $k$ and $6$ $\kpp$ vertices, $\binom{4}{2}$ ways to choose
+pairs of the $2$ $\kp$ and remaining $4$ $\kpp$ vertices, and $2\doublefact$
+ways to choose pairs of the remaining $2$ $\kpp$ vertices.
+Hence, it has multiplicity $\binom{6}{2} \binom{4}{2} 2\doublefact = 180$.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
@@ -136,11 +136,11 @@ Hence, it has multiplicity ${6 \choose 2} {4 \choose 2} 2\doublefact = 180$.
     \end{feynman}
   \end{tikzpicture}
   \caption{\ref{2b}.
-    Feynman diagram for $\avg{x_k^2 x_\kp^2}$ with multiplicity $2$.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2}$ of multiplicity $2$.
   }
   \label{fig:2b1}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
@@ -163,11 +163,11 @@ Hence, it has multiplicity ${6 \choose 2} {4 \choose 2} 2\doublefact = 180$.
     \end{feynman}
   \end{tikzpicture}
   \caption{\ref{2b}.
-    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ with multiplicity $15$.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ of multiplicity $30$.
   }
   \label{fig:2b2}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
@@ -190,7 +190,7 @@ Hence, it has multiplicity ${6 \choose 2} {4 \choose 2} 2\doublefact = 180$.
     \end{feynman}
   \end{tikzpicture}
   \caption{\ref{2b}.
-    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ with multiplicity $90$.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ of multiplicity $180$.
   }
   \label{fig:2b3}
 \end{figure}
@@ -207,9 +207,9 @@ Hence, it has multiplicity ${6 \choose 2} {4 \choose 2} 2\doublefact = 180$.
         \end{enumerate}
 \end{enumerate}
 
-See figure~\ref{fig:2c}.
+Figure~\ref{fig:2c} is such a Feynman diagram.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
     \begin{feynman}
@@ -217,8 +217,9 @@ See figure~\ref{fig:2c}.
       \vertex [below right=0.25in and 0.25in of k] (kpp);
       \vertex [below left=0.25in and 0.25in of kpp] (kp);
       \diagram* {
-      (k)  -- (kpp),
-      (kp) -- (kpp),
+      (k)   --[quarter right] (kp),
+      (k)   --[quarter left] (kpp),
+      (kp)  --[quarter right] (kpp),
       (kpp) --[loop, out=285, in=345, min distance=1cm] kpp,
       (kpp) --[loop, out=015, in=075, min distance=1cm] kpp,
       };
@@ -252,10 +253,9 @@ The diagram in figure~\ref{fig:2b1} does not change and has multiplicity $2$.
 There are $(m - 1)\doublefact$ ways to choose pairs of $m$ $\kpp$ vertices;
 hence, the diagram analogous to figure~\ref{fig:2b2} has multiplicity $2 (m -
   1)\doublefact$.
-In the diagram analogous to figure~\ref{fig:2b3}, there are ${m \choose 2}$
-ways to choose pairs of the $2$ $k$ and $m$ $\kpp$ vertices, ${m - 2 \choose
-      2}$ ways to choose pairs of the $2$ $\kp$ and remaining $m - 2$ $\kpp$
-vertices, and $(m - 4)\doublefact$ ways to choose pairs of the remaining $m -
-  4$ $\kpp$ vertices.
-Hence, it has multiplicity ${m \choose 2} {m - 2 \choose 2} (m -
-  4)\doublefact$.
+In the diagram analogous to figure~\ref{fig:2b3}, there are $\binom{m}{2}$ ways
+to choose pairs of the $2$ $k$ and $m$ $\kpp$ vertices, $\binom{m - 2}{2}$ ways
+to choose pairs of the $2$ $\kp$ and remaining $(m - 2)$ $\kpp$ vertices, and
+$(m - 4)\doublefact$ ways to choose pairs of the remaining $(m - 4)$ $\kpp$
+vertices.
+Hence, it has multiplicity $\binom{m}{2} \binom{m - 2}{2} (m - 4)\doublefact$.
