@@ -7,18 +7,26 @@
 \newcommand{\half}{\frac{1}{2}}
 \newcommand{\ihbar}{\frac{i}{\hbar}}
 
+% Primes
+\newcommand{\kp}{{k^\prime}}
+\newcommand{\kpp}{{k^{\prime\prime}}}
+\newcommand{\pp}{{p^{\prime}}}
+\newcommand{\tp}{{t^{\prime}}}
+\newcommand{\tpp}{{t^{\prime\prime}}}
+
 % Linear algebra
 \newcommand{\matr}[1]{{#1}}
 \newcommand{\norm}[1]{\lVert{#1}\rVert}
-
-% Variables
-\newcommand{\tp}{t^\prime}
+\newcommand{\transpose}[1]{{#1}^{\,\mathsf{T}}}
+\DeclareMathOperator{\adj}{\text{adj}}
 
 % Integration measures
 \renewcommand{\d}[1][]{\text{d}{#1}}
 \newcommand{\dt}{\d{t}}
 \newcommand{\dtp}{\d{\tp}}
 \newcommand{\dx}{\d{x}}
+\newcommand{\dy}{\d{y}}
+\newcommand{\dz}{\d{z}}
 \newcommand{\dnr}[2]{\text{d}^{#1}r_{#2}}
 \newcommand{\dnp}[2]{\text{d}^{#1}p_{#2}}
 
@@ -46,4 +54,7 @@
 \newcommand{\propone}{K(x_f, x_0, t)}
 \newcommand{\propn}{K(\vec{r}_f, \vec{r}_0, t)}
 
-% Theorem environments
+% Perturbation theory
+\newcommand{\avg}[1]{\left\langle{#1}\right\rangle}
+\newcommand{\fact}{{!}}
+\newcommand{\doublefact}{{!!}}

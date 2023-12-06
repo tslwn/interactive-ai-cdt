@@ -1,0 +1,153 @@
+\subsection{Wick's theorem}
+
+Use Wick's theorem to evaluate the following integrals.
+
+\begin{enumerate}[(a)]
+  \item $\int (x + y + z)^2 e^{-10x^2 - y^2 - 6xy - 2z^2} \dx\,\dy\,\dz$
+\end{enumerate}
+
+We have that:
+\begin{align}
+  c
+   & =
+  \int_{\R_n} \exp\left(-\frac{1}{2} \transpose{\vec{x}} \matr{A} \vec{x}\right) \dx^n =
+  \left(\frac{(2\pi)^n}{\det\matr{A}}\right)^{1/2}
+  \\[2ex]
+  \avg{\cdots}
+   & =
+  \frac{1}{c} \int_{\R_n} \exp\left(-\frac{1}{2} \transpose{\vec{x}} \matr{A} \vec{x}\right) \cdots\,\dx^n
+  \\[2ex]
+  \avg{x_k x_\kp}
+   & =
+  (A^{-1})_{k \kp}
+\end{align}
+
+The exponent is:
+\begin{align*}
+  -10x^2 - y^2 - 6xy - 2z^2
+   & =
+  -\frac{1}{2}(20x^2 + 2y^2 + 12xy + 4z^2)
+  \\
+   & =
+  -\frac{1}{2}
+  \begin{bmatrix}
+    x & y & z
+  \end{bmatrix}
+  \begin{bmatrix}
+    20 & 6 & 0
+    \\
+    6  & 2 & 0
+    \\
+    0  & 0 & 4
+  \end{bmatrix}
+  \begin{bmatrix}
+    x
+    \\
+    y
+    \\
+    z
+  \end{bmatrix}
+  \\
+   & =
+  -\frac{1}{2} \transpose{\vec{x}} \matr{A} \vec{x}
+  \quad\text{where}\quad
+  \vec{x} =
+  \begin{bmatrix}
+    x
+    \\
+    y
+    \\
+    z
+  \end{bmatrix}
+  ,\quad
+  \matr{A} =
+  \begin{bmatrix}
+    20 & 6 & 0
+    \\
+    6  & 2 & 0
+    \\
+    0  & 0 & 4
+  \end{bmatrix}
+\end{align*}
+
+Hence, with $\vec{x}$ and $\matr{A}$ as above, the integral is:
+\begin{align}
+   & \int_{\R^3} (x + y + z)^2 e^{-10x^2 - y^2 - 6xy - 2z^2} \dx\,\dy\,\dz
+  \nonumber
+  \\
+   & \qquad =
+  \frac{1}{c}\avg{(x + y + z)^2}
+  \nonumber
+  \\
+   & \qquad =
+  \frac{1}{c}\avg{x^2 + y^2 + z^2 + 2xy + 2xz + 2yz}
+  \nonumber
+  \\
+   & \qquad =
+  \frac{1}{c}\left(\avg{x^2} + \avg{y^2} + \avg{z^2} + 2\avg{xy} + 2\avg{xz} + 2\avg{yz}\right)
+  \nonumber
+  \\
+   & \qquad =
+  \frac{1}{c}\left((A^{-1})_{11} + (A^{-1})_{22} + (A^{-1})_{33} + 2(A^{-1})_{12} + 2(A^{-1})_{13} + 2(A^{-1})_{23}\right)
+\end{align}
+
+We also have that:
+\begin{equation}
+  \matr{A}^{-1} = \frac{1}{\det\matr{A}}\adj\matr{A}
+\end{equation}
+\begin{align*}
+  \det\matr{A}
+    & =
+  20 (2 \times 4 - 0 \times 0) - 6 (6 \times 4 - 0 \times 0) + 0 (6 \times 0 - 2 \times 0)
+  \\[2ex]
+    & = 160 - 144 + 0 = 16
+  \\[2ex]
+  \adj\matr{A}
+    & =
+  \begin{bmatrix}
+    2 \times 4 - 0 \times 0    & -(6 \times 4 - 0 \times 0)  & 6 \times 0 - 2 \times 0
+    \\
+    -(6 \times 4 - 0 \times 0) & 20 \times 4 - 0 \times 0    & -(20 \times 0 - 6 \times 0)
+    \\
+    6 \times 0 - 2 \times 0    & -(20 \times 0 - 6 \times 0) & 20 \times 2 - 6 \times 6
+  \end{bmatrix}
+  \\[2ex]
+    & =
+  \begin{bmatrix}
+    8   & -24 & 0
+    \\
+    -24 & 80  & 0
+    \\
+    0   & 0   & 4
+  \end{bmatrix}
+  \\[2ex]
+  \matr{A}^{-1}
+    & = \frac{1}{16}
+  \begin{bmatrix}
+    8   & -24 & 0
+    \\
+    -24 & 80  & 0
+    \\
+    0   & 0   & 4
+  \end{bmatrix}
+  = \frac{1}{4}
+  \begin{bmatrix}
+    2  & -6 & 0
+    \\
+    -6 & 20 & 0
+    \\
+    0  & 0  & 1
+  \end{bmatrix}
+  \\[2ex]
+  c & =
+  \left(\frac{(2\pi)^3}{16}\right)^{1/2} = \sqrt{\frac{\pi^3}{2}}
+\end{align*}
+Finally, the integral is:
+\begin{align*}
+   & \int_{\R^3} (x + y + z)^2 e^{-10x^2 - y^2 - 6xy - 2z^2} \dx\,\dy\,\dz
+  \\[2ex]
+   & \qquad =
+  \frac{1}{2 \sqrt{2\pi^3}} \left(2 + 20 + 1 + 2(-6) + 2(0) + 2(0)\right)
+  =
+  \frac{11}{2 \sqrt{2\pi^3}}
+\end{align*}
