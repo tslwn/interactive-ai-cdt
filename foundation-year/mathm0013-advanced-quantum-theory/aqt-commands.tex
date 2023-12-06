@@ -24,6 +24,7 @@
 \renewcommand{\d}[1][]{\text{d}{#1}}
 \newcommand{\dt}{\d{t}}
 \newcommand{\dtp}{\d{\tp}}
+\newcommand{\dtpp}{\d{\tpp}}
 \newcommand{\dx}{\d{x}}
 \newcommand{\dy}{\d{y}}
 \newcommand{\dz}{\d{z}}
@@ -51,8 +52,8 @@
 \newcommand{\braket}[2]{\langle\,#1\,\vert\,#2\,\rangle}
 
 % Propagators
-\newcommand{\propone}{K(x_f, x_0, t)}
-\newcommand{\propn}{K(\vec{r}_f, \vec{r}_0, t)}
+\newcommand{\propone}[1][]{K_{\text{#1}}(x_f, x_0, t)}
+\newcommand{\propn}[1][]{K_{\text{#1}}(\vec{r}_f, \vec{r}_0, t)}
 
 % Perturbation theory
 \newcommand{\avg}[1]{\left\langle{#1}\right\rangle}

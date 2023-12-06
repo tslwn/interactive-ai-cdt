@@ -1,7 +1,7 @@
 \subsection{Feynman diagrams}
 
 Use perturbation theory to evaluate the following expressions in terms of
-integrals over products of factors $iG(\tp, \tpp)$ and draw the corresponding
+integrals over products of factors $iG(\tp, \tpp)$, and draw the corresponding
 Feynman diagrams.
 
 \begin{enumerate}[(a)]
@@ -23,18 +23,9 @@ Hence:
    & \approx
   \avg{x(t_1) x(t_2)} - \epsilon\ihbar\int_0^t \avg{x(t_1) x(t_2) x(\tp)^6} \dtp
 \end{align*}
-There is one Feynman diagram for $\avg{x(t_1) x(t_2)}$ (figure~\ref{fig:37b1})
-and two Feynman diagrams for $\avg{x(t_1) x(t_2) x(\tp)^6}$
-(figures~\ref{fig:37b2} and \ref{fig:37b3}).
-The diagram in figure~\ref{fig:37b1} has multiplicity $1$.
-There are $(6 - 1)\doublefact$ ways to choose pairs of the $6$ $\tp$ vertices;
-hence, the diagram in figure~\ref{fig:37b2} has multiplicity $15$.
-In the diagram in figure~\ref{fig:37b3}, there are $\binom{6}{1}$ ways to
-choose a pair of the $1$ $t_1$ and $6$ $\tp$ vertices, $\binom{5}{1}$ ways to
-choose a pair of the $1$ $t_2$ and remaining $5$ $\tp$ vertices, and $(4 -
-  1)\doublefact$ ways to choose pairs of the remaining $4$ $\tp$ vertices.
-Hence, it has multiplicity $6 \times 5 \times 3 = 90$.
 
+There is one Feynman diagram for $\avg{x(t_1) x(t_2)}$ (figure~\ref{fig:37b1}),
+which has multiplicity $1$.
 \begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
@@ -50,9 +41,23 @@ Hence, it has multiplicity $6 \times 5 \times 3 = 90$.
       \node[below] at (t2) {$t_2$};
     \end{feynman}
   \end{tikzpicture}
-  \caption{Feynman diagram for $\avg{x(t_1) x(t_2)}$ of contribution \dots}
+  \caption{Feynman diagram for $\avg{x(t_1) x(t_2)}$ of multiplicity $1$.}
   \label{fig:37b1}
 \end{figure}
+
+There are two Feynman diagrams for $\avg{x(t_1) x(t_2) x(\tp)^6}$
+(figures~\ref{fig:37b2} and \ref{fig:37b3}).
+In the diagram in figure~\ref{fig:37b2}, there are $(6 - 1)\doublefact = 15$
+ways to choose pairs of the $6$ legs of the $\tp$ vertex; hence, the diagram in
+figure~\ref{fig:37b2} has multiplicity $15$.
+In the diagram in figure~\ref{fig:37b3}, there are $\binom{6}{1} = 6$ ways to
+choose a pair of the leg of the $t_1$ vertex and $6$ legs of the $\tp$ vertex,
+$\binom{5}{1} = 5$ ways to choose a pair of the leg of the $t_2$ vertex and
+remaining $5$ legs of the $\tp$ vertex, and $(4 - 1)\doublefact = 3$ ways to
+choose pairs of the remaining $4$ legs of the $\tp$ vertex.
+Hence, it has multiplicity $6 \times 5 \times 3 = 90$.
+The sum of the multiplicities of the diagrams for $\avg{x(t_1) x(t_2)
+    x(\tp)^6}$ is $7\doublefact = 105$, as expected.
 
 \begin{figure}[ht!]
   \centering
@@ -75,10 +80,9 @@ Hence, it has multiplicity $6 \times 5 \times 3 = 90$.
       \node[below right=0cm and 0.5cm] at (tp) {$\tp$};
     \end{feynman}
   \end{tikzpicture}
-  \caption{Feynman diagram for $\avg{x(t_1) x(t_2) x(\tp)^6}$ of contribution \dots}
+  \caption{Feynman diagram for $\avg{x(t_1) x(t_2) x(\tp)^6}$ of multiplicity $15$.}
   \label{fig:37b2}
 \end{figure}
-
 \begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
@@ -100,7 +104,7 @@ Hence, it has multiplicity $6 \times 5 \times 3 = 90$.
       \node[below right=0cm and 0.5cm] at (tp) {$\tp$};
     \end{feynman}
   \end{tikzpicture}
-  \caption{Feynman diagram for $\avg{x(t_1) x(t_2) x(\tp)^6}$ of contribution \dots}
+  \caption{Feynman diagram for $\avg{x(t_1) x(t_2) x(\tp)^6}$ of multiplicity $90$.}
   \label{fig:37b3}
 \end{figure}
 
@@ -110,7 +114,7 @@ We have that:
   \quad\text{where}\quad
   (A^{-1} x)(\tp) = \int_0^t G(\tp, \tpp) x(\tpp) \dtp
 \end{equation}
-Hence:
+Hence, the expression is:
 \begin{align*}
    & \avg{x(t_1) x(t_2) \exp\left(-\epsilon\ihbar\int_0^t x(\tp)^6 \dtp \right)}
   \\[2ex]
