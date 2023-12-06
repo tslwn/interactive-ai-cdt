@@ -113,11 +113,11 @@ hence, the diagram in figure~\ref{fig:2b1} has multiplicity $2\fact = 2$.
 There are $(6 - 1)\doublefact = 15$ ways to choose pairs of the $6$ $\kpp$
 vertices; hence, the diagram in figure~\ref{fig:2b2} has multiplicity $2 \times
   15 = 30$.
-In the diagram in figure~\ref{fig:2b3}, there are $\binom{6}{2}$ ways to choose
-pairs of the $2$ $k$ and $6$ $\kpp$ vertices, $\binom{4}{2}$ ways to choose
-pairs of the $2$ $\kp$ and remaining $4$ $\kpp$ vertices, and $2\doublefact$
-ways to choose pairs of the remaining $2$ $\kpp$ vertices.
-Hence, it has multiplicity $\binom{6}{2} \binom{4} {2} 2\doublefact = 180$.
+In the diagram in figure~\ref{fig:2b3}, there are $\binom{6}{2} = 15$ ways to
+choose pairs of the $2$ $k$ and $6$ $\kpp$ vertices, $\binom{4}{2} = 6$ ways to
+choose pairs of the $2$ $\kp$ and remaining $4$ $\kpp$ vertices, and $(2 -
+  1)\doublefact = 1$ ways to choose pairs of the remaining $2$ $\kpp$ vertices.
+Hence, it has multiplicity $15 \times 6 \times 1 = 90$.
 
 \begin{figure}[ht!]
   \centering
@@ -190,7 +190,7 @@ Hence, it has multiplicity $\binom{6}{2} \binom{4} {2} 2\doublefact = 180$.
     \end{feynman}
   \end{tikzpicture}
   \caption{\ref{2b}.
-    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ of multiplicity $180$.
+    Feynman diagram for $\avg{x_k^2 x_\kp^2 x_\kpp^6}$ of multiplicity $90$.
   }
   \label{fig:2b3}
 \end{figure}
@@ -256,6 +256,6 @@ hence, the diagram analogous to figure~\ref{fig:2b2} has multiplicity $2 (m -
 In the diagram analogous to figure~\ref{fig:2b3}, there are $\binom{m}{2}$ ways
 to choose pairs of the $2$ $k$ and $m$ $\kpp$ vertices, $\binom{m - 2}{2}$ ways
 to choose pairs of the $2$ $\kp$ and remaining $(m - 2)$ $\kpp$ vertices, and
-$(m - 4)\doublefact$ ways to choose pairs of the remaining $(m - 4)$ $\kpp$
+$(m - 4 - 1)\doublefact$ ways to choose pairs of the remaining $(m - 4)$ $\kpp$
 vertices.
-Hence, it has multiplicity $\binom{m}{2} \binom{m - 2}{2} (m - 4)\doublefact$.
+Hence, it has multiplicity $\binom{m}{2} \binom{m - 2}{2} (m - 5)\doublefact$.
