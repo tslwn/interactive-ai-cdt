@@ -23,7 +23,8 @@ Hence $I$ is:
   \epsilon \sum_\kp \avg{x_k^2 x_\kp^6}
 \end{equation*}
 We have that, for an average $\avg{x_k^p x_\kp^\pp}$, a Feynman diagram with $m$
-connections between $p$ $k$ and $\pp$ $\kp$ vertices has multiplicity:
+connections between $p$ legs of a $k$ vertex and $\pp$ legs of a $\kp$ vertex
+has multiplicity:
 \begin{equation}{}
   \label{eq:2a-multiplicity}
   \binom{p}{m} \binom{\pp}{m} m\fact (p - m - 1)\doublefact (\pp - m - 1)\doublefact
@@ -41,7 +42,7 @@ The sum of the multiplicities is $7\doublefact = 105$, as expected.
 Hence $I$ is:
 \begin{equation*}
   I \approx
-  (\matr{A}^{-1})_{kk} - \epsilon \left(
+  (\matr{A}^{-1})_{kk} - \epsilon \sum_\kp \left(
   15 (\matr{A}^{-1})_{kk} \left((\matr{A}^{-1})_{\kp\kp}\right)^3 +
   90 \left((\matr{A}^{-1})_{k\kp}\right)^2 \left((\matr{A}^{-1})_{\kp\kp}\right)^2
   \right)
@@ -110,13 +111,14 @@ Hence $I$ is:
 
 For $m = p = \pp$, equation~\ref{eq:2a-multiplicity} reduces to $m\fact$;
 hence, the diagram in figure~\ref{fig:2b1} has multiplicity $2\fact = 2$.
-There are $(6 - 1)\doublefact = 15$ ways to choose pairs of the $6$ $\kpp$
-vertices; hence, the diagram in figure~\ref{fig:2b2} has multiplicity $2 \times
-  15 = 30$.
+There are $(6 - 1)\doublefact = 15$ ways to choose pairs of the $6$ legs of the
+$\kpp$ vertex; hence, the diagram in figure~\ref{fig:2b2} has multiplicity $2
+  \times 15 = 30$.
 In the diagram in figure~\ref{fig:2b3}, there are $\binom{6}{2} = 15$ ways to
-choose pairs of the $2$ $k$ and $6$ $\kpp$ vertices, $\binom{4}{2} = 6$ ways to
-choose pairs of the $2$ $\kp$ and remaining $4$ $\kpp$ vertices, and $(2 -
-  1)\doublefact = 1$ ways to choose pairs of the remaining $2$ $\kpp$ vertices.
+choose pairs of the $2$ legs of the $k$ vertex and $6$ legs of the $\kpp$
+vertex, $\binom{4}{2} = 6$ ways to choose pairs of the $2$ legs of the $\kp$
+vertex and remaining $4$ legs of the $\kpp$ vertex, and $(2 - 1)\doublefact =
+  1$ ways to choose pairs of the remaining $2$ legs of the $\kpp$ vertex.
 Hence, it has multiplicity $15 \times 6 \times 1 = 90$.
 
 \begin{figure}[ht!]
@@ -250,12 +252,14 @@ Figure~\ref{fig:2c} is such a Feynman diagram.
 \end{enumerate}
 
 The diagram in figure~\ref{fig:2b1} does not change and has multiplicity $2$.
-There are $(m - 1)\doublefact$ ways to choose pairs of $m$ $\kpp$ vertices;
-hence, the diagram analogous to figure~\ref{fig:2b2} has multiplicity $2 (m -
-  1)\doublefact$.
-In the diagram analogous to figure~\ref{fig:2b3}, there are $\binom{m}{2}$ ways
-to choose pairs of the $2$ $k$ and $m$ $\kpp$ vertices, $\binom{m - 2}{2}$ ways
-to choose pairs of the $2$ $\kp$ and remaining $(m - 2)$ $\kpp$ vertices, and
-$(m - 4 - 1)\doublefact$ ways to choose pairs of the remaining $(m - 4)$ $\kpp$
-vertices.
-Hence, it has multiplicity $\binom{m}{2} \binom{m - 2}{2} (m - 5)\doublefact$.
+There are $(m - 1)\doublefact$ ways to choose pairs of the $m$ legs of the
+$\kpp$ vertex; hence, the diagram analogous to figure~\ref{fig:2b2} has
+multiplicity $2 (m - 1)\doublefact$.
+In the diagram analogous to figure~\ref{fig:2b3}, there are $2 \binom{m}{2}$
+ways to choose pairs of the $2$ legs of the $k$ vertex and $m$ legs of the
+$\kpp$ vertex, $2 \binom{m - 2}{2}$ ways to choose pairs of the $2$ legs of the
+$\kp$ vertex and remaining $(m - 2)$ legs of the $\kpp$ vertex, and $(m - 4 -
+  1)\doublefact$ ways to choose pairs of the remaining $(m - 4)$ legs of the
+$\kpp$ vertex.
+Hence, it has multiplicity $4 \binom{m}{2} \binom{m - 2}{2} (m -
+  5)\doublefact$.
