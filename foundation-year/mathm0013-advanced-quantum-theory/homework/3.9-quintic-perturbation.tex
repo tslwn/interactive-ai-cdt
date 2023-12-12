@@ -38,7 +38,7 @@ Hence:
 The term of order $\epsilon$ vanishes because $n$ is odd and hence
 $\avg{x(\tp)^n} = 0$.
 
-There are $n - 2$ Feynman diagrams for $\avg{x(\tp)^n x(\tpp)^n}$.
+There are $\half (n + 1)$ Feynman diagrams for $\avg{x(\tp)^n x(\tpp)^n}$.
 For the example of $n = 5$, there are $3$ diagrams for $m = \{1, 3, 5\}$
 connections between the legs of the $\tp$ and $\tpp$ vertices
 (figure~\ref{fig:39a1}).
@@ -133,19 +133,19 @@ The multiplicities sum to $(10 - 1)\doublefact = 945$, as expected.
   \label{fig:39a1}
 \end{figure}
 
-Generalising to odd integers $n \geq 3$, there are $n - 2$ diagrams for $m =
-  \{1, 3, \dots, n - 2\}$ connections between the legs of the $\tp$ and $\tpp$
-vertices.
+Generalising to odd integers $n \geq 3$, there are $\half (n + 1)$ diagrams
+for\\ $m = \{1, 3, \dots, n-2, n\}$ connections between the legs of the $\tp$
+and $\tpp$ vertices.
 With $m$ connections, there are $m\fact \binom{n}{m}^2$ ways to choose $m$
 pairs of the legs of the $\tp$ and $\tpp$ vertices and $(n - m - 1)\doublefact$
 ways to choose pairs of the remaining legs of each of the $\tp$ and $\tpp$
 vertices.
-Hence, each of the $n - 2$ diagrams with $m$ connections has multiplicity:
+Hence, each of the $\half (n + 1)$ diagrams with $m$ connections has multiplicity:
 \begin{equation*}
   m\fact \left( \binom{n}{m} (n - m - 1)\doublefact \right)^2
 \end{equation*}
 Define $n = 2j + 1$ and $m = 2k + 1$ where $j \in \N$, $k \in \{0, 1, \dots, j
-  - 1\}$.
+  - 1, j\}$.
 The average is:
 \begin{align*}
    & \avg{\exp\left(-\epsilon\ihbar\int_0^t x(\tp)^{2j + 1} \,\dtp \right)}
@@ -156,7 +156,7 @@ The average is:
   \\[3ex]
    & \qquad \approx 1
   - \frac{1}{2}\epsilon^2\frac{1}{\hbar^2}\Biggl(\
-  \sum_{k=0}^{j - 1}
+  \sum_{k=0}^{j}
   (2k + 1)\fact \left( \binom{2j + 1}{2k + 1} \left(2(j - k) - 1\right)\doublefact \right)^2
   \dots
   \\[2ex]
