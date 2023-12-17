@@ -1,0 +1,77 @@
+\subsection{Wavefunction}
+
+Consider a bosonic, spinless system with three single-particle states.
+Write down the normalised wavefunction of the multiple-particle state $\ket{3,
+    0, 1}$ in occupation-number representation.
+
+For bosons, we have that:
+\begin{equation}
+  \psi_{i_1, \dots, i_N}(\vec{r}_i, \dots \vec{r}_N) = C \sum_\pi \psi_{i_{\pi(1)}} (\vec{r}_1) \dots \psi_{i_{\pi(N)}} (\vec{r}_N)
+  ,\
+  C = \frac{1}{\sqrt{N \fact \, \Pi_i n_i \fact \mathstrut}}
+\end{equation}
+For $N = 4$:
+\begin{equation*}
+  C = \frac{1}{\sqrt{4 \fact \, 3 \fact \, 0 \fact \, 1 \fact \mathstrut}} =
+  \frac{1}{12}
+\end{equation*}
+There are $4 \fact = 24$ permutations of the
+indices $i_1, \dots, i_4$.
+Hence:
+\begin{align*}
+   & \psi_{3, 0, 1}(\vec{r}_1, \vec{r}_2, \vec{r}_3, \vec{r}_4)
+  = \frac{1}{12} \sum_\pi
+  \psi_{i_{\pi(1)}} (\vec{r}_1)
+  \psi_{i_{\pi(2)}} (\vec{r}_2)
+  \psi_{i_{\pi(3)}} (\vec{r}_3)
+  \psi_{i_{\pi(4)}} (\vec{r}_4)
+  \\
+   & \qquad = \frac{1}{12} \Bigl(
+  \psi_1(\vec{r}_1) \psi_1(\vec{r}_2) \psi_1(\vec{r}_3) \psi_3(\vec{r}_4) \, + \,
+  \psi_1(\vec{r}_1) \psi_1(\vec{r}_2) \psi_1(\vec{r}_4) \psi_3(\vec{r}_3) \, + \,
+  \\
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_1) \psi_1(\vec{r}_3) \psi_1(\vec{r}_2) \psi_3(\vec{r}_4) \, + \,
+  \psi_1(\vec{r}_1) \psi_1(\vec{r}_3) \psi_1(\vec{r}_4) \psi_3(\vec{r}_2) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_1) \psi_1(\vec{r}_4) \psi_1(\vec{r}_2) \psi_3(\vec{r}_3) \, + \,
+  \psi_1(\vec{r}_1) \psi_1(\vec{r}_4) \psi_1(\vec{r}_3) \psi_3(\vec{r}_2) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_2) \psi_1(\vec{r}_1) \psi_1(\vec{r}_3) \psi_3(\vec{r}_4) \, + \,
+  \psi_1(\vec{r}_2) \psi_1(\vec{r}_1) \psi_1(\vec{r}_4) \psi_3(\vec{r}_3) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_2) \psi_1(\vec{r}_3) \psi_1(\vec{r}_1) \psi_3(\vec{r}_4) \, + \,
+  \psi_1(\vec{r}_2) \psi_1(\vec{r}_3) \psi_1(\vec{r}_4) \psi_3(\vec{r}_1) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_2) \psi_1(\vec{r}_4) \psi_1(\vec{r}_1) \psi_3(\vec{r}_3) \, + \,
+  \psi_1(\vec{r}_2) \psi_1(\vec{r}_4) \psi_1(\vec{r}_3) \psi_3(\vec{r}_1) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_3) \psi_1(\vec{r}_1) \psi_1(\vec{r}_2) \psi_3(\vec{r}_4) \, + \,
+  \psi_1(\vec{r}_3) \psi_1(\vec{r}_1) \psi_1(\vec{r}_4) \psi_3(\vec{r}_2) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_3) \psi_1(\vec{r}_2) \psi_1(\vec{r}_1) \psi_3(\vec{r}_4) \, + \,
+  \psi_1(\vec{r}_3) \psi_1(\vec{r}_2) \psi_1(\vec{r}_4) \psi_3(\vec{r}_1) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_3) \psi_1(\vec{r}_4) \psi_1(\vec{r}_1) \psi_3(\vec{r}_2) \, + \,
+  \psi_1(\vec{r}_3) \psi_1(\vec{r}_4) \psi_1(\vec{r}_2) \psi_3(\vec{r}_1) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_4) \psi_1(\vec{r}_1) \psi_1(\vec{r}_2) \psi_3(\vec{r}_3) \, + \,
+  \psi_1(\vec{r}_4) \psi_1(\vec{r}_1) \psi_1(\vec{r}_3) \psi_3(\vec{r}_2) \, + \,
+  \\[1ex]
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_4) \psi_1(\vec{r}_2) \psi_1(\vec{r}_1) \psi_3(\vec{r}_3) \, + \,
+  \psi_1(\vec{r}_4) \psi_1(\vec{r}_2) \psi_1(\vec{r}_3) \psi_3(\vec{r}_1) \, + \,
+  \\
+   & \qquad\qquad\quad\,
+  \psi_1(\vec{r}_4) \psi_1(\vec{r}_3) \psi_1(\vec{r}_1) \psi_3(\vec{r}_2) \, + \,
+  \psi_1(\vec{r}_4) \psi_1(\vec{r}_3) \psi_1(\vec{r}_2) \psi_3(\vec{r}_1)
+  \Bigr)
+\end{align*}

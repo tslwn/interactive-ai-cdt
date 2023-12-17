@@ -1,0 +1,144 @@
+\newcommand{\opc}[1]{\hat{a}^{\dagger}_{#1}}
+\newcommand{\opa}[1]{\hat{a}_{#1}}
+\newcommand{\opn}[1]{\hat{n}_{#1}}
+
+\subsection{Bose-Hubbard model}
+
+Consider a system with an arbitrary number of indistinguishable bosonic
+particles.
+It has two sites and the Hamiltonian:
+\begin{equation}
+  \hat{H} = - \opc{1}\opa{2} - \opc{2}\opa{1} + \half \sum_i \opn{i}(\opn{i} - 1)
+  ,\
+  \opn{i} = \opc{i}\opa{i}
+\end{equation}
+
+\begin{enumerate}[(a)]
+  \setcounter{enumi}{0}
+  \item Show that applying $\hat{H}$ to a state does not change its particle
+        number.
+\end{enumerate}
+
+Heuristically, each term in the Hamiltonian contains an equal number of
+creation and annihilation operators.
+Apply $\hat{H}$ to a state $\ket{n_1, n_2}$ in occupation-number representation:
+\begin{align*}
+  \hat{H}
+   & = \left(
+  - \opc{1}\opa{2}
+  - \opc{2}\opa{1}
+  + \half \sum_i \opn{i}(\opn{i} - 1)
+  \right) \ket{n_1, n_2}
+  \\
+   & =
+  - \opc{1}\opa{2}\ket{n_1, n_2}
+  - \opc{2}\opa{1}\ket{n_1, n_2}
+  + \left( \half \sum_i \opn{i}(\opn{i} - 1) \right) \ket{n_1, n_2}
+\end{align*}
+The three terms are:
+\begin{align*}
+  - \opc{1}\opa{2}\ket{n_1, n_2}
+   & =
+  - \sqrt{n_2}\ \opc{1}\ket{n_1, n_2 - 1}
+  \\
+   & =
+  - \sqrt{n_1 + 1}\ \sqrt{n_2}\ \ket{n_1 + 1, n_2 - 1}
+  \\[3ex]
+  - \opc{2}\opa{1}\ket{n_1, n_2}
+   & =
+  - \sqrt{n_1}\ \opc{2}\ket{n_1 - 1, n_2}
+  \\
+   & =
+  - \sqrt{n_1}\ \sqrt{n_2 + 1}\ \ket{n_1 - 1, n_2 + 1}
+  \\[2ex]
+  \left( \half \sum_i \opn{i}(\opn{i} - 1) \right) \ket{n_1, n_2}
+   & =
+  \half \left( n_1(n_1 - 1) + n_2(n_2 - 1) \right) \ket{n_1, n_2}
+\end{align*}
+In each case, the particle number is unchanged.
+
+\begin{enumerate}[(a)]
+  \setcounter{enumi}{1}
+  \item Write down the basis states of the system with two particles.
+\end{enumerate}
+
+In occupation-number representation, the basis states are $ \ket{2, 0}, \ket{1,
+    1}, \ket{0, 2} $.
+
+\begin{enumerate}[(a)]
+  \setcounter{enumi}{2}
+  \item Represent the Hamiltonian in matrix form and determine its eigenvalues.
+\end{enumerate}
+Apply $\hat{H}$ to the basis states:
+\begin{align*}
+  \hat{H} \ket{2, 0}
+   & =
+  - \sqrt{2}\ \opc{2}\ket{1, 0}
+  =
+  - \sqrt{2}\ \ket{1, 1}
+  \\[2ex]
+  \hat{H} \ket{1, 1}
+   & =
+  - \opc{1}\ket{1, 0} - \opc{2}\ket{0, 1}
+  =
+  - \sqrt{2}\ \ket{2, 0} - \sqrt{2}\ \ket{0, 2}
+  \\[2ex]
+  \hat{H} \ket{0, 2}
+   & =
+  - \sqrt{2}\ \opc{1}\ket{0, 1}
+  =
+  - \sqrt{2}\ \ket{1, 1}
+\end{align*}
+In matrix form:
+\begin{align*}
+  H(i, j)
+   & =
+  \begin{bmatrix}
+    \bra{2, 0} \hat{H} \ket{2, 0} & \bra{2, 0} \hat{H} \ket{1, 1} & \bra{2, 0} \hat{H} \ket{0, 2}
+    \\[1ex]
+    \bra{1, 1} \hat{H} \ket{2, 0} & \bra{1, 1} \hat{H} \ket{1, 1} & \bra{1, 1} \hat{H} \ket{0, 2}
+    \\[1ex]
+    \bra{0, 2} \hat{H} \ket{2, 0} & \bra{0, 2} \hat{H} \ket{1, 1} & \bra{0, 2} \hat{H} \ket{0, 2}
+  \end{bmatrix}
+  \\[2ex]
+   & =
+  \begin{bmatrix}
+    0         & -\sqrt{2} & 0
+    \\[0.5ex]
+    -\sqrt{2} & 0         & -\sqrt{2}
+    \\[0.5ex]
+    0         & -\sqrt{2} & 0
+  \end{bmatrix}
+\end{align*}
+The eigenvalues of $\matr{A}$ are the roots of its characteristic polynomial,
+$\det(\matr{A} - \lambda \matr{I}) = 0$.
+\begin{align*}
+  \det(\matr{A} - \lambda \matr{I})
+   & =
+  \begin{vmatrix}
+    -\lambda  & -\sqrt{2} & 0
+    \\[0.5ex]
+    -\sqrt{2} & -\lambda  & -\sqrt{2}
+    \\[0.5ex]
+    0         & -\sqrt{2} & -\lambda
+  \end{vmatrix}
+  =
+  -\lambda
+  \begin{vmatrix}
+    -\lambda  & -\sqrt{2}
+    \\[0.5ex]
+    -\sqrt{2} & -\lambda
+  \end{vmatrix}
+  + \sqrt{2}
+  \begin{vmatrix}
+    -\sqrt{2} & -\sqrt{2}
+    \\[0.5ex]
+    0         & -\lambda
+  \end{vmatrix}
+  \\[2ex]
+   & =
+  -\lambda \left( \lambda^2 - 2 \right) + 2 \lambda
+  =
+  -\lambda \left( 4 - \lambda^2 \right) = 0
+\end{align*}
+Hence, the eigenvalues are $\lambda = 0, \pm 2$.
