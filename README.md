@@ -32,3 +32,4 @@ University of Bristol.
 - [Homework 2 (24/11/2023)](./foundation-year/mathm0013-advanced-quantum-theory/homework/homework-2023-11-24/homework-2023-11-24.pdf)
 - [Homework 3 (04/12/2023)](./foundation-year/mathm0013-advanced-quantum-theory/homework/homework-2023-12-04/homework-2023-12-04.pdf)
 - [Homework 4 (11/12/2023)](./foundation-year/mathm0013-advanced-quantum-theory/homework/homework-2023-12-11/homework-2023-12-11.pdf)
+- [Homework 5 (18/12/2023)](./foundation-year/mathm0013-advanced-quantum-theory/homework/homework-2023-12-18/homework-2023-12-18.pdf)
